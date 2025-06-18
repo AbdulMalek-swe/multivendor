@@ -17,14 +17,14 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 export default function App({ Component, pageProps }) {
-
   return (
     <ProductProvider>
       <CartProvider>
         {" "}
         <main className={`  ${roboto.variable} ${poppins.variable}  `}>
-           <LayoutPageWrapper><Component {...pageProps} /></LayoutPageWrapper>
-          
+          <LayoutPageWrapper>
+            <Component {...pageProps} />
+          </LayoutPageWrapper>
         </main>
       </CartProvider>{" "}
     </ProductProvider>

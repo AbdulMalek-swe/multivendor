@@ -1,26 +1,24 @@
 // import { useProduct } from '@/hooks/product/useProduct';
+import React from "react";
+import SingleCart from "@/components/product/SingleCart";
 import { useCart } from "@/hooks/cart/useCart";
 import { useProduct } from "@/hooks/product/useProduct";
 import Link from "next/link";
-import React from "react";
 
-const Product = () => {
-  const { allProducts } = useProduct();
-  const { addToCart, cart,removeFromCart } = useCart();
-  console.log(cart);
+const Product = () => { 
+  const {   cart,removeFromCart } = useCart(); 
   return (
     <div>
-      <span className="px-5 py-5 bg-red-900 flex justify-center items-center">
-        {cart?.length}
-      </span>
-      <Link href={"/"}>home</Link>
+       
+      <Link href={"/"} className="text-green-400 hover:underline bg-red-900  block py-4 my-5">home</Link>
       <div className="flex gap-2 justify-between">
-        <div>
+        <div className="flex gap-4 flex-wrap">
+           
           {cart.map((item, idx) => (
-            <div>
-              {item?.title}{" "}
+            <div className="relative">
+            <SingleCart product={item}/>   
               <button
-                className="px-2 border py-1 bg-red-900"
+                className=" rounded-full px-2 border cursor-pointer bg-red-900 absolute bottom-2.5 w-full py-2"
                 onClick={() => removeFromCart(item?.id)}
               >
                 remove item
@@ -28,19 +26,7 @@ const Product = () => {
             </div>
           ))}
         </div>
-        <div>
-            {allProducts.map((item, id) => (
-          <div key={id}>
-            {item?.title}
-            <button
-              className="px-2 border py-1 bg-red-900"
-              onClick={() => addToCart(item)}
-            >
-              add to cart
-            </button>
-          </div>
-        ))}
-        </div>
+        
       </div>
     </div>
   );

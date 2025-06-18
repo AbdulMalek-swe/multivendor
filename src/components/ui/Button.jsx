@@ -57,7 +57,7 @@ const Button = ({
   font-poppins text-2xl font-medium leading-5
   border rounded-full transition-all duration-500 ease-in-out
     text-primary   focus:outline-none
-  hover:opacity-85 cursor-pointer py-8
+  hover:opacity-85 cursor-pointer  
   ${isShrinking ? ` ` : "w-96 h-12 px-6"}
 `;
 
@@ -93,7 +93,7 @@ const Button = ({
         </span>
       ) : (
         showText && (
-          <span className="transition-opacity duration-300 animate-fade-up">
+          <span className="transition-opacity duration-300 animate-fade-up flex items-center gap-2 font-poppins">
             {children}
           </span>
         )
