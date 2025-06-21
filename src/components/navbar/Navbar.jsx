@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextInput } from "../ui/Input";
 import { useForm } from "react-hook-form";
 import { useCart } from "@/hooks/cart/useCart";
@@ -14,10 +14,26 @@ const Navbar = () => {
     },
   });
   const { cart } = useCart();
+  const [isFixed, setIsFixed] = useState(false);
+
+  // Scroll detector
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsFixed(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <div>
+    <div className="">
       {/* navingation header  */}
-      <section className="bg-primary  ">
+      <section
+      className={`bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden ${
+    isFixed
+      ? "opacity-0 -translate-y-4 h-0"
+      : "opacity-100 translate-y-0 h-8"
+  }`}
+      >
         <div className="container mx-auto flex justify-between items-center text-sm font-medium leading-[18px] h-8 ">
           <p>Welcome to Baajar!</p>
           <div className="flex items-center">
@@ -27,7 +43,13 @@ const Navbar = () => {
         </div>
       </section>
       {/* second header  */}
-      <section className="h-20">
+      <section
+         className={`bg-white z-50 w-full transition-all duration-500 ease-in-out transform ${
+    isFixed
+      ? "fixed top-0 left-0  shadow-md translate-y-0 opacity-100 h-16 scale-[1]"
+      : "relative opacity- -translate-y-0 h-20 scale-[0.98]"
+  }`}
+      >
         <div className="container mx-auto  h-full flex items-center justify-between gap-3">
           <div className="flex gap-3 items-center flex-shrink-0">
             <img src="icons/location.svg" />
