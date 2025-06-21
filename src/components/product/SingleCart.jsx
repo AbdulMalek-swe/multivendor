@@ -16,7 +16,7 @@ const SingleCart = ({ product }) => {
         src={product?.image}
         width={1000}
         height={1000}
-        className="overflow-hidden w-[247px] h-[187px] rounded-t-2xl"
+        className="overflow-hidden w-full h-[187px] rounded-t-2xl"
       />
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 py-2">
         <h3 className="text-[#222222] font-poppins font-semibold text-base leading-5  ">

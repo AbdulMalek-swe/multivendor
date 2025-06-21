@@ -5,23 +5,23 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isSuccess, setIsSuccess] = useState(false);
-  // const handleClick = async () => {
-  //   setIsLoading(true);
-  //   setIsSuccess(false);
-  //   try {
-  //     const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
-  //     console.log(res);
-  //     setIsSuccess(true);
-  //   } catch (error) {
-  //   } finally {
-  //     setIsLoading(false);
-  //     setTimeout(() => {
-  //       setIsSuccess(false); // reset after 2s
-  //     }, 800);
-  //   }
-  // };
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const handleClick = async () => {
+    setIsLoading(true);
+    setIsSuccess(false);
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      console.log(res);
+      setIsSuccess(true);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setIsSuccess(false); // reset after 2s
+      }, 800);
+    }
+  };
   const productDetails =[
     {
       id:1,
@@ -79,18 +79,16 @@ export default function Home() {
     },
   ]
   return (
-    <div className=" flex gap-4 flex-wrap  ">
+    <div className=" container mx-auto  grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3  ">
       {
-        productDetails?.map((product,idx)=><SingleCart product={product}/>)
-      }
-      
-     
-      {/* <Link href={"/service"}>service</Link>
-      <Button
+        productDetails?.map((product,idx)=><SingleCart product={product} key={idx}/>)
+      } 
+      <Link href={"/service"}>service</Link>
+      {/* <Button
         onClick={() => handleClick()}
-        // isLoading={isLoading}
-        // isSuccess={isSuccess}
-        className="!h-32"
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        className="!h-8"
       >
         {" "}
         Log in{" "}
