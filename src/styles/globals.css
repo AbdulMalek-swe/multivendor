@@ -49,3 +49,17 @@ body {
   color: var(--foreground);
   font-family: Poppins;
 }
+/* dot style  */
+.dot {
+  @apply w-2 h-2 bg-gray-300 rounded-full mx-1 inline-block opacity-60 transition-all duration-300 ease-in-out;
+  transform-origin: center;
+}
+
+.dot.swiper-pagination-bullet-active {
+  @apply   w-6 opacity-100;
+}
+/* Position dots to the left */
+.custom-swiper .swiper-pagination {
+  @apply flex justify-start ml-20  mb-6;
+   
+}

@@ -25,7 +25,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <div className="">
+    <div className="mb-1">
       {/* navingation header  */}
       <section
         className={`bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden ${

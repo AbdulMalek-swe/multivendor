@@ -1,13 +1,14 @@
+import Banner from "@/components/banner/Banner";
 import SingleCart from "@/components/product/SingleCart";
 import SingleShopCard from "@/components/shop/SingleShopCard";
 import HomePageHeaderText from "@/components/ui/HomePageHeaderText";
 import { productList } from "@/constants/product";
 import { shopList } from "@/constants/shopList";
-import Link from "next/link";
 
 export default function Home() {
   return (
     <div className=" container mx-auto  space-y-3 ">
+      <Banner />
       <div className="flex justify-between">
         <HomePageHeaderText>
           Nearest <span className="text-primary ">Shop Profile</span>
@@ -28,16 +29,21 @@ export default function Home() {
           <SingleShopCard shop={shop} key={idx} />
         ))}
       </div>
-      <HomePageHeaderText>
-        Hot Product <span className="text-primary ">Nearby</span>
-      </HomePageHeaderText>
+      {/* header text  */}
+      <div className="flex justify-between items-center">
+        <HomePageHeaderText>
+          Hot Product <span className="text-primary ">Nearby</span>
+        </HomePageHeaderText>
+        <div className="  text-sm md:text-base leading-[18px] text-[#222222]">
+          <span>View All</span>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
         {productList?.map((product, idx) => (
           <SingleCart product={product} key={idx} />
         ))}
       </div>
-
-      <Link href={"/service"}>service</Link>
     </div>
   );
 }
