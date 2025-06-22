@@ -1,12 +1,12 @@
- import Link from "next/link";
-import Navbar from "../navbar/Navbar";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 export const LayoutPageWrapper = ({ children }) => {
-  
   return (
     <section>
-      <Navbar/> 
+      <Navbar />
       <main className="flex-grow">{children}</main>
+      <Footer />
     </section>
   );
 };

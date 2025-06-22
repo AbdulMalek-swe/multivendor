@@ -1,9 +1,8 @@
 import { LayoutPageWrapper } from "@/components/layout";
 import { CartProvider } from "@/context/CartContext";
-import { ProductProvider } from "@/context/ProductContext";
-import { useCart } from "@/hooks/cart/useCart";
+import { ProductProvider } from "@/context/ProductContext"; 
 import "@/styles/globals.css";
-import { Poppins, Roboto } from "next/font/google";
+import { Poppins, Roboto} from "next/font/google";
 
 const roboto = Roboto({
   subsets: ["latin"],
