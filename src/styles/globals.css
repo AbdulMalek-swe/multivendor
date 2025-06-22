@@ -16,7 +16,7 @@
   --font-poppins: "Poppins", sans-serif;
   --animate-ripple: ripple 0.6s linear;
   --animate-fade-up: fadeup 0.4s ease-out;
-   --breakpoint-xs: 480px;
+  --breakpoint-xs: 480px;
   @keyframes ripple {
     0% {
       transform: scale(0);
@@ -56,10 +56,12 @@ body {
 }
 
 .dot.swiper-pagination-bullet-active {
-  @apply   w-6 opacity-100;
+  @apply w-6 opacity-100;
 }
 /* Position dots to the left */
 .custom-swiper .swiper-pagination {
   @apply flex justify-start ml-20  mb-6;
-   
 }
+
+/* hover effect design 
+ */

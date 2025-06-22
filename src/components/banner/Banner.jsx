@@ -12,23 +12,24 @@ const Banner = () => {
     
   };
   return (
-    <div className="w-full  h-full">
+    <div className="w-full  h-full  ">
       <Swiper
         modules={[Pagination, Autoplay]}
         slidesPerView={1}
         loop
         autoplay={{ delay: 3000 }}
         pagination={pagination}
-         className="custom-swiper"
+        className="custom-swiper  "
       >
         {bannerList.map((banner, idx) => (
           <SwiperSlide key={idx} className="aspect-auto w-full  ">
             <Image
               src= {banner}
-              alt="Banner 1"
+              alt="Loading..."
               className="w-full object-cover rounded-md"
               width={1000}
               height={1000}
+              priority
             />
           </SwiperSlide>
         ))}
