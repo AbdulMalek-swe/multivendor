@@ -2,7 +2,8 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
+import "swiper/css/navigation"; 
+import "react-modern-drawer/dist/index.css";
 export const LayoutPageWrapper = ({ children }) => {
   return (
     <section>

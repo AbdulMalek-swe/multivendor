@@ -14,7 +14,7 @@ export default function Home() {
         <section className="flex-shrink-0"> 
           <Category />
         </section>
-        <section className="w-full">
+        <section className="w-full overflow-hidden">
           <div>
             <Banner />
           </div>

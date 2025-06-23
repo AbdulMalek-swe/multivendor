@@ -1,2 +1,3 @@
-export { FiShoppingCart } from "react-icons/fi";
-// export {TrackCar} from "icons/track_car.svg"
+export { FiShoppingCart  } from "react-icons/fi";
+export { FaHome  } from "react-icons/fa";
+export { MdOutlineDashboard, MdPerson  } from "react-icons/md";
