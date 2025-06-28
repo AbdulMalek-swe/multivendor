@@ -6,6 +6,7 @@ import { ROUTES } from "@/constants/route";
 import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
 import { useRouter } from "next/router";
 import Drawer from "react-modern-drawer";
+import CartMenu from "../cart/CartMenu";
 const Navbar = () => {
   const { cart } = useCart();
   const [isFixed, setIsFixed] = useState(false);
@@ -69,16 +70,29 @@ const Navbar = () => {
               <img src="/icons/account.svg" alt="loading" />
             </Link>
             <NavbarText text1="Deliver to" text2="all sylhet" />
-            <Link className="relative" href={ROUTES?.CART}>
-              <img src="/icons/cart.svg" alt="loading" />
-              {cart?.length ? (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
-                  {cart?.length}
-                </span>
-              ) : (
-                ""
-              )}
-            </Link>
+            {/* cart route  */}
+            <div className="relative  group py-2 ">
+              <Link className="" href={ROUTES?.CART}>
+                <img src="/icons/cart.svg" alt="loading" />
+                {cart?.length ? (
+                  <span className="absolute top-1.5 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
+                    {cart?.length}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </Link>
+              <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
+                <CartMenu />
+              </div>
+              {/* hover for full body overlay with background  */}
+              <div
+                className="fixed inset-0 bg-black opacity-20 z-[9998] h-screen top-16 hidden group-hover:block 
+  translate-y-[-100%] group-hover:translate-y-0 
+  transition-all duration-500 ease-in-out 
+  pointer-events-none group-hover:pointer-events-auto"
+              ></div>
+            </div>
           </div>
         </div>
       </section>

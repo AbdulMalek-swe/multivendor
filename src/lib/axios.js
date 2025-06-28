@@ -1,15 +1,19 @@
 // import { getToken } from "@/utils/helpers";
 import axios from "axios";
 
-// const apiUrl = `${process.env.NEXT_PUBLIC_API_SERVER}api/`
-const apiUrl = "https://jsonplaceholder.typicode.com/"; 
-axios.defaults.headers.post["Content-Type"] = "application/json"; 
+let apiUrl;
+if (process?.env?.NODE_ENV === "development") {
+  apiUrl = `${process.env.NEXT_PUBLIC_API_SERVER}api/`;
+} else {
+  apiUrl = `${process.env.NEXT_PUBLIC_PRODUCTION_API_SERVER}api/`;
+}
+axios.defaults.headers.post["Content-Type"] = "application/json";
 const publicRequest = axios.create({
   baseURL: apiUrl,
-}); 
+});
 const privateRequest = axios.create({
   baseURL: apiUrl,
-}); 
+});
 /* Public request config */
 publicRequest.interceptors.request.use(
   async (config) => {
