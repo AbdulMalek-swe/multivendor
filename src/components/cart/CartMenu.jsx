@@ -1,6 +1,6 @@
 import { useCart } from "@/hooks/cart/useCart";
 import Image from "next/image";
-import React from "react"; 
+import React from "react";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 
@@ -40,7 +40,12 @@ const CartMenu = () => {
           </div>
         ))}
       </div>
-      <Link href={ROUTES?.CHECKOUT}  className=" bg-primary  text-white/80 mt-5 flex items-center justify-center font-bold rounded-xl w-full text-base py-3 hover:opacity-85">Proceed To Checkout</Link>
+      <Link
+        href={ROUTES?.CHECKOUT}
+        className=" bg-primary  text-white/80 mt-5 flex items-center justify-center font-bold rounded-xl w-full text-base py-3 hover:opacity-85"
+      >
+        Proceed To Checkout
+      </Link>
     </div>
   );
 };

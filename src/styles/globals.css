@@ -63,5 +63,27 @@ body {
   @apply flex justify-start ml-20  mb-6;
 }
 
-/* hover effect design 
+/*  
+browser scrollbar custom design code here 
  */
+/* global.css or your component CSS */
+::-webkit-scrollbar {
+  width: 12px; /* vertical scrollbar */
+  height: 8px; /* horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: white; /* track color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #DC2626; /* scroll handle */
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB709; /* hover effect */
+   
+}
