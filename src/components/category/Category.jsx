@@ -1,28 +1,40 @@
-"use client";
-import { categoryList } from "@/constants/category";
 import React, { useEffect, useRef, useState } from "react";
-
+import { RxDashboard, IoIosArrowDown, IoIosArrowForward } from "@/icons";
+import Image from "next/image";
+import Link from "next/link";
+import useCategories from "@/hooks/Category/useCategory";
 const Category = () => {
   const [open, setOpen] = useState(true);
+  const { categories: categoryList, loading, error } = useCategories();
   return (
-    <div className=" ">
+    <div className=" w-full">
       <button
-        className="w-full py-3 text-base font-semibold text-[#030712]  rounded-t-lg  border  border-[#E5E7EB] border-b-0 cursor-pointer"
+        className="w-full px-4 py-3 text-base font-semibold text-[#030712]  rounded-t-lg  border  border-[#E5E7EB] border-b-0 cursor-pointer flex  items-center justify-between gap-2"
         onClick={() => setOpen(!open)}
       >
-        All Categories
+        <p className="flex items-center gap-2">
+          <span>
+            <RxDashboard />
+          </span>
+          <span>All Categories</span>
+        </p>
+        <IoIosArrowDown />
       </button>
       <div
-        className={` transition-all duration-500 ease-in-out ${
-          open ? "h-screen" : "h-0 overflow-hidden"
+        className={`w-full transition-all duration-500 ease-in-out ${
+          open ? " h-[calc(100vh-80px)]" : "h-0 overflow-hidden"
         }`}
       >
-        <nav className="flex justify-center items-center">
-          <ul className="flex flex-col list-none relative bg-white  max-h-screen  border rounded-b-lg border-t-0">
+        <nav className="flex justify-center items-center w-full">
+          <ul className="flex flex-col list-none relative bg-white  max-h-[calc(100vh-80px)]  border rounded-b-lg border-t-0 w-full">
             {categoryList.map((menu, index) => {
               const depthLevel = 0;
               return (
-                <MenuItems items={menu} key={index} depthLevel={depthLevel} />
+                <MenuItems
+                  category={menu}
+                  key={index}
+                  depthLevel={depthLevel}
+                />
               );
             })}
           </ul>
@@ -34,7 +46,7 @@ const Category = () => {
 
 export default Category;
 
-const MenuItems = ({ items, depthLevel }) => {
+const MenuItems = ({ category, depthLevel }) => {
   const [dropdown, setDropdown] = useState(false);
   const ref = useRef();
 
@@ -62,34 +74,63 @@ const MenuItems = ({ items, depthLevel }) => {
 
   return (
     <li
-      className="text-[#030712] bg-white font-medium text-sm leading-5 border-t border-t-[#E5E7EB]"
+      className="text-[#030712] bg-white font-medium text-sm leading-5 border-t border-t-[#E5E7EB] py-2 lg:py-3"
       ref={ref}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {items.children ? (
+      {category?.children?.length>0 ? (
         <>
           <button
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((prev) => !prev)}
-            className="w-48 flex justify-between items-center px-4 py-2  00 focus:outline-none"
+            className="w-full flex justify-between items-center px-4 py-2 cursor-pointer focus:outline-none"
           >
-            {items.title}
-            <span className="ml-2">&raquo;</span>
+            <p className="flex items-center gap-2">
+              {category?.category_image ? (
+                <Image
+                  src={`${process?.env.NEXT_PUBLIC_API_SERVER}${category?.category_image}`}
+                  width={1000}
+                  height={1000}
+                  className="w-3 h-3"
+                />
+              ) : (
+                <RxDashboard />
+              )}
+
+              <span> {category?.category_name}</span>
+            </p>
+            <IoIosArrowForward />
           </button>
 
           <Dropdown
-            childrens={items.children}
+            childrens={category.children}
             dropdown={dropdown}
             depthLevel={depthLevel}
           />
         </>
       ) : (
-        <a href="/#" className="block w-48 px-4 py-2  ">
-          {items.title}
-        </a>
+        <Link
+          href="/#"
+          className="  w-full flex justify-between items-center px-4 py-2 cursor-pointer focus:outline-none "
+        >
+          <p className="flex items-center gap-2">
+            {category?.category_image ? (
+              <Image
+                src={`${process?.env.NEXT_PUBLIC_API_SERVER}${category?.category_image}`}
+                width={1000}
+                height={1000}
+                className="w-3 h-3"
+              />
+            ) : (
+              <RxDashboard />
+            )}
+
+            <span> {category?.category_name}</span>
+          </p>
+        </Link>
       )}
     </li>
   );

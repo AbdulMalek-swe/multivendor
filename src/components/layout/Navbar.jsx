@@ -82,16 +82,20 @@ const Navbar = () => {
                   ""
                 )}
               </Link>
-              <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
-                <CartMenu />
-              </div>
+              {cart?.length > 0 && (
+                <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
+                  <CartMenu cartProduct={cart} />
+                </div>
+              )}
               {/* hover for full body overlay with background  */}
-              <div
-                className="fixed inset-0 bg-black opacity-20 z-[9998] h-screen top-16 hidden group-hover:block 
+              {cart?.length > 0 && (
+                <div
+                  className="fixed inset-0 bg-black opacity-20 z-[9998] h-[calc(100vh-80px)] top-16 hidden group-hover:block 
   translate-y-[-100%] group-hover:translate-y-0 
   transition-all duration-500 ease-in-out 
   pointer-events-none group-hover:pointer-events-auto"
-              ></div>
+                ></div>
+              )}
             </div>
           </div>
         </div>

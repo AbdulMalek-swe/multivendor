@@ -1,11 +1,10 @@
-import { useCart } from "@/hooks/cart/useCart";
-import Image from "next/image";
+ 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 
-const CartMenu = () => {
-  const { cart: cartProduct } = useCart();
+const CartMenu = ({cartProduct=[]}) => { 
   return (
     <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
       <div className="overflow-y-auto max-h-[300px]">
@@ -29,8 +28,8 @@ const CartMenu = () => {
                   {product?.group}
                 </p>
                 <p className="flex gap-2 font-medium text-xs text-[#AAAAAA]">
-                  <span>color:{product?.color}</span>
-                  <span>Size:{product?.attribute}</span>
+                  <span>Color : {product?.color}</span>
+                  <span>Size : {product?.size}</span>
                 </p>
               </div>
               <span className="text-primary font-bold md:text-base text-sm leading-3.5">

@@ -58,5 +58,23 @@ export const shopList = [
       price: 230,
       image: "/shop/5.png",
       location:"Road # 5, block - c, Jalalabad, 1218, Sylhet"
+    },{
+      id: 1,
+      title: "Awei AT7",
+      subtitle: "Mayer Dua Electronics",
+      group: "laden",
+      discount_price: 300,
+      price: 350,
+      image: "/shop/1.png",
+      location:"Road # 5, block - c, Jalalabad, 1218, Sylhet"
+    },  {
+      id: 5,
+      title: "Awei AT7",
+      subtitle: "Mayer Dua Electronics",
+      group: "laden",
+      discount_price: 150,
+      price: 230,
+      image: "/shop/5.png",
+      location:"Road # 5, block - c, Jalalabad, 1218, Sylhet"
     },
   ];

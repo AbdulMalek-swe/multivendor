@@ -4,12 +4,11 @@ import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import { bannerList } from "@/constants/banner";
 const Banner = () => {
-    const pagination = {
+  const pagination = {
     clickable: true,
     renderBullet: function (index, className) {
-         return `<span class="dot ${className}"></span>`;
+      return `<span class="dot ${className}"></span>`;
     },
-    
   };
   return (
     <div className="w-full  h-full  ">
@@ -19,14 +18,14 @@ const Banner = () => {
         loop
         autoplay={{ delay: 3000 }}
         pagination={pagination}
-        className="custom-swiper  "
+        className="custom-swiper"
       >
         {bannerList.map((banner, idx) => (
           <SwiperSlide key={idx} className="aspect-auto w-full  ">
             <Image
-              src= {banner}
+              src={banner}
               alt="Loading..."
-              className="w-full object-cover rounded-md"
+              className="w-full object-cover rounded-lg"
               width={1000}
               height={1000}
               priority
