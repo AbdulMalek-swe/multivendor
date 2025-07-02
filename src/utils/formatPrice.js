@@ -3,7 +3,7 @@ export const formatPrice = (amount, currency = "৳") => {
   return (
     <div className="flex items-center gap-1 text-nowrap">
       {currency} {" "}
-      {formatted}
+      {Math.round(formatted)}
     </div>
   );
 };

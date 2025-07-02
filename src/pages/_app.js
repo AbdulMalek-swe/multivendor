@@ -1,6 +1,5 @@
 import { LayoutPageWrapper } from "@/components/layout";
-import { CartProvider } from "@/context/CartContext";
-import { ProductProvider } from "@/context/ProductContext"; 
+import { CartProvider } from "@/context/CartContext"; 
 import "@/styles/globals.css";
 import { Poppins, Roboto} from "next/font/google";
 
@@ -17,7 +16,7 @@ const poppins = Poppins({
 });
 export default function App({ Component, pageProps }) {
   return (
-    <ProductProvider>
+ 
       <CartProvider>
         {" "}
         <main className={`  ${roboto.variable} ${poppins.variable}  `}>
@@ -25,7 +24,7 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
           </LayoutPageWrapper>
         </main>
-      </CartProvider>{" "}
-    </ProductProvider>
+      </CartProvider> 
+    
   );
 }

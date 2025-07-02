@@ -6,7 +6,8 @@ import { ROUTES } from "@/constants/route";
 import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
 import { useRouter } from "next/router";
 import Drawer from "react-modern-drawer";
-import CartMenu from "../cart/CartMenu";
+import CartMenu from "../cart/CartMenu"; 
+import BottomNav from "./BottomNav";
 const Navbar = () => {
   const { cart } = useCart();
   const [isFixed, setIsFixed] = useState(false);
@@ -100,7 +101,10 @@ const Navbar = () => {
           </div>
         </div>
       </section>
-      <ResponsiveNavbars cart={cart} />
+      <div className="md:hidden  ">
+          <BottomNav/>
+      </div>
+      {/* <ResponsiveNavbars cart={cart} /> */}
     </div>
   );
 };
@@ -110,25 +114,25 @@ const ResponsiveNavbars = ({ cart }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => setIsOpen((prev) => !prev);
   return (
-    <div className="md:hidden fixed bottom-0 left-0 w-full bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-gray-200 px-4 py-3 text-sm text-gray-700 z-50">
-      <div className="flex w-full justify-between items-center">
+    <div className="md:hidden fixed bottom-0 left-0 w-full bg-green-300 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-gray-200 px-4  text-sm text-gray-700 z-50">
+      <div className="flex w-full justify-between items-center   py-5">
         <Link
           href={ROUTES?.HOME}
           className={`${
-            pathname === ROUTES?.HOME ? "text-primary" : ""
+            pathname === ROUTES?.HOME ? "text-primary  p-3 -mt-12 bg-red-900 rounded-full   border shadow-2xl border-tranparent" : ""
           } flex flex-col justify-center items-center gap-1 font-medium`}
         >
           <FaHome />
-          <span> Home</span>
+        {/* {pathname !== ROUTES?.HOME &&  <span> Home</span>} */}
         </Link>
         <span
           className={`${
             isOpen ? "font-extrabold" : "font-medium"
-          } flex flex-col justify-center items-center gap-1 cursor-pointer`}
+          } flex flex-col justify-center items-center gap-1 cursor-pointer  `}
           onClick={toggleDrawer}
         >
           <MdOutlineDashboard />
-          <span>Category</span>
+          {/* <span>Category</span> */}
         </span>
         <Link
           href={ROUTES?.CART}
@@ -137,7 +141,7 @@ const ResponsiveNavbars = ({ cart }) => {
           } flex flex-col justify-center items-center gap-1 font-medium relative`}
         >
           <FiShoppingCart />
-          <span>Cart</span>
+          {/* <span>Cart</span> */}
           {cart?.length ? (
             <span className="absolute -top-2 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
               {cart?.length}
@@ -153,7 +157,7 @@ const ResponsiveNavbars = ({ cart }) => {
           } flex flex-col justify-center items-center gap-1 font-medium`}
         >
           <MdPerson />
-          Account
+          {/* Account */}
         </Link>
       </div>
       {/* drawer code for category show  */}

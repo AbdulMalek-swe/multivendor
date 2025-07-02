@@ -11,29 +11,29 @@ const SingleCart = ({ product }) => {
     addToCart(productItem);
   };
   return (
-    <div className="rounded-2xl bg-white    relative shadow-xs  ">
+    <div className="rounded-2xl bg-white    relative shadow-xs overflow-hidden">
       <div className="w-full aspect-auto overflow-hidden">
         <Image
-          src={product?.image}
+            src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.thumbnail}`}
           width={1000}
           height={1000}
           className="overflow-hidden w-full h-[187px] rounded-t-2xl"
         />
       </div>
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 py-2">
-        <h3 className="text-[#222222] font-poppins font-semibold text-base leading-5  ">
-          {product?.title}
+        <h3 className="text-[#222222] font-poppins font-semibold text-base leading-5 line-clamp-1" title={product?.title}>
+          {product?.product_name}
         </h3>
         <hr className="border" />
         <p className="text-[#9CA3AF] font-poppins font-normal text-xs">
-          {product?.group}
+          {product?.vendor?.company_name}
         </p>
         <div className="flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12">
-          <h3 className="text-2xl font-poppins font-bold text-primary">
-            {formatPrice(product?.discount_price)}
+          <h3 className="text-2xl font-poppins font-bold text-primary ">  
+            {formatPrice(product?.offer_price)}
           </h3>
           <span className="line-through font-poppins font-normal text-[#222222] text-base  ">
-            {formatPrice(product?.price)}
+            {formatPrice(product?.reguler_price)}
           </span>
         </div>
         <Button
@@ -44,7 +44,7 @@ const SingleCart = ({ product }) => {
           Add To Cart
         </Button>
         <p className="bg-primary absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
-          {offerPricePercent(product?.price, product?.discount_price)}% OFF
+          {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>
       </div>
     </div>

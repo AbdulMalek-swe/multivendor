@@ -2,7 +2,7 @@ import { category } from "@/lib/api/category/category";
 import { useState, useEffect } from "react";
 
 function useCategories() {
-  const [categories, setCategories] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
@@ -12,7 +12,7 @@ function useCategories() {
       try {
         // call category api 
         const response = await category();
-        setCategories(response?.data?.data);
+        setData(response?.data?.data);
         setLoading(false);
       } catch (err) {
         setError(err.message || "Unknown error");
@@ -24,7 +24,7 @@ function useCategories() {
     fetchCategories();
   }, []);
 
-  return { categories, loading, error };
+  return { data, loading, error };
 }
 
 export default useCategories;

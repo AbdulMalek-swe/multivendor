@@ -1,10 +1,9 @@
- 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ROUTES } from "@/constants/route";
-
-const CartMenu = ({cartProduct=[]}) => { 
+import { ROUTES } from "@/constants/route"; 
+import LinkButton from "../ui/LinkButton";
+// import LinkButton from "../ui/LinkButton";
+const CartMenu = ({ cartProduct = [] }) => {
   return (
     <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
       <div className="overflow-y-auto max-h-[300px]">
@@ -39,12 +38,7 @@ const CartMenu = ({cartProduct=[]}) => {
           </div>
         ))}
       </div>
-      <Link
-        href={ROUTES?.CHECKOUT}
-        className=" bg-primary  text-white/80 mt-5 flex items-center justify-center font-bold rounded-xl w-full text-base py-3 hover:opacity-85"
-      >
-        Proceed To Checkout
-      </Link>
+      <LinkButton href={ROUTES?.CHECKOUT}>Proceed To Checkout</LinkButton>
     </div>
   );
 };

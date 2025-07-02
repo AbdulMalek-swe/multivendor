@@ -1,8 +1,7 @@
 // import { useProduct } from '@/hooks/product/useProduct';
 import React from "react";
 import SingleCart from "@/components/card/SingleCart";
-import { useCart } from "@/hooks/cart/useCart";
-import { useProduct } from "@/hooks/product/useProduct";
+import { useCart } from "@/hooks/cart/useCart"; 
 import Link from "next/link";
 
 const Product = () => {

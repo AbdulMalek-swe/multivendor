@@ -6,17 +6,17 @@ export const categoryList = [
     title: "Meats",
   },
   {
-    title: "Dairy Products",
-    children:[
-        {
-            title:"Ponir",
-            children:[
-                {
-                    title:"choclate"
-                }
-            ]
-        }
-    ]
+    category_name: "Dairy Products",
+    children: [
+      {
+        category_name: "Ponir",
+        children: [
+          {
+            category_name: "choclate",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "Breads & Bakery",
@@ -38,6 +38,5 @@ export const categoryList = [
   },
   {
     title: "Mother & Baby",
-  } 
-  
+  },
 ];
