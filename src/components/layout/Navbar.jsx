@@ -6,7 +6,7 @@ import { ROUTES } from "@/constants/route";
 import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
 import { useRouter } from "next/router";
 import Drawer from "react-modern-drawer";
-import CartMenu from "../cart/CartMenu"; 
+import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 const Navbar = () => {
   const { cart } = useCart();
@@ -102,7 +102,7 @@ const Navbar = () => {
         </div>
       </section>
       <div className="md:hidden  ">
-          <BottomNav/>
+        <BottomNav />
       </div>
       {/* <ResponsiveNavbars cart={cart} /> */}
     </div>
@@ -119,11 +119,13 @@ const ResponsiveNavbars = ({ cart }) => {
         <Link
           href={ROUTES?.HOME}
           className={`${
-            pathname === ROUTES?.HOME ? "text-primary  p-3 -mt-12 bg-red-900 rounded-full   border shadow-2xl border-tranparent" : ""
+            pathname === ROUTES?.HOME
+              ? "text-primary  p-3 -mt-12 bg-red-900 rounded-full   border shadow-2xl border-tranparent"
+              : ""
           } flex flex-col justify-center items-center gap-1 font-medium`}
         >
           <FaHome />
-        {/* {pathname !== ROUTES?.HOME &&  <span> Home</span>} */}
+          {/* {pathname !== ROUTES?.HOME &&  <span> Home</span>} */}
         </Link>
         <span
           className={`${

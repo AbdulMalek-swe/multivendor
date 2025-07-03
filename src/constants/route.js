@@ -9,7 +9,7 @@ export const ROUTES = {
   // ORDER PROCESS 
   CHECKOUT:"/checkout",
   //   auth route
-  LOGIN: "/login",
+  LOGIN: "/auth/login",
   REGISTER: "/register",
   //   user dashboard route
   DASHBOARD: "/dashboard",

@@ -1,7 +1,8 @@
 import { LayoutPageWrapper } from "@/components/layout";
-import { CartProvider } from "@/context/CartContext"; 
+import { CartProvider } from "@/context/CartContext";
 import "@/styles/globals.css";
-import { Poppins, Roboto} from "next/font/google";
+import { Poppins, Roboto } from "next/font/google";
+import { Toaster } from "sonner";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -16,15 +17,25 @@ const poppins = Poppins({
 });
 export default function App({ Component, pageProps }) {
   return (
- 
-      <CartProvider>
-        {" "}
-        <main className={`  ${roboto.variable} ${poppins.variable}  `}>
-          <LayoutPageWrapper>
-            <Component {...pageProps} />
-          </LayoutPageWrapper>
-        </main>
-      </CartProvider> 
-    
+    <CartProvider>
+      {" "}
+      <main className={`  ${roboto.variable} ${poppins.variable}  `}>
+        <LayoutPageWrapper>
+          <Component {...pageProps} />
+          <Toaster
+            position="top-right" 
+            richColors
+            closeButton
+            visibleToasts={9} 
+            toastOptions={{
+              style: {
+                borderRadius: "10px",
+                padding: "14px",
+              },
+            }}
+          />
+        </LayoutPageWrapper>
+      </main>
+    </CartProvider>
   );
 }

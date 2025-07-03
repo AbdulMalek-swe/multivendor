@@ -5,15 +5,25 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { CiLock, FiPhone } from "@/icons";
 import { validateEmailPhone, validatePassword } from "@/utils/validation";
+import { login } from "@/lib/api/auth/auth";
+import {
+  networkErrorHandeller,
+  responseHandler,
+  setToken,
+} from "@/utils/helpers";
+import { useRouter } from "next/router";
+import { notifySuccess } from "@/utils/toast";
 
 const Login = () => {
+  const router = useRouter();
+  // hook form use
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
     let loginData = { password: data?.password };
     if (isEmail) {
@@ -21,9 +31,20 @@ const Login = () => {
     } else {
       loginData = { ...loginData, phone: data.email };
     }
-    console.log(loginData);
+    // login api integrate here
+    try {
+      const response = await login(loginData);
+      if (responseHandler(response)) {
+        notifySuccess(response?.data?.message);
+        setToken(response?.data?.data?.token);
+        router?.push(
+          router?.query?.redirectTo ? router?.query?.redirectTo : "/"
+        );
+      }
+    } catch (error) {
+      networkErrorHandeller(error);
+    }
   };
-
   return (
     <AuthLayout onsubmit={handleSubmit(onSubmit)} icon>
       <TextInput

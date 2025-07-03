@@ -7,9 +7,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 import { spcialOffer } from "@/constants/serviceSpecialOffer";
-import useShop from "@/hooks/api/Shop/useShop"; 
+import useShop from "@/hooks/api/Shop/useShop";
 import useGeolocation from "@/hooks/Location/useGeoLocation";
 import useProduct from "@/hooks/api/Product/useProduct";
+import { toast } from "sonner";
 export default function Home() {
   const { latLng } = useGeolocation();
   // shop list
