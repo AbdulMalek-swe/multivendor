@@ -1,6 +1,6 @@
+import ShopProduct from "@/components/shop/Shop-Product";
 import React from "react";
-import ShopProduct from "@/components/shop/shop-product";
-
+ 
 const ShopProducts = () => {
   return <ShopProduct />;
 };
