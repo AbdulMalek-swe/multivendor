@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import useCategories from "@/hooks/api/Category/useCategory";
 import CategorySkeleton from "../loader/skeleton/Home/CategorySkeleton";
+import { ROUTES } from "@/constants/route";
 const Category = () => {
   const [open, setOpen] = useState(true);
   const { data: categoryList, loading, error } = useCategories();
@@ -78,7 +79,8 @@ const MenuItems = ({ category, depthLevel }) => {
     >
       {category?.children?.length >= 1 ? (
         <>
-          <button
+          <Link
+           href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
@@ -100,8 +102,7 @@ const MenuItems = ({ category, depthLevel }) => {
               <span> {category?.category_name}</span>
             </p>
             <IoIosArrowForward />
-          </button>
-
+          </Link>
           <Dropdown
             childrens={category.children}
             dropdown={dropdown}
@@ -110,7 +111,7 @@ const MenuItems = ({ category, depthLevel }) => {
         </>
       ) : (
         <Link
-          href="/#"
+          href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
           className="  w-full flex justify-between items-center px-4  cursor-pointer focus:outline-none "
         >
           <p className="flex items-center gap-2">

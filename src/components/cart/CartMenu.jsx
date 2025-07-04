@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { ROUTES } from "@/constants/route"; 
+import { ROUTES } from "@/constants/route";
 import LinkButton from "../ui/LinkButton";
 // import LinkButton from "../ui/LinkButton";
 const CartMenu = ({ cartProduct = [] }) => {
@@ -11,7 +11,7 @@ const CartMenu = ({ cartProduct = [] }) => {
           <div className="flex gap-2 md:gap-4 items-center border-b-2 md:py-3 py-2">
             <div className="aspect-square w-[73px] h-[73px] flex items-center">
               <Image
-                src={product?.image}
+                src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.product?.thumbnail}`}
                 alt="loading"
                 width={1000}
                 height={1000}
@@ -20,19 +20,19 @@ const CartMenu = ({ cartProduct = [] }) => {
             </div>
             <div className="flex-shrink-0">
               <h3 className="text-[#0F172A] font-medium text-sm leading-3.5 pb-2 md:pb-3">
-                {product?.title}
+                {product?.product?.product_name}
               </h3>
               <div className="flex md:gap-4 gap-2">
                 <p className="text-[#6B7280] font-bold text-xs leading-3.5">
                   {product?.group}
                 </p>
                 <p className="flex gap-2 font-medium text-xs text-[#AAAAAA]">
-                  <span>Color : {product?.color}</span>
-                  <span>Size : {product?.size}</span>
+                  <span>Color : {product?.color?.name}</span>
+                  <span>Size : {product?.attribute?.name}</span>
                 </p>
               </div>
               <span className="text-primary font-bold md:text-base text-sm leading-3.5">
-                BDT {product?.price}/-
+                BDT {Math.round(product?.price)}/-
               </span>
             </div>
           </div>

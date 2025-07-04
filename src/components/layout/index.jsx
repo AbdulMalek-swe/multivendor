@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "react-modern-drawer/dist/index.css";
+import "react-range-slider-input/dist/style.css";
 export const LayoutPageWrapper = ({ children }) => {
   return (
     <section>

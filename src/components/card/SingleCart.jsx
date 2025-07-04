@@ -3,12 +3,13 @@ import Image from "next/image";
 import Button from "../ui/Button";
 import { FiShoppingCart } from "@/icons";
 import { offerPricePercent } from "@/utils/priceOfferPercent";
-import { formatPrice } from "@/utils/formatPrice";
+import { formatPrice } from "@/utils/formatPrice"; 
 import { useCart } from "@/hooks/cart/useCart";
 const SingleCart = ({ product }) => {
-  const { addToCart } = useCart();
+  const { addItem } = useCart();
   const handleAddedToCart = (productItem) => {
-    addToCart(productItem);
+      const product = {product_id:productItem?.id,vendor_id:productItem?.vendor_id,quantity:1,price:productItem?.offer_price,color_id:productItem?.color_id,attribute_id:productItem?.attribute_id}
+      addItem(product);
   };
   return (
     <div className="rounded-2xl bg-white    relative shadow-xs overflow-hidden">

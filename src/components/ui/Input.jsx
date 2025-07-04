@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "@/icons";
+import { AiFillEye, AiFillEyeInvisible, FaCheck } from "@/icons";
 import clsx from "clsx";
 export const TextInput = ({
- label,
+  label,
   name,
   register,
   required,
@@ -32,11 +32,11 @@ export const TextInput = ({
         placeholder={placeholder}
         {...registered}
         onChange={(e) => {
-          registered.onChange(e); // call RHF's onChange
+          register && registered?.onChange(e); // call RHF's onChange
           trigger && trigger(name); // trigger validation
         }}
         onBlur={(e) => {
-          registered.onBlur(e); // call RHF's onBlur
+          register && registered?.onBlur(e); // call RHF's onBlur
           trigger && trigger(name); // trigger validation
         }}
         className={`w-full bg-[#F3F4F6] px-3 h-[46px]  rounded-md outline-0 placeholder:text-[#6B7280] text-black/70  ${
@@ -46,7 +46,7 @@ export const TextInput = ({
       />
 
       {errors[name] && (
-      <p className="text-sm text-gray-300  px-2">{errors[name].message}</p>
+        <p className="text-sm text-gray-300  px-2">{errors[name].message}</p>
       )}
     </div>
   );
@@ -110,5 +110,27 @@ export const PasswordInput = ({
         {show ? <AiFillEyeInvisible /> : <AiFillEye />}
       </div>
     </div>
+  );
+};
+// custom checkbox
+export const Checkbox = ({ checked, onChange,label }) => {
+  return (
+    <label className="flex items-center gap-2 cursor-pointer select-none ">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={ onChange }
+        className="hidden"
+      />
+
+      <div
+        className={`w-5 h-5 border-2 flex items-center justify-center rounded-md transition-all duration-200 ${
+          checked ? "bg-red-600 border-red-600" : "bg-white border-gray-400"
+        }`}
+      >
+        {checked && <FaCheck className="text-white text-lg" />}
+      </div>
+      {label &&<span className="text-sm text-[#030712] font-medium ">{label}</span>}
+    </label>
   );
 };

@@ -1,4 +1,5 @@
 // import { getToken } from "@/utils/helpers";
+import { getToken } from "@/utils/helpers";
 import axios from "axios";
 
 let apiUrl;
@@ -30,7 +31,7 @@ publicRequest.interceptors.request.use(
 /* Private request config */
 privateRequest.interceptors.request.use(
   async (config) => {
-    // const token = getToken();
+    const token = getToken();
     if (config.headers === undefined) {
       config.headers = {};
     }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextInput } from "../ui/Input";
-import { useCart } from "@/hooks/cart/useCart";
+import { TextInput } from "../ui/Input"; 
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
@@ -8,10 +7,11 @@ import { useRouter } from "next/router";
 import Drawer from "react-modern-drawer";
 import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
+import { useCart } from "@/hooks/cart/useCart";
 const Navbar = () => {
-  const { cart } = useCart();
-  const [isFixed, setIsFixed] = useState(false);
-  // Scroll detector
+  const  {items} = useCart(); 
+  const [isFixed, setIsFixed] = useState(false); 
+  // Scroll detector 
   useEffect(() => {
     const handleScroll = () => {
       setIsFixed(window.scrollY > 0);
@@ -19,6 +19,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  
   return (
     <div className="mb-1  ">
       {/* navingation header  */}
@@ -75,21 +76,21 @@ const Navbar = () => {
             <div className="relative  group py-2 ">
               <Link className="" href={ROUTES?.CART}>
                 <img src="/icons/cart.svg" alt="loading" />
-                {cart?.length ? (
+                {items?.length ? (
                   <span className="absolute top-1.5 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
-                    {cart?.length}
+                    {items?.length}
                   </span>
                 ) : (
                   ""
                 )}
               </Link>
-              {cart?.length > 0 && (
+              {items?.length > 0 && (
                 <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
-                  <CartMenu cartProduct={cart} />
+                  <CartMenu cartProduct={items} />
                 </div>
               )}
               {/* hover for full body overlay with background  */}
-              {cart?.length > 0 && (
+              {items?.length > 0 && (
                 <div
                   className="fixed inset-0 bg-black opacity-20 z-[9998] h-[calc(100vh-80px)] top-16 hidden group-hover:block 
   translate-y-[-100%] group-hover:translate-y-0 

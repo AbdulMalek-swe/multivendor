@@ -36,7 +36,16 @@
     }
   }
 }
-
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+  [type="submit"],
+  [type="reset"],
+  [type="button"] {
+    @apply cursor-pointer;
+  }
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --background: white;
@@ -78,12 +87,28 @@ browser scrollbar custom design code here
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #DC2626; /* scroll handle */
+  background-color: #dc2626; /* scroll handle */
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFB709; /* hover effect */
-   
+  background: #ffb709; /* hover effect */
 }
+
+/* custom slider color change 
+ */
+#custom-slider-color {
+  background-color: #111827;
+}
+#custom-slider-color .range-slider__range {
+  background: #111827;
+  transition: height 0.3s;
+}
+
+#custom-slider-color .range-slider__thumb {
+  background: #111827;
+  transition: transform 0.3s;
+}
+
+ 

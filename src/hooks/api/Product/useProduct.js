@@ -6,7 +6,7 @@ function useProduct(query = {}) {
   const [error, setError] = useState(null);
   useEffect(() => {
     // if (!query?.lat || !query?.lng) return;
-    async function fetchShop() {
+    async function fetchProduct() {
       setLoading(true);
       setError(null);
       try {
@@ -21,7 +21,7 @@ function useProduct(query = {}) {
         setLoading(false);
       }
     }
-    fetchShop();
+    fetchProduct();
   }, [JSON.stringify(query)]);
 
   return { data, loading, error };
