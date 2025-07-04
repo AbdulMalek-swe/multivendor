@@ -8,7 +8,7 @@ const CartMenu = ({ cartProduct = [] }) => {
     <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
       <div className="overflow-y-auto max-h-[300px]">
         {cartProduct?.map((product, idx) => (
-          <div className="flex gap-2 md:gap-4 items-center border-b-2 md:py-3 py-2">
+          <div className="flex gap-2 md:gap-4 items-center border-b-2 md:py-3 py-2" key={idx}>
             <div className="aspect-square w-[73px] h-[73px] flex items-center">
               <Image
                 src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.product?.thumbnail}`}

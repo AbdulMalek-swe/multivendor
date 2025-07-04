@@ -19,7 +19,7 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice   }) => {
     setValue(newVal); 
   };
   return (
-    <div className="shadow-sm spce-y-6 md:space-y-10 pb-4 px-2 rounded-md mb-32 overflow-hidden   w-full">
+    <div className="shadow-sm spce-y-6 md:space-y-10 pb-4 px-2 rounded-md  overflow-hidden   w-full">
       <h1 className="font-semibold text-sm text-[#030712]">Price Filter</h1>
       <div className="space-y-5">
         {/* price input field  */}

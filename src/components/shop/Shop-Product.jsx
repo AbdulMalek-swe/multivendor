@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import PriceFilter from "../filter/PriceFilter";
-import useCategoryId from "@/hooks/api/Category/useSingleCategory";
-import { useRouter } from "next/router";
-import PriceFilterSkeleton from "../loader/skeleton/Porduct/Category/PriceFilterSkeleton";
-import ProductStatus from "../filter/Status";
-import SingleCart from "../card/SingleCart";
-import ProductStatusSkeleton from "../loader/skeleton/Porduct/Category/ProductStatusSkeleton";
-import ProductCategory from "../filter/ProductCategory";
-import ProductBrands from "../filter/ProductBrands";
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import PriceFilterSkeleton from '../loader/skeleton/Porduct/Category/PriceFilterSkeleton';
+import ProductStatusSkeleton from '../loader/skeleton/Porduct/Category/ProductStatusSkeleton';
+import PriceFilter from '../filter/PriceFilter';
+import ProductCategory from '../filter/ProductCategory';
+import ProductBrands from '../filter/ProductBrands';
+import ProductStatus from '../filter/Status';
+import SingleCart from '../card/SingleCart'; 
+import useSingleShopId from '@/hooks/api/Shop/useSingleShop';
 
-const CategoryProduct = () => {
+const ShopProduct = () => {
   const { query } = useRouter();
   const [price, setPrice] = useState({});
   const [checked, setChecked] = useState([]);
@@ -27,11 +27,14 @@ const CategoryProduct = () => {
       min_price: price?.minPrice,
     };
   }
-  const { data, loading } = useCategoryId(query?.slug, params);
+  // declare category 
+  const { data, loading,error } = useSingleShopId(query?.slug, params);
+  console.log(data,error,"------------>");
+  console.log("welcoecome");
   return (
     <div className="flex gap-4 md:gap-8 ">
-      <div className="w-[259px]">
-        {loading ? (
+      <div className="w-[259px]"> 
+        {  loading ? (
           <>
             <PriceFilterSkeleton />
             <ProductStatusSkeleton />
@@ -40,12 +43,12 @@ const CategoryProduct = () => {
           <>
             {" "}
             <PriceFilter
-              max={Math.round(data?.max_price) ?? 100}
+              max={Math.round(data?.max_price) || 100}
               min={0}
               setPrice={setPrice}
             />
             <ProductCategory
-              category={data?.child_categories}
+              category={data?.categories}
               categoryId={categoryId}
               setCategoryId={setCategoryId}
             />
@@ -63,7 +66,7 @@ const CategoryProduct = () => {
         {/* show product here
          */}
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {data?.products?.data?.map((product, idx) => (
+          {data?.products?.map((product, idx) => (
             <SingleCart product={product} key={idx} />
           ))}
         </div>
@@ -72,4 +75,4 @@ const CategoryProduct = () => {
   );
 };
 
-export default CategoryProduct;
+export default ShopProduct;

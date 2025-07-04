@@ -1,7 +1,8 @@
-import { getCategoryById } from "@/lib/api/category/category";
+ 
+import { getSingleShopById } from "@/lib/api/shop/shop";
 import { useEffect, useState } from "react";
 
-function useCategoryId(id,query={}) {
+function useSingleShopId(id,query={}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,12 +10,12 @@ function useCategoryId(id,query={}) {
   useEffect(() => {
     if (!id) return;
 
-    const fetchCategory = async () => {
+    const fetchSingleShop = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await getCategoryById(id,query); 
+        const response = await getSingleShopById(id,query); 
         setData(response?.data?.data); // depends on your API structure
       } catch (err) {
         setError(err?.message || "Unknown error");
@@ -23,10 +24,10 @@ function useCategoryId(id,query={}) {
       }
     };
 
-    fetchCategory();
+    fetchSingleShop();
   }, [id,JSON.stringify(query)]);
 
   return { data, loading, error };
 }
 
-export default useCategoryId;
+export default useSingleShopId;

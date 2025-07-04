@@ -7,6 +7,7 @@ export const ROUTES = {
   PRODUCT_DETAILS: (id) => `/products/${id}`,
   CATEGORY: "/category",
   CATEGORY_DETAILS:(id)=>`/category/${id}`,
+  SHOP_DETAILS:(id)=>`/shop/product/${id}`,
   // ORDER PROCESS 
   CHECKOUT:"/checkout",
   //   auth route

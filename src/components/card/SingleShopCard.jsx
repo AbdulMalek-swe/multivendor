@@ -1,9 +1,13 @@
 import React from "react";
-import Image from "next/image"; 
+import Image from "next/image";
 import Link from "next/link";
-const SingleShopCard = ({ shop }) => { 
+import { ROUTES } from "@/constants/route";
+const SingleShopCard = ({ shop }) => {
   return (
-    <Link href="/vendor hsop" className="rounded-2xl bg-white    relative shadow-xs overflow-hidden">
+    <Link
+      href={ROUTES?.SHOP_DETAILS(shop?.id)}
+      className="rounded-2xl bg-white    relative shadow-xs overflow-hidden"
+    >
       <div className="w-full h-[187px] overflow-hidden rounded-t-2xl">
         <Image
           src={`${process?.env.NEXT_PUBLIC_API_SERVER}${shop?.logo}`}
