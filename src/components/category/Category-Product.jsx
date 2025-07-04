@@ -37,10 +37,10 @@ const CategoryProduct = () => {
             <ProductStatusSkeleton />
           </>
         ) : (
-          <>
+          <div className="space-y-4">
             {" "}
             <PriceFilter
-              max={Math.round(data?.max_price) ?? 100}
+              max={Math.round(data?.max_price) || 100}
               min={0}
               setPrice={setPrice}
             />
@@ -55,7 +55,7 @@ const CategoryProduct = () => {
               setBrandId={setBrandId}
             />
             <ProductStatus checked={checked} setChecked={setChecked} />
-          </>
+          </div>
         )}
       </div>
       <div className=" ">
