@@ -1,6 +1,11 @@
-import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
+import { customService } from "@/constants/footer";
+import { ROUTES } from "@/constants/route";
+import useCategories from "@/hooks/api/Category/useCategory";
+import { FaWhatsapp, FaPhoneAlt } from "@/icons";
+import Link from "next/link";
 
 export default function Footer() {
+  const { data: categoryList } = useCategories();
   return (
     <footer className="bg-primary text-white z-20 py-10 overflow-hidden px-6 relative before:absolute before:-top-52 before:-right-48 before:bg-[#E03B3B]  before:w-[434px] before:h-[434px] before:rounded-full after:absolute after:-top-52 after:-right-48 after:border after:border-[#8B70D1]  after:w-[445px] after:h-[445px]   after:rounded-full">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between">
@@ -37,16 +42,16 @@ export default function Footer() {
           <h3 className="font-semibold border-b border-white mb-4 inline-block">
             Most Popular Categories
           </h3>
-          <ul className="space-y-2 text-sm">
-            <li>• Staples</li>
-            <li>• Beverages</li>
-            <li>• Personal Care</li>
-            <li>• Home Care</li>
-            <li>• Baby Care</li>
-            <li>• Vegetables & Fruits</li>
-            <li>• Snacks & Foods</li>
-            <li>• Dairy & Bakery</li>
-          </ul>
+          <div className="space-y-2 text-sm flex flex-col">
+            {categoryList?.map((category, idx) => (
+              <Link
+                href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
+                key={idx}
+              >
+                • {category?.category_name}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Right Section */}
@@ -54,14 +59,13 @@ export default function Footer() {
           <h3 className="font-semibold border-b border-white mb-4 inline-block">
             Customer Services
           </h3>
-          <ul className="space-y-2 text-sm">
-            <li>• About Us</li>
-            <li>• Terms & Conditions</li>
-            <li>• FAQ</li>
-            <li>• Privacy Policy</li>
-            <li>• E-waste Policy</li>
-            <li>• Cancellation & Return Policy</li>
-          </ul>
+          <div className="space-y-2 text-sm flex flex-col">
+            {customService.map((item, idx) => (
+              <Link href={item?.href} key={idx}>
+                • {item?.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

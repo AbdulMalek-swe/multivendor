@@ -66,7 +66,7 @@ const Button = ({
       ref={btnRef}
       type={type}
       onClick={(e) => {
-        handleClick(e), onClick();
+        handleClick(e), onClick(e);
       }}
       disabled={isLoading || isSuccess || disabled}
       //   disabled={disabled || loading}

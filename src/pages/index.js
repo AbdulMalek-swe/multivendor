@@ -10,7 +10,6 @@ import { spcialOffer } from "@/constants/serviceSpecialOffer";
 import useShop from "@/hooks/api/Shop/useShop";
 import useGeolocation from "@/hooks/Location/useGeoLocation";
 import useProduct from "@/hooks/api/Product/useProduct";
-import { toast } from "sonner";
 export default function Home() {
   const { latLng } = useGeolocation();
   // shop list
@@ -46,7 +45,7 @@ export default function Home() {
                     <span className="font-medium">Nearest Shops</span>
                   </div>
                   <Link
-                    href={ROUTES.HOME}
+                    href={ROUTES.SHOP}
                     className="flex items-center pl-6 cursor-pointer"
                   >
                     <span>View All</span>
@@ -102,17 +101,19 @@ export default function Home() {
         </div>
         <div className="w-full md:w-8/12 lg:w-9/12 ">
           <div className=" ">
-            <div className="flex justify-between items-center pb-2 md:pb-4">
+            <div className="flex justify-between pb-2 md:pb-4">
               <HomePageHeaderText>
                 Hot Product <span className="text-primary ">Nearby</span>
               </HomePageHeaderText>
-              <Link
-                href={ROUTES.HOME}
-                className="flex items-center pl-6 cursor-pointer"
-              >
-                <span>View All</span>
-                <img src="/icons/leftArrow.svg" alt="location icon" />
-              </Link>
+              <div className="flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
+                <Link
+                  href={ROUTES.PRODUCTS}
+                  className="flex items-center pl-6 cursor-pointer"
+                >
+                  <span>View All</span>
+                  <img src="/icons/leftArrow.svg" alt="location icon" />
+                </Link>
+              </div>
             </div>
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {productList?.map((product, idx) => (

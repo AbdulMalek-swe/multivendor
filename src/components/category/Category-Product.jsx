@@ -8,6 +8,7 @@ import SingleCart from "../card/SingleCart";
 import ProductStatusSkeleton from "../loader/skeleton/Porduct/Category/ProductStatusSkeleton";
 import ProductCategory from "../filter/ProductCategory";
 import ProductBrands from "../filter/ProductBrands";
+import ProductBanner from "../banner/ProductBanner";
 
 const CategoryProduct = () => {
   const { query } = useRouter();
@@ -58,8 +59,25 @@ const CategoryProduct = () => {
           </div>
         )}
       </div>
-      <div className=" ">
+      <div className="space-y-4 md:space-y-5 lg:space-y-6">
         {/* banner set for cateogory section  */}
+        <ProductBanner
+          title={
+            <>
+              Nearby Groceries Products
+              <br />
+              Tailored for you
+            </>
+          }
+          subTitle={
+            <>
+              We have prepared special discounts for you on grocery
+              <br />
+              products...
+            </>
+          }
+          img="/shop/1.png"
+        />
         {/* show product here
          */}
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">

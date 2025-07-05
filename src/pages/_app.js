@@ -19,8 +19,7 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }) {
   return (
     <DeleteModalProvider>
-      <CartProvider>
-        {" "}
+      <CartProvider> 
         <main className={`  ${roboto.variable} ${poppins.variable}  `}>
           <LayoutPageWrapper>
             <Component {...pageProps} />

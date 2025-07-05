@@ -1,13 +1,20 @@
 export const ROUTES = {
-  HOME: "/",
-  ABOUT: "/about",
+  HOME: "/", 
   CONTACT: "/contact",
   PRODUCTS: "/products",
   CART: "/cart",
-  PRODUCT_DETAILS: (id) => `/products/${id}`,
+  PRODUCT_DETAILS: (id) => `/products-details/${id}`,
   CATEGORY: "/category",
   CATEGORY_DETAILS:(id)=>`/category/${id}`,
-  SHOP_DETAILS:(id)=>`/shop/product/${id}`,
+  SHOP:"/shop",
+  SHOP_DETAILS:(id)=>`/shop-products/${id}`,
+  // information router 
+  ABOUT: "/information/about",
+  TERMS_CONDITION:"/information/terms-condition",
+  FAQ:"/information/faq",
+  PRIVACY_POLICY:"/information/privacy-policy",
+  E_WASTE_POLICY:"/information/e-waste-policy",
+  CANCEL_POLICY:"/information/cancellation-return-policy",
   // ORDER PROCESS 
   CHECKOUT:"/checkout",
   //   auth route
