@@ -52,7 +52,7 @@ const SingleCart = ({ product }) => {
           </span>
         </div>
         <Button
-          className="!w-full   !h-8 !text-xs !font-poppins !font-light text-nowrap !z-50"
+          className="!w-full   !h-8 !text-xs !font-poppins !font-light text-nowrap  "
           onClick={(e) => {
             if (e && e.stopPropagation) {
               e.stopPropagation();

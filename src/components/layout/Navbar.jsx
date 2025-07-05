@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextInput } from "../ui/Input"; 
+import { TextInput } from "../ui/Input";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
@@ -8,10 +8,13 @@ import Drawer from "react-modern-drawer";
 import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
+import { CiSearch } from "@/icons";
 const Navbar = () => {
-  const  {items} = useCart(); 
-  const [isFixed, setIsFixed] = useState(false); 
-  // Scroll detector 
+  const { items } = useCart();
+  const [isFixed, setIsFixed] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const router = useRouter();
+  // Scroll detector
   useEffect(() => {
     const handleScroll = () => {
       setIsFixed(window.scrollY > 0);
@@ -19,7 +22,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   return (
     <div className="mb-1  ">
       {/* navingation header  */}
@@ -57,13 +60,19 @@ const Navbar = () => {
             <NavbarText text1="Deliver to" text2="all sylhet" />
           </div>
           {/* search area  */}
-          <div className="w-full">
+          <div className="w-full relative">
             <TextInput
               placeholder="Search for products, categories or brands..."
               onChange={(e) => {
-                console.log(e.target.value);
+                setSearchText(e.target.value);
               }}
             />
+            <span className="absolute text-3xl font-bold text-black right-0 top-0 h-full 
+             flex items-center cursor-pointer bg-primary/10 rounded-r-md 
+             px-2 transition-all duration-300 ease-in-out 
+             hover:bg-primary/30 hover:scale-105 hover:shadow-md" onClick={()=>searchText&& router.push(`/search-product?search=${searchText}`)}>
+              <CiSearch />
+            </span>
           </div>
           {/* cart and profile icon  */}
           <div className="hidden md:flex  items-center flex-shrink-0 gap-2">

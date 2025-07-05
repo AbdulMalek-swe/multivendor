@@ -2,8 +2,9 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
-import { bannerList } from "@/constants/banner";
+import useBanner from "@/hooks/api/banner/useBanner";
 const Banner = () => {
+  const { data: bannerList, loading } = useBanner();
   const pagination = {
     clickable: true,
     renderBullet: function (index, className) {
@@ -11,7 +12,7 @@ const Banner = () => {
     },
   };
   return (
-    <div className="w-full  h-full  ">
+    <div className="w-full  h-full max-h-[320px] overflow-hidden  ">
       <Swiper
         modules={[Pagination, Autoplay]}
         slidesPerView={1}
@@ -21,11 +22,11 @@ const Banner = () => {
         className="custom-swiper"
       >
         {bannerList.map((banner, idx) => (
-          <SwiperSlide key={idx} className="aspect-auto w-full  ">
+          <SwiperSlide key={idx} className="aspect-auto w-full h-full ">
             <Image
-              src={banner}
+              src={`${process?.env.NEXT_PUBLIC_API_SERVER}${banner?.banner_image}`}
               alt="Loading..."
-              className="w-full object-cover rounded-lg"
+              className="w-full object-cover rounded-lg max-h-[320px]"
               width={1000}
               height={1000}
               priority

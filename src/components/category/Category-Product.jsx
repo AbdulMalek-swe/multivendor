@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import PriceFilter from "../filter/PriceFilter";
 import useCategoryId from "@/hooks/api/Category/useSingleCategory";
 import { useRouter } from "next/router";
@@ -9,6 +9,8 @@ import ProductStatusSkeleton from "../loader/skeleton/Porduct/Category/ProductSt
 import ProductCategory from "../filter/ProductCategory";
 import ProductBrands from "../filter/ProductBrands";
 import ProductBanner from "../banner/ProductBanner";
+import { useLoadingObserver } from "@/utils/loadingObserver";
+import ProductCardSkeleton from "../loader/skeleton/Porduct/Product/SingleProductSkeleton";
 
 const CategoryProduct = () => {
   const { query } = useRouter();
@@ -16,29 +18,43 @@ const CategoryProduct = () => {
   const [checked, setChecked] = useState([]);
   const [categoryId, setCategoryId] = useState([]);
   const [brandId, setBrandId] = useState([]);
-  let params = {
-    ...(checked.includes("In Stock") && { in_stock: true }),
-    ...(checked.includes("On Sale") && { on_sale: true }),
-    ...(categoryId?.length > 0 && { category_ids: categoryId }),
-  };
-  if (price?.maxPrice) {
-    params = {
-      ...params,
-      max_price: price?.maxPrice,
-      min_price: price?.minPrice,
+  const [page, setPage] = useState(1);
+  const loadingRef = useRef();
+  const queryParams = useMemo(() => {
+    let params = {
+      ...(checked.includes("In Stock") && { in_stock: true }),
+      ...(checked.includes("On Sale") && { on_sale: true }),
+      ...(categoryId.length > 0 && { category_ids: categoryId }),
+      per_page: 10,
+      page,
     };
-  }
-  const { data, loading } = useCategoryId(query?.slug, params);
+    if (price?.maxPrice) {
+      params.max_price = price.maxPrice;
+      params.min_price = price.minPrice;
+    }
+    return params;
+  }, [checked, categoryId, price, page]);
+  const { data, loading, infinityLoading, hasMoreData } = useCategoryId(
+    query?.slug,
+    queryParams
+  );
+  useLoadingObserver({
+    setPage,
+    observerRef: loadingRef,
+    loading: infinityLoading,
+    hasMoreData,
+  });
+
   return (
     <div className="flex gap-4 md:gap-8 ">
-      <div className="w-[259px]">
+      <div className="w-[259px] shrink-0">
         {loading ? (
           <>
             <PriceFilterSkeleton />
             <ProductStatusSkeleton />
           </>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4   ">
             {" "}
             <PriceFilter
               max={Math.round(data?.max_price) || 100}
@@ -59,7 +75,7 @@ const CategoryProduct = () => {
           </div>
         )}
       </div>
-      <div className="space-y-4 md:space-y-5 lg:space-y-6">
+      <div className="flex-1 space-y-4 md:space-y-5 lg:space-y-6 ">
         {/* banner set for cateogory section  */}
         <ProductBanner
           title={
@@ -80,10 +96,29 @@ const CategoryProduct = () => {
         />
         {/* show product here
          */}
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {data?.products?.data?.map((product, idx) => (
-            <SingleCart product={product} key={idx} />
-          ))}
+
+        {loading ? (
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {data?.products?.data?.map((product, idx) => (
+              <SingleCart product={product} key={idx} />
+            ))}
+          </div>
+        )}
+
+        <div ref={loadingRef} className="  mt-4 flex justify-center">
+          {!loading && infinityLoading && (
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
