@@ -8,11 +8,15 @@ const Button = ({
   disabled = false,
   isLoading = false,
   isSuccess = false,
+  bgColor = "bg-primary",
+  color = "text-white/80",
+  rounded = "rounded-full",
+  textSize = "text-2xl",
   onClick = () => {},
   className = "",
 }) => {
-  const btnRef = useRef(null); 
-  const [isShrinking, setIsShrinking] = useState(false); 
+  const btnRef = useRef(null);
+  const [isShrinking, setIsShrinking] = useState(false);
   const [showText, setShowText] = useState(true);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const handleClick = (e) => {
@@ -30,12 +34,12 @@ const Button = ({
       e.clientY - button.getBoundingClientRect().top - radius
     }px`;
     button.appendChild(circle);
-    // Steps 
+    // Steps
     setTimeout(() => {
       circle.remove();
     }, 400);
   };
- useEffect(() => {
+  useEffect(() => {
     if (isLoading) {
       setIsShrinking(true);
       setShowText(false);
@@ -54,11 +58,11 @@ const Button = ({
   //  button defualt class
   const baseStyles = `
   relative overflow-hidden flex items-center justify-center
-  font-poppins text-2xl font-medium leading-5
-  border rounded-full transition-all duration-500 ease-in-out
+  font-poppins  font-medium leading-5
+  border transition-all duration-500 ease-in-out gap-1 lg:gap-1.5
     text-primary   focus:outline-none
   hover:opacity-85 cursor-pointer  
-  ${isShrinking ? ` ` : "w-96 h-12 px-6"}
+  ${isShrinking ? ` ` : "w-full h-12 px-6"}
 `;
 
   return (
@@ -71,10 +75,14 @@ const Button = ({
       disabled={isLoading || isSuccess || disabled}
       //   disabled={disabled || loading}
       className={clsx(
-        className,
         baseStyles,
         // variants[variant],
-        disabled && "opacity-50 cursor-not-allowed"
+        disabled && "opacity-50 cursor-not-allowed",
+        bgColor,
+        color,
+        rounded,
+        textSize,
+        className
       )}
       style={
         isShrinking && btnRef.current
@@ -92,11 +100,7 @@ const Button = ({
           <FaCheck className="text-green-300" /> Success
         </span>
       ) : (
-        showText && (
-          <span className="transition-opacity duration-300 animate-fade-up flex items-center gap-2 font-poppins">
-            {children}
-          </span>
-        )
+        showText &&  children 
       )}
     </button>
   );

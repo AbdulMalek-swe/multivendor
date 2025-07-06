@@ -5,3 +5,6 @@ export const product = async(params={})=>{
 export const searchProduct = async(params={})=>{
     return await publicRequest.get("product/search",{params});
 }
+export const singleProduct = async(id)=>{
+    return await publicRequest.get(`user/product/${id}`);
+}

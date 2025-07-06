@@ -6,6 +6,7 @@ import { offerPricePercent } from "@/utils/priceOfferPercent";
 import { formatPrice } from "@/utils/formatPrice";
 import { useCart } from "@/hooks/cart/useCart";
 import Link from "next/link";
+import { ROUTES } from "@/constants/route";
 const SingleCart = ({ product }) => {
   const { addItem } = useCart();
   const handleAddedToCart = (productItem) => {
@@ -21,7 +22,7 @@ const SingleCart = ({ product }) => {
   };
   return (
     <Link
-      href={"/"}
+      href={ROUTES?.PRODUCT_DETAILS(product?.id)}
       className="rounded-2xl bg-white   relative shadow-xs overflow-hidden"
     >
       <div className="w-full aspect-auto overflow-hidden">

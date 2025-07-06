@@ -9,18 +9,16 @@ import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
 import { CiSearch } from "@/icons";
-import { getToken, removeToken } from "@/utils/helpers";
 import Image from "next/image";
 import LinkButton from "../ui/LinkButton";
 import { useAuth } from "@/context/AuthContext";
 const Navbar = () => {
   const { items } = useCart();
-  const {user:userProfile,logout } = useAuth();
+  const { user: userProfile, logout } = useAuth();
   const [isFixed, setIsFixed] = useState(false);
-  const [searchText, setSearchText] = useState(""); 
+  const [searchText, setSearchText] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
-  const router = useRouter(); 
-  console.log(userProfile,"find my profile");
+  const router = useRouter();
   // Scroll detector
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +26,7 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); 
+  }, []);
   const menuRef = useRef(null);
   // Click outside to close
   useEffect(() => {
@@ -36,10 +34,8 @@ const Navbar = () => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setProfileMenu(false);
       }
-    };
-
-    window.addEventListener("click", handleClickOutside);
-
+    };  
+    window.addEventListener("click", handleClickOutside); 
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
@@ -135,7 +131,7 @@ const Navbar = () => {
                     <li
                       className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       onClick={() => {
-                        logout()
+                        logout();
                       }}
                     >
                       Logout

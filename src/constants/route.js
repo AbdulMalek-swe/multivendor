@@ -4,7 +4,7 @@ export const ROUTES = {
   PRODUCTS: "/products",
   PRODUCTS_SEARCH:"/search-product",
   CART: "/cart",
-  PRODUCT_DETAILS: (id) => `/products-details/${id}`,
+  PRODUCT_DETAILS: (id) => `/product-details/${id}`,
   CATEGORY: "/category",
   CATEGORY_DETAILS:(id)=>`/category/${id}`,
   SHOP:"/shop",
