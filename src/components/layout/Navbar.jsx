@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextInput } from "../ui/Input";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
@@ -9,11 +9,18 @@ import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
 import { CiSearch } from "@/icons";
+import { getToken, removeToken } from "@/utils/helpers";
+import Image from "next/image";
+import LinkButton from "../ui/LinkButton";
+import { useAuth } from "@/context/AuthContext";
 const Navbar = () => {
   const { items } = useCart();
+  const {user:userProfile,logout } = useAuth();
   const [isFixed, setIsFixed] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const router = useRouter();
+  const [searchText, setSearchText] = useState(""); 
+  const [profileMenu, setProfileMenu] = useState(false);
+  const router = useRouter(); 
+  console.log(userProfile,"find my profile");
   // Scroll detector
   useEffect(() => {
     const handleScroll = () => {
@@ -21,10 +28,24 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, []); 
+  const menuRef = useRef(null);
+  // Click outside to close
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setProfileMenu(false);
+      }
+    };
 
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
-    <div className="mb-1  ">
+    <div className="mb-1">
       {/* navingation header  */}
       <section
         className={` hidden md:block bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden ${
@@ -67,48 +88,121 @@ const Navbar = () => {
                 setSearchText(e.target.value);
               }}
             />
-            <span className="absolute text-3xl font-bold text-black right-0 top-0 h-full 
-             flex items-center cursor-pointer bg-primary/10 rounded-r-md 
+            <span
+              className="absolute text-3xl font-bold text-black right-0 top-0 h-full 
+             flex items-center cursor-pointer bg-primary/5 rounded-r-md 
              px-2 transition-all duration-300 ease-in-out 
-             hover:bg-primary/30 hover:scale-105 hover:shadow-md" onClick={()=>searchText&& router.push(`/search-product?search=${searchText}`)}>
+             hover:bg-primary/15 hover:scale-105 hover:shadow-md"
+              onClick={() =>
+                searchText &&
+                router.push(`/search-product?search=${searchText}`)
+              }
+            >
               <CiSearch />
             </span>
           </div>
           {/* cart and profile icon  */}
-          <div className="hidden md:flex  items-center flex-shrink-0 gap-2">
-            <Link href={ROUTES?.DASHBOARD}>
-              {" "}
-              <img src="/icons/account.svg" alt="loading" />
-            </Link>
-            <NavbarText text1="Deliver to" text2="all sylhet" />
-            {/* cart route  */}
-            <div className="relative  group py-2 ">
-              <Link className="" href={ROUTES?.CART}>
-                <img src="/icons/cart.svg" alt="loading" />
-                {items?.length ? (
-                  <span className="absolute top-1.5 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
-                    {items?.length}
-                  </span>
-                ) : (
-                  ""
-                )}
-              </Link>
-              {items?.length > 0 && (
-                <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
-                  <CartMenu cartProduct={items} />
-                </div>
-              )}
-              {/* hover for full body overlay with background  */}
-              {items?.length > 0 && (
+          {userProfile ? (
+            <div className="hidden md:flex  items-center flex-shrink-0 gap-2 ">
+              <div className="relative" ref={menuRef}>
+                <button onClick={() => setProfileMenu(!profileMenu)}>
+                  {" "}
+                  <Image
+                    width={25}
+                    height={25}
+                    src="/icons/account.svg"
+                    alt="loading"
+                  />
+                </button>
+                {/* profile menu show here  */}
                 <div
-                  className="fixed inset-0 bg-black opacity-20 z-[9998] h-[calc(100vh-80px)] top-16 hidden group-hover:block 
+                  className={`absolute -right-8 mt-2 w-48 bg-white rounded-md shadow-lg origin-top-right z-50 overflow-hidden
+        transform transition-all duration-300 ease-out
+        ${
+          profileMenu
+            ? "translate-y-0 opacity-100 visible"
+            : "translate-y-5 opacity-0 invisible"
+        }`}
+                  onMouseLeave={() => setProfileMenu(false)} // Hover outside => close
+                >
+                  <ul className="py-2 text-sm text-gray-700">
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Profile
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Settings
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        logout()
+                      }}
+                    >
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <NavbarText text1="Deliver to" text2="all sylhet" />
+              {/* cart route  */}
+              <div className="relative  group py-2 ">
+                <Link className="" href={ROUTES?.CART}>
+                  <Image
+                    width={25}
+                    height={25}
+                    src="/icons/cart.svg"
+                    alt="loading"
+                  />
+                  {items?.length ? (
+                    <span className="absolute top-1.5 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
+                      {items?.length}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </Link>
+                {items?.length > 0 && (
+                  <div className="absolute top-11 right-0  w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
+                    <CartMenu cartProduct={items} />
+                  </div>
+                )}
+                {/* hover for full body overlay with background  */}
+                {items?.length > 0 && (
+                  <div
+                    className="fixed inset-0 bg-black opacity-20 z-[9998] h-[calc(100vh-80px)] top-16 hidden group-hover:block 
   translate-y-[-100%] group-hover:translate-y-0 
   transition-all duration-500 ease-in-out 
   pointer-events-none group-hover:pointer-events-auto"
-                ></div>
-              )}
+                  ></div>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex gap-2 md:gap-3 ">
+              <LinkButton
+                href={ROUTES?.LOGIN}
+                className="text-nowrap uppercase text-sm  font-medium"
+                bgColor=" "
+                color="text-black"
+              >
+                <span className="relative  group">
+                  login
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100 origin-left" />
+                </span>
+              </LinkButton>
+              <LinkButton
+                href={ROUTES?.REGISTER}
+                className="text-nowrap uppercase text-sm  font-medium"
+                bgColor="bg-r "
+                color="text-[#030712]"
+              >
+                <span className="relative  group">
+                  Sign Up
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100 origin-left" />
+                </span>
+              </LinkButton>
+            </div>
+          )}
         </div>
       </section>
       <div className="md:hidden  ">

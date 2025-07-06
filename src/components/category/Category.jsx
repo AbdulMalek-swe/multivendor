@@ -94,6 +94,7 @@ const MenuItems = ({ category, depthLevel }) => {
                   width={1000}
                   height={1000}
                   className="w-3 h-3"
+                  alt={category?.category_name}
                 />
               ) : (
                 <RxDashboard />
@@ -121,6 +122,7 @@ const MenuItems = ({ category, depthLevel }) => {
                 width={1000}
                 height={1000}
                 className="w-3 h-3"
+                alt = {category?.category_name}
               />
             ) : (
               <RxDashboard />

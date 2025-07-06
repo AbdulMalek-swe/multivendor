@@ -13,7 +13,7 @@ const LinkButton = ({
     <Link
       href={href}
       className={clsx(
-        "mt-5 flex items-center justify-center font-bold w-full text-base py-3 hover:opacity-85 transition-all duration-150",
+        "flex items-center justify-center font-bold w-full text-base   hover:opacity-85 transition-all duration-150",
         bgColor,
         color,
         rounded,

@@ -1,4 +1,5 @@
 import { LayoutPageWrapper } from "@/components/layout";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
 import "@/styles/globals.css";
@@ -18,6 +19,7 @@ const poppins = Poppins({
 });
 export default function App({ Component, pageProps }) {
   return (
+    <AuthProvider>
     <DeleteModalProvider>
       <CartProvider> 
         <main className={`  ${roboto.variable} ${poppins.variable}  `}>
@@ -39,5 +41,6 @@ export default function App({ Component, pageProps }) {
         </main>
       </CartProvider>
     </DeleteModalProvider>
+    </AuthProvider>
   );
 }

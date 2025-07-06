@@ -30,12 +30,13 @@ const SingleCart = ({ product }) => {
           width={1000}
           height={1000}
           className="overflow-hidden w-full h-[187px] rounded-t-2xl"
+          alt={product?.product_name}
         />
       </div>
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 py-2">
         <h3
           className="text-[#222222] font-poppins font-semibold text-base leading-5 line-clamp-1"
-          title={product?.title}
+          title={product?.product_name}
         >
           {product?.product_name}
         </h3>

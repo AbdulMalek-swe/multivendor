@@ -1,0 +1,54 @@
+// context/AuthContext.js
+import { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { getProfile } from "@/lib/api/profile/profile";
+import { getToken, removeToken, setToken } from "@/utils/helpers";
+import { notifyError } from "@/utils/toast";
+const AuthContext = createContext();
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      setLoading(false);
+      return;
+    } 
+    const fetchProfile = async () => {
+      try {
+        const res = await getProfile(); 
+        setUser(res.data?.data);
+      } catch (err) { 
+        notifyError(err)
+        removeToken();
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const login = async (token) => {
+    setToken(token);
+    try {
+      const res = await getProfile();
+      setUser(res?.data?.data) 
+    } catch {
+      setUser(null);
+    }
+  };
+
+  const logout = () => {
+    removeToken()
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);

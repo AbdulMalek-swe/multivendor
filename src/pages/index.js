@@ -27,8 +27,9 @@ export default function Home() {
             width={1000}
             height={1000}
             className="mb-2"
+            alt="loading..."
           />
-          <Image src="/homeImage/2.png" width={1000} height={1000} />
+          <Image src="/homeImage/2.png" width={1000} height={1000}  alt="loading..." />
         </div>
         {/* product and banner section  */}
         <div className="w-full md:w-8/12 lg:w-9/12 ">
@@ -97,7 +98,7 @@ export default function Home() {
       <section className="flex gap-4   ">
         <div className="hidden md:block md:w-4/12 lg:w-3/12 ">
           {/* <Category /> */}
-          <Image src="/homeImage/3.png" width={1000} height={1000} />
+          <Image src="/homeImage/3.png" width={1000} height={1000}  alt="loading..."/>
         </div>
         <div className="w-full md:w-8/12 lg:w-9/12 ">
           <div className=" ">

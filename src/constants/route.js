@@ -20,7 +20,7 @@ export const ROUTES = {
   CHECKOUT:"/checkout",
   //   auth route
   LOGIN: "/auth/login",
-  REGISTER: "/register",
+  REGISTER: "/auth/signup",
   //   user dashboard route
   DASHBOARD: "/dashboard",
   DASHBOARD_ORDERS: "/dashboard/orders",
