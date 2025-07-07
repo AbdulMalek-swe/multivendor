@@ -55,6 +55,10 @@ const Login = () => {
       }
     } catch (error) {
       networkErrorHandeller(error);
+       setSuccess({
+          loading: false,
+          success: false,
+        });
     }
   };
 

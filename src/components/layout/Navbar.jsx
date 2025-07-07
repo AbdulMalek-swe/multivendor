@@ -12,9 +12,10 @@ import { CiSearch } from "@/icons";
 import Image from "next/image";
 import LinkButton from "../ui/LinkButton";
 import { useAuth } from "@/context/AuthContext";
+import NavbarSkeleton from "../loader/skeleton/Navbar/NavbarSkeleton";
 const Navbar = () => {
   const { items } = useCart();
-  const { user: userProfile, logout } = useAuth();
+  const { user: userProfile, logout,loading:authLoading } = useAuth();
   const [isFixed, setIsFixed] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
@@ -34,12 +35,13 @@ const Navbar = () => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setProfileMenu(false);
       }
-    };  
-    window.addEventListener("click", handleClickOutside); 
+    };
+    window.addEventListener("click", handleClickOutside);
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+  if(authLoading) return <NavbarSkeleton/>
   return (
     <div className="mb-1">
       {/* navingation header  */}

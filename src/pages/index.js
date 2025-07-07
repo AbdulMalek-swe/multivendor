@@ -10,12 +10,15 @@ import { spcialOffer } from "@/constants/serviceSpecialOffer";
 import useShop from "@/hooks/api/Shop/useShop";
 import useGeolocation from "@/hooks/Location/useGeoLocation";
 import useProduct from "@/hooks/api/Product/useProduct";
+import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
+import HomeFirstSkeletonSection from "@/components/loader/skeleton/Home/HomeFirstSkeletonSection";
+import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
 export default function Home() {
   const { latLng } = useGeolocation();
   // shop list
-  const { data: shopList } = useShop(latLng);
+  const { data: shopList, loading: shopLoading } = useShop(latLng);
   // product list
-  const { data: productList } = useProduct();
+  const { data: productList, loading: productLoading } = useProduct();
   return (
     <div className=" container mx-auto space-y-2 sm:space-y-4 md:space-y-6 lg:space-y-8 pb-4  ">
       {/* catgory and banner section  */}
@@ -29,44 +32,65 @@ export default function Home() {
             className="mb-2"
             alt="loading..."
           />
-          <Image src="/homeImage/2.png" width={1000} height={1000}  alt="loading..." />
+          <Image
+            src="/homeImage/2.png"
+            width={1000}
+            height={1000}
+            alt="loading..."
+          />
         </div>
         {/* product and banner section  */}
         <div className="w-full md:w-8/12 lg:w-9/12 ">
           <div>
             <Banner />
             <div className="pt-4 sm:pt-8 md:pt-10">
-              <div className="flex justify-between pb-2 md:pb-4">
-                <HomePageHeaderText>
-                  Nearest <span className="text-primary ">Shop Profile</span>
-                </HomePageHeaderText>
-                <div className="flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
-                  <div className="flex items-center gap-2">
-                    <img src="/icons/homeLocation.svg" alt="location icon" />
-                    <span className="font-medium">Nearest Shops</span>
+              {shopLoading ? (
+                <HomeFirstSkeletonSection />
+              ) : (
+                <div className="flex justify-between pb-2 md:pb-4">
+                  <HomePageHeaderText>
+                    Nearest <span className="text-primary ">Shop Profile</span>
+                  </HomePageHeaderText>
+                  <div className="flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
+                    <div className="flex items-center gap-2">
+                      <img src="/icons/homeLocation.svg" alt="location icon" />
+                      <span className="font-medium">Nearest Shops</span>
+                    </div>
+                    <Link
+                      href={ROUTES.SHOP}
+                      className="flex items-center pl-6 cursor-pointer"
+                    >
+                      <span>View All</span>
+                      <img src="/icons/leftArrow.svg" alt="location icon" />
+                    </Link>
                   </div>
-                  <Link
-                    href={ROUTES.SHOP}
-                    className="flex items-center pl-6 cursor-pointer"
-                  >
-                    <span>View All</span>
-                    <img src="/icons/leftArrow.svg" alt="location icon" />
-                  </Link>
+                </div>
+              )}
+              {shopLoading ? (
+                <SingleShopSkeleton />
+              ) : (
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
+                  {shopList?.map((shop, idx) => (
+                    <SingleShopCard shop={shop} key={idx} />
+                  ))}
+                </div>
+              )}
+            </div>
+            {productLoading ? (
+              <div className="pt-5 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {[...Array(10)].map((_, idx) => (
+                  <ProductCardSkeleton key={idx} />
+                ))}
+              </div>
+            ) : (
+              <div className="lg:pt-3">
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {productList?.map((product, idx) => (
+                    <SingleCart product={product} key={idx} />
+                  ))}
                 </div>
               </div>
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
-                {shopList?.map((shop, idx) => (
-                  <SingleShopCard shop={shop} key={idx} />
-                ))}
-              </div>
-            </div>
-            <div className="lg:pt-3">
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {productList?.map((product, idx) => (
-                  <SingleCart product={product} key={idx} />
-                ))}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -98,7 +122,12 @@ export default function Home() {
       <section className="flex gap-4   ">
         <div className="hidden md:block md:w-4/12 lg:w-3/12 ">
           {/* <Category /> */}
-          <Image src="/homeImage/3.png" width={1000} height={1000}  alt="loading..."/>
+          <Image
+            src="/homeImage/3.png"
+            width={1000}
+            height={1000}
+            alt="loading..."
+          />
         </div>
         <div className="w-full md:w-8/12 lg:w-9/12 ">
           <div className=" ">
