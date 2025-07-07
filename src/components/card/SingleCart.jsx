@@ -32,6 +32,7 @@ const SingleCart = ({ product }) => {
           height={1000}
           className="overflow-hidden w-full h-[187px] rounded-t-2xl"
           alt={product?.product_name}
+          priority
         />
       </div>
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 py-2">

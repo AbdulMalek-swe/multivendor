@@ -1,4 +1,4 @@
-export { FiShoppingCart,FiPhone  } from "react-icons/fi";
+export { FiShoppingCart,FiPhone,FiAlertTriangle  } from "react-icons/fi";
 export { FaHome ,FaCheck,FaMinus,FaPlus,FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 export { MdOutlineDashboard, MdPerson ,MdOutlinePayment  } from "react-icons/md";
 export { RxDashboard } from "react-icons/rx";

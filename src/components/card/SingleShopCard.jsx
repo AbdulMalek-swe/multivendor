@@ -15,7 +15,8 @@ const SingleShopCard = ({ shop }) => {
           height={1000}
           alt="shop logo"
           className="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-        />
+          priority
+       />
       </div>
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 pt-2 pb-6">
         <h3
