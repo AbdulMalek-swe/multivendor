@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 
-const Login = () => {
+const VerifyOtp = () => {
   const router = useRouter();
   const { login: userLogin } = useAuth();
   const [success, setSuccess] = useState({
@@ -61,45 +61,17 @@ const Login = () => {
   return (
     <AuthLayout
       onsubmit={handleSubmit(onSubmit)}
-      icon
       link={
-        <div className="flex items-center font-normal text-sm md:text-[15px]">
-          Don&apos;t have an account ?{" "}
+        <div className="flex flex-col items-center font-normal text-sm md:text-[15px]">
+          <p>Didn&apos;t get the OTP</p>  
           <Link href={ROUTES?.REGISTER} className="hover:underline">
             {" "}
-            SignUp Now
+           Resend Now
           </Link>
         </div>
-      }
-      footer={<Link href={ROUTES?.FORGET_PASSWORD}>Fogot Password?</Link>}
-      text="Welcome to Baajar. Login"
+      } 
+      text="Verify your phone number"
     >
-      <TextInput
-        register={register}
-        name="email"
-        label={
-          <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
-            {" "}
-            <FiPhone /> Phone Number or E-mail{" "}
-          </p>
-        }
-        rules={validateEmailPhone}
-        errors={errors}
-        trigger={trigger}
-      />
-      <PasswordInput
-        register={register}
-        name="password"
-        label={
-          <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
-            {" "}
-            <CiLock /> Password{" "}
-          </p>
-        }
-        rules={validatePassword}
-        errors={errors}
-        trigger={trigger}
-      />
       <div className=" flex justify-center">
         <Button
           className="rounded-lg mt-8  font-bold !w-[188px]  !h-[48px]"
@@ -110,11 +82,11 @@ const Login = () => {
           isLoading={success?.loading}
           isSuccess={success?.success}
         >
-          Login
+          Verify
         </Button>
       </div>
     </AuthLayout>
   );
 };
 
-export default Login;
+export default VerifyOtp;

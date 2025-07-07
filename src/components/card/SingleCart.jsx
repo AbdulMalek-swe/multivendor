@@ -7,19 +7,9 @@ import { formatPrice } from "@/utils/formatPrice";
 import { useCart } from "@/hooks/cart/useCart";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
+import { handlePurchaseProduct } from "@/utils/productPurchase";
 const SingleCart = ({ product }) => {
-  const { addItem } = useCart();
-  const handleAddedToCart = (productItem) => {
-    const product = {
-      product_id: productItem?.id,
-      vendor_id: productItem?.vendor_id,
-      quantity: 1,
-      price: productItem?.offer_price,
-      color_id: productItem?.color_id,
-      attribute_id: productItem?.attribute_id,
-    };
-    addItem(product);
-  };
+  const { addItem } = useCart(); 
   return (
     <Link
       href={ROUTES?.PRODUCT_DETAILS(product?.id)}
@@ -62,7 +52,7 @@ const SingleCart = ({ product }) => {
             } else {
               console.log("Event object missing:", e);
             }
-            handleAddedToCart(product);
+            handleAddedToCart(addItem(handlePurchaseProduct(product)));
           }}
         >
           <FiShoppingCart />

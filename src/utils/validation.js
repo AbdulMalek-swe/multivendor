@@ -21,3 +21,12 @@ export const validatePassword = {
     return true;
   },
 };
+// password validation rules
+export const validateName = {
+  required: "Name is required",
+  validate: (value) => {
+    if (value.length < 2) return "At least 6  characters";
+    if (value.length > 20) return "Max 20 characters";
+    return true;
+  },
+};

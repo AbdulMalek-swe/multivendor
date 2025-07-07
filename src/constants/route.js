@@ -21,6 +21,8 @@ export const ROUTES = {
   //   auth route
   LOGIN: "/auth/login",
   REGISTER: "/auth/signup",
+  FORGET_PASSWORD:"/auth/forgot-password",
+  OTP:"/auth/verify-otp",
   //   user dashboard route
   DASHBOARD: "/dashboard",
   DASHBOARD_ORDERS: "/dashboard/orders",

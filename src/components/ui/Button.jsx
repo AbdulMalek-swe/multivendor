@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { FaCheck, FaSpinner } from "react-icons/fa";
+import { FaCheck, FaSpinner } from "@/icons";
 const Button = ({
   children,
   type = "button",

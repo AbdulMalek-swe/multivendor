@@ -8,8 +8,12 @@ import { offerPricePercent } from "@/utils/priceOfferPercent";
 import SkeletonProductDetails from "@/components/loader/skeleton/Porduct/Product/SkeletonProductDetails";
 import CustomError from "@/components/error/CustomError";
 import { formatPrice } from "@/utils/formatPrice";
+import { handlePurchaseProduct } from "@/utils/productPurchase";
+import { useCart } from "@/hooks/cart/useCart";
+import { notifyError } from "@/utils/toast";
 
 const ProductDetails = () => {
+  const { addItem } = useCart();
   const router = useRouter();
   const {
     data: productItem,
@@ -17,7 +21,46 @@ const ProductDetails = () => {
     error,
   } = useProductId(router?.query?.slug);
   const product = productItem?.product;
-  const [quantity,setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const [variantId, setVariantId] = useState({
+    color_id: null,
+    attribute_id: null,
+  });
+  const handlePurchase = (vl) => {
+    let color_id, attribute_id;
+    if (!productItem?.colors?.length) {
+      color_id = null;
+    } else {
+      color_id = variantId?.color_id
+        ? variantId?.color_id
+        : productItem?.colors[0]?.id;
+    }
+    if (!productItem?.attributes?.length) {
+      attribute_id = null;
+    } else {
+      attribute_id = variantId?.attribute_id
+        ? variantId?.attribute_id
+        : productItem?.attributes[0]?.id;
+    }
+    if (vl === "add") {
+      addItem(
+        handlePurchaseProduct({ ...product, quantity, color_id, attribute_id })
+      );
+    } else {
+      localStorage.setItem(
+        "order_items",
+        JSON.stringify([
+          handlePurchaseProduct({
+            ...product,
+            quantity,
+            color_id,
+            attribute_id, 
+          }),
+        ])
+      );
+      router?.push(`/checkout?buy_now=${product?.slug}`);
+    }
+  };
   if (loading) return <SkeletonProductDetails />;
   if (error) return <CustomError />;
   return (
@@ -77,11 +120,26 @@ const ProductDetails = () => {
           </div>
           <div className="flex gap-1 sm:gap-2 md:gap-3">
             <div className="flex items-center justify-between px-5 bg-[#FFFFFF] border border-[#D1D5DB] w-full  rounded-md  text-base sm:text-lg md:text-xl lg:text-2xl  text-[#020617]">
-              <button className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition" >
+              <button
+                className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
+                onClick={() =>
+                  setQuantity((prev) => {
+                    return prev === 1 ? 1 : prev - 1;
+                  })
+                }
+              >
                 -
-              </button> 
+              </button>
               <span className="text-lg font-semibold px-3">{quantity}</span>
-              <button className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition" onClick={()=>setQuantity(quantity+1)} >
+              <button
+                className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
+                onClick={() => {
+                  if (product?.stock <= quantity) {
+                    return notifyError("Quantity is over the stock");
+                  }
+                  setQuantity(quantity + 1);
+                }}
+              >
                 +
               </button>
             </div>
@@ -90,6 +148,7 @@ const ProductDetails = () => {
               bgColor="bg-[#16A34A]"
               rounded="rounded-md"
               textSize="text-sm"
+              onClick={() => handlePurchase("add")}
             >
               <AiOutlineShopping />
               <span> Add to cart</span>
@@ -99,6 +158,7 @@ const ProductDetails = () => {
               bgColor="bg-[#212529]"
               rounded="rounded-md"
               textSize="text-sm"
+              onClick={() => handlePurchase("buy")}
             >
               <AiOutlineShopping />
               <span>Buy Now</span>
@@ -110,8 +170,11 @@ const ProductDetails = () => {
               <div className="flex">
                 {productItem?.attributes?.map((att, idx) => (
                   <span
-                    className="w-full border rounded-md px-2 border-[#D1D5DB]"
+                    className="w-full border rounded-md px-2 border-[#D1D5DB] cursor-pointer"
                     key={idx}
+                    onClick={() =>
+                      setVariantId({ ...variantId, attribute_id: att?.id })
+                    }
                   >
                     {att?.name}
                   </span>
@@ -123,11 +186,14 @@ const ProductDetails = () => {
               <div className="flex gap-1 ">
                 {productItem?.colors?.map((clr, idx) => (
                   <span
-                    className="w-full border rounded-md px-2 border-[#D1D5DB] shrink-0 text-center"
+                    className="w-full cursor-pointer border rounded-md px-2 border-[#D1D5DB] shrink-0 text-center"
                     key={idx}
                     style={{
                       background: clr?.hex_code ?? clr?.name,
                     }}
+                    onClick={() =>
+                      setVariantId({ ...variantId, color_id: clr?.id })
+                    }
                   >
                     {clr?.name}
                   </span>
