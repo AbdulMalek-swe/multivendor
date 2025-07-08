@@ -29,7 +29,7 @@ export default function Home() {
     error: productError,
     infinityLoading,
     hasMoreData,
-  } = useProduct({ ...latLng, page, per_page: 2 });
+  } = useProduct({ ...latLng, page, per_page: 10 });
   // loading observer function
   useLoadingObserver({
     setPage,

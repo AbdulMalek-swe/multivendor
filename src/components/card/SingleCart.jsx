@@ -9,7 +9,15 @@ import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 import { handlePurchaseProduct } from "@/utils/productPurchase";
 const SingleCart = ({ product }) => {
-  const { addItem } = useCart(); 
+  const { addItem } = useCart();
+  const handleAdded = () => {
+    const newProduct = {
+      ...product,
+      color_id: product?.colors[0] ?? null,
+      attribute_id: product?.attributes[0] ?? null,
+    };
+    addItem(handlePurchaseProduct(newProduct));
+  };
   return (
     <Link
       href={ROUTES?.PRODUCT_DETAILS(product?.id)}
@@ -20,7 +28,7 @@ const SingleCart = ({ product }) => {
           src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.thumbnail}`}
           width={1000}
           height={1000}
-          className="overflow-hidden w-full h-[187px] rounded-t-2xl"
+          className="overflow-hidden w-full h-[187px] rounded-t-2xl  transition-transform duration-300 ease-in-out hover:scale-110"
           alt={product?.product_name}
           priority
         />
@@ -44,7 +52,7 @@ const SingleCart = ({ product }) => {
             {formatPrice(product?.reguler_price)}
           </span>
         </div>
-        <Button
+        {/* <Button
           className="!w-full   !h-8 !text-xs !font-poppins !font-light text-nowrap  "
           onClick={(e) => {
             if (e && e.stopPropagation) {
@@ -52,12 +60,12 @@ const SingleCart = ({ product }) => {
             } else {
               console.log("Event object missing:", e);
             }
-            handleAddedToCart(addItem(handlePurchaseProduct(product)));
+            handleAdded(product)
           }}
         >
           <FiShoppingCart />
           Add To Cart
-        </Button>
+        </Button> */}
         <p className="bg-primary absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
           {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>

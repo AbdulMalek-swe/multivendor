@@ -1,5 +1,5 @@
 // src/hooks/useCartProvider.js
-import { useEffect, useReducer } from "react"; 
+import { useEffect, useReducer } from "react";
 import { getToken } from "@/utils/helpers";
 import {
   addToCart,
@@ -72,7 +72,8 @@ export default function useCartProvider() {
   const addItem = async (data) => {
     try {
       const res = await addToCart(data);
-      dispatch({ type: "ADD_ITEM", payload: res.data.cart });
+      loadCart();
+      // dispatch({ type: "ADD_ITEM", payload: res.data?.data });
       notifySuccess("Successfully Added Cart");
     } catch (err) {
       notifyError(err?.response?.data?.error);
@@ -82,23 +83,24 @@ export default function useCartProvider() {
   const updateItem = async (data) => {
     try {
       const formData = new FormData();
-      formData.append("qty", data?.qty);
+      formData.append("action", data?.action);
       formData.append("_method", "PUT");
       const res = await updateToCart(data?.id, formData);
       loadCart();
       dispatch({ type: "UPDATE_ITEM", payload: res.data.cart });
     } catch (err) {
-       notifyError(err?.response?.data?.error);
+      notifyError(err?.response?.data?.error);
     }
   };
   // remove cart item
   const removeItem = async (cart_id) => {
     try {
       await removeFromCart(cart_id);
-      dispatch({
-        type: "REMOVE_ITEM",
-        payload: { cart_id },
-      });
+      // dispatch({
+      //   type: "REMOVE_ITEM",
+      //   payload: { cart_id },
+      // });
+      loadCart();
     } catch (err) {
       notifyError("Delete not successfully");
     }

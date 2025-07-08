@@ -2,8 +2,12 @@ import React from "react";
 import Image from "next/image";
 import { ROUTES } from "@/constants/route";
 import LinkButton from "../ui/LinkButton";
+import Button from "../ui/Button";
 // import LinkButton from "../ui/LinkButton";
 const CartMenu = ({ cartProduct = [] }) => {
+  const handleCheckout = ()=>{
+    
+  }
   return (
     <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
       <div className="overflow-y-auto max-h-[300px]">
@@ -41,7 +45,7 @@ const CartMenu = ({ cartProduct = [] }) => {
           </div>
         ))}
       </div>
-      <LinkButton href={ROUTES?.CHECKOUT}>Proceed To Checkout</LinkButton>
+      <Button onClick={handleCheckout} rounded="rounded-md" className="py-2 h-11" textSize="text-sm md:text-[15px]" >Proceed To Checkout</Button>
     </div>
   );
 };

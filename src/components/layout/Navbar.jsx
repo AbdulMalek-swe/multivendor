@@ -8,14 +8,14 @@ import Drawer from "react-modern-drawer";
 import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
-import { CiSearch } from "@/icons";
+import { CiSearch, CiFaceSmile, CiShop, CiLogout } from "@/icons";
 import Image from "next/image";
 import LinkButton from "../ui/LinkButton";
 import { useAuth } from "@/context/AuthContext";
 import NavbarSkeleton from "../loader/skeleton/Navbar/NavbarSkeleton";
 const Navbar = () => {
   const { items } = useCart();
-  const { user: userProfile, logout,loading:authLoading } = useAuth();
+  const { user: userProfile, logout, loading: authLoading } = useAuth();
   const [isFixed, setIsFixed] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  if(authLoading) return <NavbarSkeleton/>
+  if (authLoading) return <NavbarSkeleton />;
   return (
     <div className="mb-1">
       {/* navingation header  */}
@@ -114,8 +114,8 @@ const Navbar = () => {
                 </button>
                 {/* profile menu show here  */}
                 <div
-                  className={`absolute -right-8 mt-2 w-48 bg-white rounded-md shadow-lg origin-top-right z-50 overflow-hidden
-        transform transition-all duration-300 ease-out
+                  className={`absolute -right-20 mt-2 w-60 bg-white rounded-md shadow-lg origin-top-right z-50 overflow-hidden
+        transform transition-all duration-300 ease-out border 
         ${
           profileMenu
             ? "translate-y-0 opacity-100 visible"
@@ -123,22 +123,23 @@ const Navbar = () => {
         }`}
                   onMouseLeave={() => setProfileMenu(false)} // Hover outside => close
                 >
-                  <ul className="py-2 text-sm text-gray-700">
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Profile
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Settings
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        logout();
-                      }}
-                    >
-                      Logout
-                    </li>
-                  </ul>
+                  {" "}
+                  <div className="py-6 text-sm text-gray-700  ">
+                    {/* indicator make  */}
+
+                    <Link href={ROUTES?.ACCOUNT} className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline">
+                      <CiFaceSmile className="text-xl" />
+                      <span className=""> Manage My Account</span>
+                    </Link>
+                    <Link href={ROUTES?.ORDERS} className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline">
+                      <CiShop className="text-xl" />
+                      My Orders
+                    </Link>
+                    <span className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline cursor-pointer">
+                      <CiLogout className="text-xl" />
+                      <span>Logout</span>
+                    </span>
+                  </div>
                 </div>
               </div>
               <NavbarText text1="Deliver to" text2="all sylhet" />

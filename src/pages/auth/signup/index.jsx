@@ -7,12 +7,15 @@ import { useForm } from "react-hook-form";
 import { validateEmailPhone, validateName } from "@/utils/validation";
 import Button from "@/components/ui/Button";
 import {  signup } from "@/lib/api/auth/auth";
-import { networkErrorHandeller } from "@/utils/helpers";
+import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
+import { useRouter } from "next/router";
+import { notifySuccess } from "@/utils/toast";
 const SignUp = () => {
   const [success, setSuccess] = useState({
     loading: false,
     success: false,
   });
+  const router = useRouter();
   // hook form use
   const {
     register,
@@ -25,28 +28,19 @@ const SignUp = () => {
       ...success,
       loading: true,
     });
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
-    let signupData = { password: data?.password };
-    if (isEmail) {
-      signupData = { ...signupData, email: data.email };
-    } else {
-      signupData = { ...signupData, phone: data.email };
-    }
-    // login api integrate here
+    
+    // signup api integrate here
     try {
-      const response = await signup(signupData);
+      const response = await signup(data);
       console.log(response,"------------------->");
-    //   if (responseHandler(response)) {
-    //     setSuccess({
-    //       loading: false,
-    //       success: true,
-    //     });
-    //     notifySuccess(response?.data?.message);
-    //     userLogin(response?.data?.data?.token);
-    //     router?.push(
-    //       router?.query?.redirectTo ? router?.query?.redirectTo : "/"
-    //     );
-    //   }
+      if (responseHandler(response)) {
+        setSuccess({
+          loading: false,
+          success: true,
+        });
+        notifySuccess(response?.data?.message); 
+        router?.push(`/auth/verify-otp?number=${response?.data?.data?.phone}`);
+      }
     } catch (error) {
       networkErrorHandeller(error);
           setSuccess({
@@ -88,11 +82,11 @@ const SignUp = () => {
       />
       <TextInput
         register={register}
-        name="email"
+        name="phone"
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            Phone Number or E-mail{" "}
+            Phone Number 
           </p>
         }
         rules={validateEmailPhone}

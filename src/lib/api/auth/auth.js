@@ -7,3 +7,15 @@ export const signup = async(payload)=>{
 export const login = async(payload)=>{
     return publicRequest.post("auth/login",payload)
 }
+// verify otp call here
+export const verifyotp = async(payload)=>{
+    return publicRequest.post("auth/account/verify/sms-send",payload)
+}
+// resend api call 
+export const resendOtp = async(payload)=>{
+    return publicRequest.post("auth/account/verify/resend",payload)
+}
+// password api call 
+export const setupPassword = async(payload)=>{
+    return publicRequest.post("auth/set-password",payload)
+}

@@ -13,7 +13,7 @@ import { useCart } from "@/hooks/cart/useCart";
 import { notifyError } from "@/utils/toast";
 
 const ProductDetails = () => {
-  const { addItem } = useCart();
+  const { addItem, items } = useCart(); 
   const router = useRouter();
   const {
     data: productItem,
@@ -54,7 +54,7 @@ const ProductDetails = () => {
             ...product,
             quantity,
             color_id,
-            attribute_id, 
+            attribute_id,
           }),
         ])
       );

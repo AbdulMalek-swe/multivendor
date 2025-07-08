@@ -2,8 +2,12 @@ import { privateRequest, publicRequest } from "@/lib/axios";
 import React, { useEffect, useState } from "react";
 import { FaHome, CiEdit, MdLocationOff } from "@/icons";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { responseHandler } from "@/utils/helpers";
+import { notifySuccess } from "@/utils/toast";
 
 const Checkout = () => {
+  const router = useRouter();
   const [orderItems, setOrderItems] = useState([]);
   const [orderAttribute, setOrderAttribute] = useState({
     subtotal: 0,
@@ -28,18 +32,21 @@ const Checkout = () => {
 //   order create successfully 
   const handleOrder = async () => {
     try {
-      const result = JSON?.parse(localStorage?.getItem("order_items"));
+      const result = JSON?.parse(localStorage?.getItem("order_items"));  
       const response = await privateRequest.post("/user/order", {
-        items: result,
+        items:  result,
         payment_method: "cod",
         shipping_address: "123 main street new york ny",
       });
+      if(responseHandler(response)){
+        notifySuccess(response?.data?.message)
+        router?.push(`/payment-options/${response?.data?.data?.id}`)
+      }
       console.log(response);
     } catch (error) {
       console.log(error);
     }
-  };
-  console.log(orderItems);
+  }; 
   return (
     <div className="container-custom mx-auto text-black ">
       <div className="grid md:grid-cols-3 gap-6">
@@ -111,9 +118,8 @@ const Checkout = () => {
                   </button>
                 </div>
                 <div>
-                  <p>sdfsdf</p>
-                  <p> sdfsdf</p>
-                  <p>sdfsdf</p>
+                  <p>Dhaka banani making</p>
+                  
                 </div>
 
                 <button

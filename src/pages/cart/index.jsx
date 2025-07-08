@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FaShoppingCart, FaCheck } from "@/icons";
+import { FaCheck } from "@/icons";
 import { useCart } from "@/hooks/cart/useCart";
 import { notifyError } from "@/utils/toast";
 import { useDeleteModal } from "@/context/DeleteModalContext";
+import { handlePurchaseProduct } from "@/utils/productPurchase";
 const Cart = () => {
   const { openModal } = useDeleteModal();
   const router = useRouter();
@@ -19,38 +20,22 @@ const Cart = () => {
   // checkout to go next order page
   const handleCheckout = () => {
     try {
-      if (!selectedProduct?.length) {
-        notifyError("Please select product then order ");
-        return;
+      console.log(productItem, "-------");
+      if (!productItem?.length) {
+        return notifyError("No product to order item");
       }
-      const orderItem = selectedProduct?.map((product) => {
-        return {
-          sell_price:
-            product?.product_variant?.price || product?.product?.sell_price,
-          product_id: product?.product?.product_id,
-          weight:
-            product?.product?.weight || product?.product_variant?.weight || 1,
-          attribute_id: product?.product_variant?.attribute_id,
-          attribute: product?.product_variant?.attribute?.name,
-          color_id: product?.product_variant?.color_id,
-          color: product?.product_variant?.color?.name,
-          attribute_weight: product?.product_variant?.weight || null,
-          attribute_price:
-            product?.product_variant?.discount_price ||
-            product?.product?.sell_price,
-          qty: product?.qty || 0,
-          image: product?.product?.thumbnail_image,
-          category: product?.product?.category?.category_name,
-          title: product?.product?.title,
-          payment: "paid",
-          product_variant_id: product?.product_variant?.product_variant_id || 0,
-          attribute_discount_price:
-            product?.product_variant?.sell_price ||
-            product?.product?.sell_price ||
-            0,
-        };
+      const result = productItem?.map((item) => {
+        return handlePurchaseProduct({
+          ...item,
+          thumbnail:item?.product?.thumbnail,
+          id: item?.product_id,
+          attribute_id: item?.selected_attribute_id,
+          color_id: item?.selected_color_id,
+          offer_price: item?.price,
+        });
       });
-      localStorage.setItem("orderItems", JSON.stringify(orderItem));
+      console.log(result);
+      localStorage.setItem("order_items", JSON.stringify(result));
       router.push("checkout?bestApplied=true");
     } catch (error) {
       notifyError(error?.message);
@@ -112,16 +97,14 @@ const Cart = () => {
         </button>
       </div>
     );
-  console.log(productItem, "----------");
-
   return (
-    <div className="container-custom  ">
+    <div className="container-custom text-black ">
       {productItem?.length && updateLoading && (
         <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
           {/* <Spinner /> */}
         </div>
       )}
-      <h2 className="text-2xl font-normal mb-4 flex items-center gap-1 bg-gray-200/50 rounded-md px-2 py-1"> 
+      <h2 className="text-2xl font-normal mb-4 flex items-center gap-1 bg-gray-200/50 rounded-md px-2 py-1">
         {/* <FaShoppingCart /> Cart List */}
       </h2>
       {/* Select All */}
@@ -179,12 +162,6 @@ const Cart = () => {
                 />
                 <div>
                   <p className="font-medium">{item?.product?.product_name}</p>
-                  {/* {item?.product_variant && (
-                    <p className="text-sm text-gray-500">
-                      Color: {item?.product_variant?.color?.name} | Size:{" "}
-                      {item?.product_variant?.attribute?.name}
-                    </p>
-                  )} */}
                   <button
                     onClick={() => openModal(() => removeItem(item?.id))}
                     className="text-xs text-red-500 mt-1 cursor-pointer hover:bg-red-200/70 rounded-md p-0.5"
@@ -198,7 +175,6 @@ const Cart = () => {
                 <p className="text-gray-800 font-semibold">
                   ৳ {Math.ceil(item?.price)}{" "}
                 </p>
-                {/* <p className="text-gray-400 line-through text-sm">৳ 550</p> */}
               </div>
               {/* cart item increament decrement system  */}
               <CartItem
@@ -236,28 +212,13 @@ const Cart = () => {
 
             <button
               onClick={handleCheckout}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold py-2 rounded hover:opacity-90 transition"
+              className="w-full bg-gradient-to-r from-primary to-primary/90 text-white font-semibold py-2 rounded hover:opacity-90 transition"
               disabled={!selectedProduct?.length}
             >
               Checkout
             </button>
 
             {/* Payment Methods */}
-            <div className="mt-4">
-              <p className="text-sm mb-2">We Accept</p>
-              <span className="flex bg-gray-200 text-black/40 px-1 rounded-lg">
-                Cash On Delivery
-              </span>
-              {/* <span className="flex   text-black/80 text-xl  rounded-lg mt-2">
-                Comming Soon
-              </span>
-              <div className="flex flex-wrap gap-2 items-center py-2">
-                <img src="/images/visa.svg" alt="Visa" className="h-6" />
-                <img src="/images/bkash.svg" alt="Bkash" className="h-6" />
-                <img src="/images/nagad.svg" alt="Nagad" className="h-6" />
-                <img src="/images/rocket.svg" alt="Rocket" className="h-6" />
-              </div> */}
-            </div>
           </div>
         </div>
       </div>
@@ -269,12 +230,9 @@ export default Cart;
 const CartItem = ({ item, updateItem }) => {
   const handleQty = (type) => {
     if (type === "dec") {
-      if (item?.quantity == 1) return;
-      const newQty = Number(item?.quantity) - 1;
-      updateItem({ id: item?.id, quantity: newQty });
+      updateItem({ id: item?.id, action: "decrement" });
     } else if (type === "inc") {
-      const newQty = Number(item?.quantity) + 1;
-      updateItem({ id: item?.id, quantity: newQty });
+      updateItem({ id: item?.id, action: "increment" });
     }
   };
   return (

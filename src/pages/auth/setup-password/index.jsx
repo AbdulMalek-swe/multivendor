@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CiLock, FiPhone } from "@/icons";
 import { validateEmailPhone, validatePassword } from "@/utils/validation";
-import { login } from "@/lib/api/auth/auth";
+import { setupPassword } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
 import { useRouter } from "next/router";
 import { notifySuccess } from "@/utils/toast";
@@ -32,16 +32,13 @@ const SetupPassword = () => {
       ...success,
       loading: true,
     });
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
-    let loginData = { password: data?.password };
-    if (isEmail) {
-      loginData = { ...loginData, email: data.email };
-    } else {
-      loginData = { ...loginData, phone: data.email };
-    }
+
     // login api integrate here
     try {
-      const response = await login(loginData);
+      const response = await setupPassword({
+        ...data,
+        phone: router?.query?.number,
+      });
       if (responseHandler(response)) {
         setSuccess({
           loading: false,
@@ -49,9 +46,7 @@ const SetupPassword = () => {
         });
         notifySuccess(response?.data?.message);
         userLogin(response?.data?.data?.token);
-        router?.push(
-          router?.query?.redirectTo ? router?.query?.redirectTo : "/"
-        );
+        router?.push("/");
       }
     } catch (error) {
       networkErrorHandeller(error);
@@ -63,29 +58,30 @@ const SetupPassword = () => {
   };
 
   return (
-    <AuthLayout onsubmit={handleSubmit(onSubmit)}> 
+    <AuthLayout onsubmit={handleSubmit(onSubmit)}>
       <p className="text-center pb-5 font-normal">
         Hello, Muhtasim Shakil <br />
         <span className="font-semibold text-white text-[15px]">
           Please set a password for your account
         </span>
       </p>
-      <TextInput
+
+      <PasswordInput
         register={register}
-        name="email"
+        name="password"
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            <FiPhone /> Phone Number or E-mail{" "}
+            <CiLock /> Password{" "}
           </p>
         }
-        rules={validateEmailPhone}
+        rules={validatePassword}
         errors={errors}
         trigger={trigger}
       />
       <PasswordInput
         register={register}
-        name="password"
+        name="confirm_password"
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}

@@ -3,5 +3,5 @@ export { FaHome ,FaCheck,FaMinus,FaPlus,FaWhatsapp, FaPhoneAlt ,  FaSpinner } fr
 export { MdOutlineDashboard, MdPerson ,MdOutlinePayment  ,MdLocationOff} from "react-icons/md";
 export { RxDashboard } from "react-icons/rx";
 export { IoIosArrowForward,IoIosArrowDown } from "react-icons/io";
-export { CiLock,CiSearch,CiEdit} from "react-icons/ci"; 
+export { CiLock,CiSearch,CiEdit,CiFaceSmile,CiShop,CiLogout} from "react-icons/ci"; 
 export{ AiFillEye, AiFillEyeInvisible,AiOutlineShopping } from "react-icons/ai";

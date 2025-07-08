@@ -1,4 +1,5 @@
 // middleware.ts
+const protectedRoute = ["/cart","/checkout"]
 import { NextResponse } from "next/server";
 export function middleware(request) {
   const token = request.cookies.get("bajar_token");
@@ -10,9 +11,9 @@ export function middleware(request) {
       return NextResponse.redirect(new URL(referer));
     }
     return NextResponse.redirect(new URL("/", request.url));
-  }
+  } 
   //  redirect area
-  if (!token && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!token && protectedRoute.includes(pathname)) {
     const loginUrl = new URL("/auth/login", request.url);
     loginUrl.searchParams.set("redirectTo", pathname);
     return NextResponse.redirect(loginUrl);

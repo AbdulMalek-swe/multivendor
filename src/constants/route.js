@@ -25,7 +25,7 @@ export const ROUTES = {
   OTP:"/auth/verify-otp",
   //   user dashboard route
   DASHBOARD: "/dashboard",
-  DASHBOARD_ORDERS: "/dashboard/orders",
-  DASHBOARD_SETTINGS: "/dashboard/settings",
+   ORDERS: "/dashboard/my-order",
+  ACCOUNT: "/dashboard/profile",
   TRACK: "/dashboard/my-order",
 };
