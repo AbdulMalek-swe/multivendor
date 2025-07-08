@@ -13,12 +13,31 @@ import useProduct from "@/hooks/api/Product/useProduct";
 import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
 import HomeFirstSkeletonSection from "@/components/loader/skeleton/Home/HomeFirstSkeletonSection";
 import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
+import CustomError from "@/components/error/CustomError";
+import { useLoadingObserver } from "@/utils/loadingObserver";
+import { useRef, useState } from "react";
 export default function Home() {
   const { latLng } = useGeolocation();
+  const [page, setPage] = useState(1);
+  const loadingRef = useRef();
   // shop list
-  const { data: shopList, loading: shopLoading } = useShop(latLng);
+  const { data: shopList, loading: shopLoading, error } = useShop(latLng);
   // product list
-  const { data: productList, loading: productLoading } = useProduct();
+  const {
+    data: productList,
+    loading: productLoading,
+    error: productError,
+    infinityLoading,
+    hasMoreData,
+  } = useProduct({ ...latLng, page, per_page: 2 });
+  // loading observer function
+  useLoadingObserver({
+    setPage,
+    observerRef: loadingRef,
+    loading: infinityLoading,
+    hasMoreData,
+  });
+  if (error) return <CustomError />;
   return (
     <div className=" container mx-auto space-y-2 sm:space-y-4 md:space-y-6 lg:space-y-8 pb-4  ">
       {/* catgory and banner section  */}
@@ -83,9 +102,9 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="lg:pt-3">
+              <div className="pt-3 ">
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {productList?.map((product, idx) => (
+                  {productList?.slice(0, 8)?.map((product, idx) => (
                     <SingleCart product={product} key={idx} />
                   ))}
                 </div>
@@ -146,13 +165,24 @@ export default function Home() {
               </div>
             </div>
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {productList?.map((product, idx) => (
+              {productList?.slice(8)?.map((product, idx) => (
                 <SingleCart product={product} key={idx} />
               ))}
+              {/* infinityLoading for open image */}
+            </div>
+            <div ref={loadingRef} className="  mt-4 flex justify-center">
+              {!productLoading && infinityLoading && (
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full">
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <ProductCardSkeleton key={index} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
+
       {/* special service section  */}
       <section className="  gap-4 hidden md:gap-3 lg:gap-5   grid-cols-1 md:grid lg:grid-cols-4  md:grid-cols-2   ">
         {spcialOffer.map((item) => (

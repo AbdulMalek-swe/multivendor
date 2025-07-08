@@ -6,8 +6,7 @@ function useCategoryId(id, query = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [infinityLoading, setInfinityLoading] = useState(false);
-  const [hasMoreData, setHasMoreData] = useState(true);
-  const [products, setProduct] = useState([]);
+  const [hasMoreData, setHasMoreData] = useState(true); 
   useEffect(() => {
     if (!id) return;
     const fetchCategory = async () => {

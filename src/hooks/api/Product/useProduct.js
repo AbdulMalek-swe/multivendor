@@ -1,29 +1,44 @@
 import { product } from "@/lib/api/product/product";
 import { useState, useEffect } from "react";
+
 function useProduct(query = {}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [infinityLoading, setInfinityLoading] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
-    // if (!query?.lat || !query?.lng) return;
+    if (!query?.lat || !query?.lng || !query?.page) return;
+
     async function fetchProduct() {
-      setLoading(true);
+      if (query.page === 1) {
+        setLoading(true);
+      } else {
+        setInfinityLoading(true);
+      } 
       setError(null);
       try {
-        // fetch shop api
         const response = await product(query);
-        setData(response?.data?.data?.data);
-        setLoading(false);
+        const result = response?.data?.data?.data || []; 
+        if (Array.isArray(result)) {
+          setHasMoreData(result.length >= 0);
+          setData((prev) => (query.page === 1 ? result : [...prev, ...result]));
+        }
       } catch (err) {
         setError(err?.message || "Unknown error");
-        setLoading(false);
+        setHasMoreData(false);
       } finally {
         setLoading(false);
+        setInfinityLoading(false);
+        // setHasMoreData(false);
       }
     }
-    fetchProduct();
-  }, [JSON.stringify(query)]);
 
-  return { data, loading, error };
+    fetchProduct();
+  }, [JSON?.stringify(query)]);
+
+  return { data, loading, error, hasMoreData, infinityLoading };
 }
+
 export default useProduct;

@@ -32,14 +32,14 @@ const AuthLayout = ({
             </div>
           )}
           {children}
-          <div className="flex flex-col items-center justify-center mt-4 ">
+          { footer||link ? <div className="flex flex-col items-center justify-center mt-4 ">
             {footer && (
               <p className="text-white font-semibold text-sm md:text-[15px] mb-2 ">
                 {footer}
               </p>
             )}
             {link && link}
-          </div>
+          </div>:""}
         </form>
       </div>
     </div>
