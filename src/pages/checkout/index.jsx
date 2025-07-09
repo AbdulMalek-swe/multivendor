@@ -1,11 +1,13 @@
 import { privateRequest, publicRequest } from "@/lib/axios";
 import React, { useEffect, useState } from "react";
-import { FaHome, CiEdit, MdLocationOff } from "@/icons";
+import { FaHome, CiEdit, MdLocationOff, IoArrowBack } from "@/icons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { responseHandler } from "@/utils/helpers";
 import { notifySuccess } from "@/utils/toast";
-
+import Drawer from "react-modern-drawer";
+import CreateAddress from "@/components/address/CreateAddress";
+import useAddress from "@/hooks/api/address/useAddress";
 const Checkout = () => {
   const router = useRouter();
   const [orderItems, setOrderItems] = useState([]);
@@ -13,7 +15,9 @@ const Checkout = () => {
     subtotal: 0,
     orderItems: 0,
   });
-//   setup for order item in state 
+  const {data,loading}= useAddress();
+  console.log(data);
+  //   setup for order item in state
   useEffect(() => {
     const result = JSON?.parse(localStorage?.getItem("order_items"));
     const subtotal = result.reduce((acc, cur) => {
@@ -29,24 +33,28 @@ const Checkout = () => {
   const deliveryAmount = () => {
     return 120;
   };
-//   order create successfully 
+  //   order create successfully
   const handleOrder = async () => {
     try {
-      const result = JSON?.parse(localStorage?.getItem("order_items"));  
+      const result = JSON?.parse(localStorage?.getItem("order_items"));
       const response = await privateRequest.post("/user/order", {
-        items:  result,
+        items: result,
         payment_method: "cod",
         shipping_address: "123 main street new york ny",
       });
-      if(responseHandler(response)){
-        notifySuccess(response?.data?.message)
-        router?.push(`/payment-options/${response?.data?.data?.id}`)
+      if (responseHandler(response)) {
+        notifySuccess(response?.data?.message);
+        router?.push(`/payment-options/${response?.data?.data?.id}`);
       }
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }; 
+    } catch (error) {}
+  };
+  // drawer code
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openType, setOpenType] = useState("");
+  const handleOpenDrawer = () => {
+    setOpenType("default");
+    setOpenDrawer(!openDrawer);
+  };
   return (
     <div className="container-custom mx-auto text-black ">
       <div className="grid md:grid-cols-3 gap-6">
@@ -56,13 +64,13 @@ const Checkout = () => {
           <div className="bg-white p-5 rounded shadow">
             {/* <h2 className="text-lg font-semibold mb-4">Shipping Information</h2> */}
             {/* drawer design  */}
-            {/* <Drawer
+            <Drawer
               open={openDrawer}
               onClose={handleOpenDrawer}
               direction="right"
               style={{
-                width: "100%",  
-                maxWidth: "450px",  
+                width: "100%",
+                maxWidth: "450px",
               }}
               className="w-full sm:w-[450px]"
             >
@@ -78,18 +86,18 @@ const Checkout = () => {
                 </div>
                 {openType === "create" && (
                   <CreateAddress
-                    refetch={fetchAddress}
-                    setOpenDrawer={setOpenDrawer}
+                    // refetch={fetchAddress}
+                    // setOpenDrawer={setOpenDrawer}
                   />
                 )}
-                {openType === "edit" && (
+                {/* {openType === "edit" && (
                   <EditAddress
                     refetch={fetchAddress}
                     setOpenDrawer={setOpenDrawer}
                   />
-                )}
-               
-                {openType === "default" && (
+                )} */}
+
+                {/* {openType === "default" && (
                   <AddressDefault
                     fetchAddress={fetchAddress}
                     setOpenDrawer={setOpenDrawer}
@@ -97,11 +105,11 @@ const Checkout = () => {
                     addressData={addressData}
                     refetch={refetch}
                   />
-                )}
+                )} */}
               </div>
-            </Drawer> */}
+            </Drawer>
             {/* shipping information show  */}
-            {true ? (
+            {data?.length>0 ? (
               <div className="border p-4 rounded text-sm space-y-1 ">
                 <div className="flex items-center justify-between">
                   <div>
@@ -112,14 +120,13 @@ const Checkout = () => {
                   </div>
                   <button
                     className="border rounded-md px-1 py-0.5 font-normal cursor-pointer  bg-blue-200/50 text-nowrap flex gap-1 flex-nowrap items-center justify-center"
-                    // onClick={handleOpenDrawer}
+                    onClick={handleOpenDrawer}
                   >
                     <FaHome className="text-blue-600" /> address
                   </button>
                 </div>
                 <div>
                   <p>Dhaka banani making</p>
-                  
                 </div>
 
                 <button

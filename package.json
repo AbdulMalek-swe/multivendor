@@ -20,6 +20,7 @@
     "react-modern-drawer": "^1.4.0",
     "react-otp-input": "^3.1.1",
     "react-range-slider-input": "^3.2.1",
+    "react-select": "^5.10.1",
     "sonner": "^2.0.5",
     "swiper": "^11.2.8"
   },

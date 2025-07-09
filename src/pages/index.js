@@ -37,7 +37,7 @@ export default function Home() {
     loading: infinityLoading,
     hasMoreData,
   });
-  if (error) return <CustomError />;
+  if (error || productError) return <CustomError />;
   return (
     <div className=" container mx-auto space-y-2 sm:space-y-4 md:space-y-6 lg:space-y-8 pb-4  ">
       {/* catgory and banner section  */}

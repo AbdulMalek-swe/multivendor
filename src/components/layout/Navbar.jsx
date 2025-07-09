@@ -127,15 +127,21 @@ const Navbar = () => {
                   <div className="py-6 text-sm text-gray-700  ">
                     {/* indicator make  */}
 
-                    <Link href={ROUTES?.ACCOUNT} className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline">
+                    <Link
+                      href={ROUTES?.ACCOUNT}
+                      className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
+                    >
                       <CiFaceSmile className="text-xl" />
                       <span className=""> Manage My Account</span>
                     </Link>
-                    <Link href={ROUTES?.ORDERS} className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline">
+                    <Link
+                      href={ROUTES?.ORDERS}
+                      className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
+                    >
                       <CiShop className="text-xl" />
                       My Orders
                     </Link>
-                    <span className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline cursor-pointer">
+                    <span className="px-4 py-2 cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline  ">
                       <CiLogout className="text-xl" />
                       <span>Logout</span>
                     </span>
@@ -205,7 +211,7 @@ const Navbar = () => {
         </div>
       </section>
       <div className="md:hidden  ">
-        <BottomNav />
+        <BottomNav items={items}/>
       </div>
       {/* <ResponsiveNavbars cart={cart} /> */}
     </div>
