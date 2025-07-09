@@ -75,8 +75,8 @@ export default function Home() {
                       <img src="/icons/homeLocation.svg" alt="location icon" />
                       <span className="font-medium">Nearest Shops</span>
                     </div>
-                    <Link
-                      href={ROUTES.SHOP}
+                    <Link 
+                      href={ROUTES.SHOP} aria-label="bajar.net"
                       className="flex items-center pl-6 cursor-pointer"
                     >
                       <span>View All</span>
@@ -156,7 +156,7 @@ export default function Home() {
               </HomePageHeaderText>
               <div className="flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
                 <Link
-                  href={ROUTES.PRODUCTS}
+                  href={ROUTES.PRODUCTS} aria-label="bajar.net"
                   className="flex items-center pl-6 cursor-pointer"
                 >
                   <span>View All</span>

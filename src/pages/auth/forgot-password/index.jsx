@@ -69,7 +69,7 @@ const Login = () => {
       link={
         <div className="flex items-center font-normal text-sm md:text-[15px]">
         Already have an account ?   
-          <Link href={ROUTES?.REGISTER} className="hover:underline">
+          <Link href={ROUTES?.REGISTER} aria-label="bajar.net" className="hover:underline">
             {" "}
             Sign In Now 
           </Link>

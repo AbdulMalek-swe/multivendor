@@ -12,6 +12,7 @@ export const TextInput = ({
   placeholder,
   rules = {},
   trigger,
+  className,
   ...rest
 }) => {
   const registered = register ? register(name, rules) : {};
@@ -40,8 +41,8 @@ export const TextInput = ({
           trigger && trigger(name); // trigger validation
         }}
         className={`w-full bg-[#F3F4F6] px-3 h-[46px]  rounded-md outline-0 placeholder:text-[#6B7280] text-black/70  ${
-          errors[name] ? "border-red-500" : " "
-        }`}
+          errors[name] ? "border-red-500" : " " 
+        } ${  className&& className}`}
         {...rest}
       />
 

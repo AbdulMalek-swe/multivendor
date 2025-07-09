@@ -22,6 +22,7 @@ const SingleCart = ({ product }) => {
     <Link
       href={ROUTES?.PRODUCT_DETAILS(product?.id)}
       className="rounded-2xl bg-white   relative shadow-xs overflow-hidden"
+      aria-label="bajar.net"
     >
       <div className="w-full aspect-auto overflow-hidden">
         <Image
@@ -41,7 +42,7 @@ const SingleCart = ({ product }) => {
           {product?.product_name}
         </h3>
         <hr className="border" />
-        <p className="text-[#9CA3AF] font-poppins font-normal text-xs">
+        <p className="text-[#4D5860] font-poppins font-normal text-xs">
           {product?.vendor?.company_name}
         </p>
         <div className="flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12">
@@ -66,7 +67,7 @@ const SingleCart = ({ product }) => {
           <FiShoppingCart />
           Add To Cart
         </Button> */}
-        <p className="bg-primary absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
+        <p className="bg-[#AB1C1C] absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
           {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>
       </div>

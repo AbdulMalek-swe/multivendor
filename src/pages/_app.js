@@ -4,6 +4,7 @@ import { CartProvider } from "@/context/CartContext";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
 import "@/styles/globals.css";
 import { Poppins, Roboto } from "next/font/google";
+import Head from "next/head";
 import { Toaster } from "sonner";
 
 const roboto = Roboto({
@@ -20,27 +21,37 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
-    <DeleteModalProvider>
-      <CartProvider> 
-        <main className={`  ${roboto.variable} ${poppins.variable}  `}>
-          <LayoutPageWrapper>
-            <Component {...pageProps} />
-            <Toaster
-              position="top-right"
-              richColors
-              closeButton
-              visibleToasts={9}
-              toastOptions={{
-                style: {
-                  borderRadius: "10px",
-                  padding: "14px",
-                },
-              }}
+      <DeleteModalProvider>
+        <CartProvider>
+          <Head>
+            <title>Bajar - Online Shopping</title>
+            <meta name="description" content="Bajar - Online Shopping" />
+            <meta charSet="UTF-8" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
             />
-          </LayoutPageWrapper>
-        </main>
-      </CartProvider>
-    </DeleteModalProvider>
+            <link rel="icon" href="/image.png" type="" />
+          </Head>
+          <main className={`  ${roboto.variable} ${poppins.variable}  `}>
+            <LayoutPageWrapper>
+              <Component {...pageProps} />
+              <Toaster
+                position="top-right"
+                richColors
+                closeButton
+                visibleToasts={9}
+                toastOptions={{
+                  style: {
+                    borderRadius: "10px",
+                    padding: "14px",
+                  },
+                }}
+              />
+            </LayoutPageWrapper>
+          </main>
+        </CartProvider>
+      </DeleteModalProvider>
     </AuthProvider>
   );
 }

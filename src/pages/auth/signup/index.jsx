@@ -58,7 +58,7 @@ const SignUp = () => {
         <div className="flex items-center font-normal text-sm md:text-[15px]">
           {" "}
           Already have an account ?{" "}
-          <Link href={ROUTES?.LOGIN} className="hover:underline">
+          <Link href={ROUTES?.LOGIN} aria-label="bajar.net" className="hover:underline">
             {" "}
             Sign In Now
           </Link>
@@ -94,7 +94,7 @@ const SignUp = () => {
         trigger={trigger}
       />
       <div className="font-normal text-sm lg:text-[15px] my-8">
-        By clicking <span className="font-semibold">"SIGN UP"</span> I agree to <Link href={ROUTES?.TERMS_CONDITION} className="font-semibold hover:underline cursor-pointer">Terms of Use</Link> and <Link href={ROUTES?.PRIVACY_POLICY} className="font-semibold hover:underline cursor-pointer">Privacy Policy</Link>
+        By clicking <span className="font-semibold">"SIGN UP"</span> I agree to <Link  aria-label="bajar.net"  href={ROUTES?.TERMS_CONDITION} className="font-semibold hover:underline cursor-pointer">Terms of Use</Link> and <Link href={ROUTES?.PRIVACY_POLICY}  aria-label="bajar.net" className="font-semibold hover:underline cursor-pointer">Privacy Policy</Link>
       </div>
       <div className=" flex justify-center">
         <Button

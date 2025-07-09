@@ -69,13 +69,13 @@ const Login = () => {
       link={
         <div className="flex items-center font-normal text-sm md:text-[15px]">
           Don&apos;t have an account ?{" "}
-          <Link href={ROUTES?.REGISTER} className="hover:underline">
+          <Link href={ROUTES?.REGISTER} aria-label="bajar.net" className="hover:underline">
             {" "}
             SignUp Now
           </Link>
         </div>
       }
-      footer={<Link href={ROUTES?.FORGET_PASSWORD}>Fogot Password?</Link>}
+      footer={<Link href={ROUTES?.FORGET_PASSWORD} aria-label="bajar.net">Fogot Password?</Link>}
       text="Welcome to Baajar. Login"
     >
       <TextInput

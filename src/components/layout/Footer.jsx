@@ -39,13 +39,14 @@ export default function Footer() {
 
         {/* Center Section */}
         <div className="mb-8 md:mb-0 md:w-1/3">
-          <h3 className="font-semibold border-b border-white mb-4 inline-block">
+          <h1 className="font-semibold border-b border-white mb-4 inline-block">
             Most Popular Categories
-          </h3>
+          </h1>
           <div className="space-y-2 text-sm flex flex-col">
             {categoryList?.map((category, idx) => (
               <Link
                 href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
+                 aria-label="bajar.net"
                 key={idx}
               >
                 • {category?.category_name}
@@ -56,12 +57,12 @@ export default function Footer() {
 
         {/* Right Section */}
         <div className="md:w-1/3">
-          <h3 className="font-semibold border-b border-white mb-4 inline-block">
+          <h1 className="font-semibold border-b border-white mb-4 inline-block">
             Customer Services
-          </h3>
+          </h1>
           <div className="space-y-2 text-sm flex flex-col">
             {customService.map((item, idx) => (
-              <Link href={item?.href} key={idx}>
+              <Link href={item?.href}  aria-label="bajar.net" key={idx}>
                 • {item?.name}
               </Link>
             ))}

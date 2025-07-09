@@ -19,6 +19,7 @@ const LinkButton = ({
         rounded,
         className
       )}
+       aria-label="bajar.net"
     >
       {children}
     </Link>

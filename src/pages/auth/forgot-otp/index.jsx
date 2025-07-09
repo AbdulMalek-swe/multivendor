@@ -63,7 +63,7 @@ const VerifyOtp = () => {
       link={
         <div className="flex flex-col items-center font-normal text-sm md:text-[15px]">
           <p>Didn&apos;t get the OTP</p>
-          <Link href={ROUTES?.REGISTER} className="hover:underline">
+          <Link href={ROUTES?.REGISTER} aria-label="bajar.net" className="hover:underline">
             {" "}
             Resend Now
           </Link>

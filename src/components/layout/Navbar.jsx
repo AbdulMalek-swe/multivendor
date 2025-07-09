@@ -53,11 +53,11 @@ const Navbar = () => {
         }`}
       >
         <div className="container mx-auto flex justify-between items-center text-sm font-medium leading-[18px] h-8 ">
-          <Link href={ROUTES?.HOME} className="hover:underline">
+          <Link href={ROUTES?.HOME}  aria-label="bajar.net" className="hover:underline">
             Welcome to Baajar!
           </Link>
           <Link
-            href={ROUTES.TRACK}
+            href={ROUTES.TRACK}  aria-label="bajar.net"
             className="flex items-center gap-1 hover:underline"
           >
             <img src="/icons/track_car.svg" alt="loading" />
@@ -75,16 +75,17 @@ const Navbar = () => {
       >
         <div className="container mx-auto  h-full flex items-center justify-between gap-3">
           <div className="flex gap-3 items-center flex-shrink-0">
-            <img src="/icons/location.svg" />
+            <img src="/icons/location.svg" alt="loading" />
             <NavbarText text1="Deliver to" text2="all sylhet" />
           </div>
           {/* search area  */}
           <div className="w-full relative">
             <TextInput
-              placeholder="Search for products, categories or brands..."
+              placeholder="Search  products,categories... "
               onChange={(e) => {
                 setSearchText(e.target.value);
               }}
+              className="text-xs sm:text-sm truncate overflow-hidden"
             />
             <span
               className="absolute text-3xl font-bold text-black right-0 top-0 h-full 
@@ -128,14 +129,14 @@ const Navbar = () => {
                     {/* indicator make  */}
 
                     <Link
-                      href={ROUTES?.ACCOUNT}
+                      href={ROUTES?.ACCOUNT} aria-label="bajar.net"
                       className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
                     >
                       <CiFaceSmile className="text-xl" />
                       <span className=""> Manage My Account</span>
                     </Link>
                     <Link
-                      href={ROUTES?.ORDERS}
+                      href={ROUTES?.ORDERS} aria-label="bajar.net"
                       className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
                     >
                       <CiShop className="text-xl" />
@@ -151,7 +152,7 @@ const Navbar = () => {
               <NavbarText text1="Deliver to" text2="all sylhet" />
               {/* cart route  */}
               <div className="relative  group py-2 ">
-                <Link className="" href={ROUTES?.CART}>
+                <Link className=""  aria-label="bajar.net" href={ROUTES?.CART}>
                   <Image
                     width={25}
                     height={25}
@@ -183,7 +184,7 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="flex gap-2 md:gap-3 ">
+            <div className="md:flex gap-2 hidden md:gap-3 ">
               <LinkButton
                 href={ROUTES?.LOGIN}
                 className="text-nowrap uppercase text-sm  font-medium"
@@ -226,7 +227,7 @@ const ResponsiveNavbars = ({ cart }) => {
     <div className="md:hidden fixed bottom-0 left-0 w-full bg-green-300 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-gray-200 px-4  text-sm text-gray-700 z-50">
       <div className="flex w-full justify-between items-center   py-5">
         <Link
-          href={ROUTES?.HOME}
+          href={ROUTES?.HOME} aria-label="bajar.net"
           className={`${
             pathname === ROUTES?.HOME
               ? "text-primary  p-3 -mt-12 bg-red-900 rounded-full   border shadow-2xl border-tranparent"
@@ -246,7 +247,7 @@ const ResponsiveNavbars = ({ cart }) => {
           {/* <span>Category</span> */}
         </span>
         <Link
-          href={ROUTES?.CART}
+          href={ROUTES?.CART} aria-label="bajar.net"
           className={`${
             pathname === ROUTES?.CART ? "text-primary" : ""
           } flex flex-col justify-center items-center gap-1 font-medium relative`}
@@ -262,7 +263,7 @@ const ResponsiveNavbars = ({ cart }) => {
           )}
         </Link>
         <Link
-          href={ROUTES?.DASHBOARD}
+          href={ROUTES?.DASHBOARD} aria-label="bajar.net"
           className={`${
             pathname === ROUTES?.DASHBOARD ? "text-primary" : ""
           } flex flex-col justify-center items-center gap-1 font-medium`}

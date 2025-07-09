@@ -85,8 +85,10 @@ const MenuItems = ({ category, depthLevel }) => {
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((prev) => !prev)}
+             aria-label="bajar.net"
             className="w-full flex justify-between items-center px-4   cursor-pointer focus:outline-none"
-          >
+      
+       >
             <p className="flex items-center gap-2">
               {category?.category_image ? (
                 <Image
@@ -113,6 +115,7 @@ const MenuItems = ({ category, depthLevel }) => {
       ) : (
         <Link
           href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
+           aria-label="bajar.net"
           className="  w-full flex justify-between items-center px-4  cursor-pointer focus:outline-none "
         >
           <p className="flex items-center gap-2">

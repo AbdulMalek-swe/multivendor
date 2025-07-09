@@ -5,7 +5,7 @@ import { ROUTES } from "@/constants/route";
 
 const PageNotFound = () => {
   return (
-    <Link href={ROUTES?.HOME} className="relative">
+    <Link href={ROUTES?.HOME}  aria-label="bajar.net" className="relative">
       <div className="w-full aspect-auto">
         {" "}
         <Image
@@ -13,6 +13,7 @@ const PageNotFound = () => {
           width={1000}
           height={1000}
           className="w-full h-full"
+          alt="loading"
         />
       </div>
     </Link>

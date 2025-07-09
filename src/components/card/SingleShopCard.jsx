@@ -7,6 +7,7 @@ const SingleShopCard = ({ shop }) => {
     <Link
       href={ROUTES?.SHOP_DETAILS(shop?.id)}
       className="rounded-2xl bg-white    relative shadow-xs overflow-hidden"
+      aria-label="bajar.net"
     >
       <div className="w-full h-[187px] overflow-hidden rounded-t-2xl">
         <Image
@@ -16,7 +17,7 @@ const SingleShopCard = ({ shop }) => {
           alt="shop logo"
           className="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
           priority
-       />
+        />
       </div>
       <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 pt-2 pb-6">
         <h3
@@ -27,14 +28,14 @@ const SingleShopCard = ({ shop }) => {
         </h3>
         <hr className="border" />
         <p
-          className="text-[#9CA3AF] font-poppins font-normal text-xs text-nowrap"
+          className="text-[#4D5860] font-poppins font-normal text-xs text-nowrap"
           title={shop?.shoptype}
         >
           {shop?.shoptype}
         </p>
 
         <p
-          className="text-[#9CA3AF] font-poppins font-normal text-xs text-nowrap"
+          className="text-[#4D5860]  font-poppins font-normal text-xs text-nowrap"
           title={shop?.company_location}
         >
           {shop?.company_location}

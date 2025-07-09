@@ -41,7 +41,7 @@ const BottomNav = ({ items }) => {
         boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.1)", // ⬆️ Top Shadow
       }}
     >
-      <ul className="relative flex w-full h-full" ref={containerRef}>
+      <div className="relative flex w-full h-full" ref={containerRef}>
         {/* Indicator */}
         <div
           className="absolute top-[0px] left-1  w-[60px] h-[50px] transition-transform duration-300 pointer-events-none  bg-transparent"
@@ -56,7 +56,7 @@ const BottomNav = ({ items }) => {
           </div>
         </div>
         {bottomNavLink.map((item, index) => (
-          <li
+          <div
             key={index}
             className="flex-1 h-full flex items-center justify-center z-10"
           >
@@ -66,7 +66,7 @@ const BottomNav = ({ items }) => {
                 className={`text-2xl transition-all duration-300 flex flex-col items-center  cursor-pointer ${
                   activeIndex === index
                     ? "text-primary -translate-y-[12px] -translate-x-[1px]"
-                    : "text-gray-600 opacity-70"
+                    : "text-gray-600  "
                 }`}
               >
                 {item.icon}
@@ -79,15 +79,16 @@ const BottomNav = ({ items }) => {
             ) : (
               <Link
                 href={item?.href}
+                 aria-label="bajar.net"
                 className={`  text-2xl transition-all duration-300 flex flex-col items-center  cursor-pointer ${
                   activeIndex === index
                     ? "text-primary -translate-y-[12px] -translate-x-[1px]"
-                    : "text-gray-600 opacity-70"
+                    : "text-gray-600  "
                 }`}
               >
                 <span className="relative">
                   {item.icon}
-                  {item?.label === "cart" && items?.length && (
+                  {item?.label === "cart" && items?.length>0 && (
                     <span className="absolute -top-1.5 -right-2 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1.5 aspect-square rounded-full">
                       {items?.length}
                     </span>
@@ -102,9 +103,9 @@ const BottomNav = ({ items }) => {
                 )}
               </Link>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       <Drawer
         open={open}
         onClose={handleOpenDrawer}
@@ -143,6 +144,7 @@ const RecursiveCategory = ({ category }) => {
       <div className="flex justify-between items-center    ">
         <Link
           href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
+           aria-label="bajar.net"
           className="flex  items-center gap-2   w-full  "
         >
           <Image
