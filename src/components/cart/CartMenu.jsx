@@ -3,11 +3,36 @@ import Image from "next/image";
 import { ROUTES } from "@/constants/route";
 import LinkButton from "../ui/LinkButton";
 import Button from "../ui/Button";
+import { useRouter } from "next/router";
+import { notifyError } from "@/utils/toast";
+import { handlePurchaseProduct } from "@/utils/productPurchase";
 // import LinkButton from "../ui/LinkButton";
 const CartMenu = ({ cartProduct = [] }) => {
-  const handleCheckout = ()=>{
-    
-  }
+  const router = useRouter();
+  // checkout
+  const handleCheckout = () => {
+    try {
+      if (!cartProduct?.length) {
+        return notifyError("No product to order item");
+      }
+      const result = cartProduct?.map((item) => {
+        return handlePurchaseProduct({
+          ...item,
+          thumbnail: item?.product?.thumbnail,
+          id: item?.product_id,
+          attribute_id: item?.selected_attribute_id,
+          color_id: item?.selected_color_id,
+          offer_price: item?.price,
+          
+        });
+      });
+      console.log(result);
+      localStorage.setItem("order_items", JSON.stringify(result));
+      router.push("/checkout?bestApplied=true");
+    } catch (error) {
+      notifyError(error?.message);
+    }
+  };
   return (
     <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
       <div className="overflow-y-auto max-h-[300px]">
@@ -45,7 +70,14 @@ const CartMenu = ({ cartProduct = [] }) => {
           </div>
         ))}
       </div>
-      <Button onClick={handleCheckout} rounded="rounded-md" className="py-2 h-11" textSize="text-sm md:text-[15px]" >Proceed To Checkout</Button>
+      <Button
+        onClick={handleCheckout}
+        rounded="rounded-md"
+        className="py-2 h-11"
+        textSize="text-sm md:text-[15px]"
+      >
+        Proceed To Checkout
+      </Button>
     </div>
   );
 };

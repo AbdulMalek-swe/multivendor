@@ -9,8 +9,7 @@ function useProduct(query = {}) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!query?.lat || !query?.lng || !query?.page) return;
-
+    if (!query?.lat || !query?.lng || !query?.page) return; 
     async function fetchProduct() {
       if (query.page === 1) {
         setLoading(true);
@@ -22,7 +21,9 @@ function useProduct(query = {}) {
         const response = await product(query);
         const result = response?.data?.data?.data || []; 
         if (Array.isArray(result)) {
-          setHasMoreData(result.length >= 0);
+          if(result?.length===0){
+            setHasMoreData(false);
+          }
           setData((prev) => (query.page === 1 ? result : [...prev, ...result]));
         }
       } catch (err) {

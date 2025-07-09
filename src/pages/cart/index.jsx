@@ -19,8 +19,7 @@ const Cart = () => {
   } = useCart();
   // checkout to go next order page
   const handleCheckout = () => {
-    try {
-      console.log(productItem, "-------");
+    try { 
       if (!productItem?.length) {
         return notifyError("No product to order item");
       }
@@ -36,7 +35,7 @@ const Cart = () => {
       });
       console.log(result);
       localStorage.setItem("order_items", JSON.stringify(result));
-      router.push("checkout?bestApplied=true");
+      router.push("/checkout?bestApplied=true");
     } catch (error) {
       notifyError(error?.message);
     }

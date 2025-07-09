@@ -16,8 +16,9 @@ const Checkout = () => {
     orderItems: 0,
   });
   const {data,loading}= useAddress();
-  console.log(data);
+   const defaultAddress = data?.find(item=>item?.default_address==1)
   //   setup for order item in state
+  console.log(defaultAddress);
   useEffect(() => {
     const result = JSON?.parse(localStorage?.getItem("order_items"));
     const subtotal = result.reduce((acc, cur) => {
@@ -40,7 +41,7 @@ const Checkout = () => {
       const response = await privateRequest.post("/user/order", {
         items: result,
         payment_method: "cod",
-        shipping_address: "123 main street new york ny",
+        shipping_address: defaultAddress?.id
       });
       if (responseHandler(response)) {
         notifySuccess(response?.data?.message);
@@ -113,7 +114,9 @@ const Checkout = () => {
               <div className="border p-4 rounded text-sm space-y-1 ">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-semibold">sdfsd</span>
+                    <span className="font-semibold">{
+                      defaultAddress?.name
+                      }</span>
                     <span className="bg-blue-200/50 rounded-md ml-1 px-1">
                       Default address
                     </span>
@@ -125,8 +128,9 @@ const Checkout = () => {
                     <FaHome className="text-blue-600" /> address
                   </button>
                 </div>
-                <div>
-                  <p>Dhaka banani making</p>
+                <div> 
+                  <p>{defaultAddress?.address_line1}</p>
+                  <p>{defaultAddress?.division?.name} - {defaultAddress?.city?.name} - {defaultAddress?.area?.name}</p>
                 </div>
 
                 <button

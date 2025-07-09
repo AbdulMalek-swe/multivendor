@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextInput } from "../ui/Input";
 import Link from "next/link";
-import { ROUTES } from "@/constants/route";
-import { FaHome, FiShoppingCart, MdOutlineDashboard, MdPerson } from "@/icons";
-import { useRouter } from "next/router";
-import Drawer from "react-modern-drawer";
+import { ROUTES } from "@/constants/route"; 
+import { useRouter } from "next/router"; 
 import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
@@ -142,10 +140,10 @@ const Navbar = () => {
                       <CiShop className="text-xl" />
                       My Orders
                     </Link>
-                    <span className="px-4 py-2 cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline  ">
+                    <div  className="px-4 py-2 cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline  "  onClick={()=>logout()}>
                       <CiLogout className="text-xl" />
                       <span>Logout</span>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -213,77 +211,12 @@ const Navbar = () => {
       </section>
       <div className="md:hidden  ">
         <BottomNav items={items}/>
-      </div>
-      {/* <ResponsiveNavbars cart={cart} /> */}
+      </div> 
     </div>
   );
 };
 export default Navbar;
-const ResponsiveNavbars = ({ cart }) => {
-  const { pathname } = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => setIsOpen((prev) => !prev);
-  return (
-    <div className="md:hidden fixed bottom-0 left-0 w-full bg-green-300 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-gray-200 px-4  text-sm text-gray-700 z-50">
-      <div className="flex w-full justify-between items-center   py-5">
-        <Link
-          href={ROUTES?.HOME} aria-label="bajar.net"
-          className={`${
-            pathname === ROUTES?.HOME
-              ? "text-primary  p-3 -mt-12 bg-red-900 rounded-full   border shadow-2xl border-tranparent"
-              : ""
-          } flex flex-col justify-center items-center gap-1 font-medium`}
-        >
-          <FaHome />
-          {/* {pathname !== ROUTES?.HOME &&  <span> Home</span>} */}
-        </Link>
-        <span
-          className={`${
-            isOpen ? "font-extrabold" : "font-medium"
-          } flex flex-col justify-center items-center gap-1 cursor-pointer  `}
-          onClick={toggleDrawer}
-        >
-          <MdOutlineDashboard />
-          {/* <span>Category</span> */}
-        </span>
-        <Link
-          href={ROUTES?.CART} aria-label="bajar.net"
-          className={`${
-            pathname === ROUTES?.CART ? "text-primary" : ""
-          } flex flex-col justify-center items-center gap-1 font-medium relative`}
-        >
-          <FiShoppingCart />
-          {/* <span>Cart</span> */}
-          {cart?.length ? (
-            <span className="absolute -top-2 -right-1 inline-flex items-center justify-center bg-primary text-white text-xs font-bold px-1 aspect-square rounded-full">
-              {cart?.length}
-            </span>
-          ) : (
-            ""
-          )}
-        </Link>
-        <Link
-          href={ROUTES?.DASHBOARD} aria-label="bajar.net"
-          className={`${
-            pathname === ROUTES?.DASHBOARD ? "text-primary" : ""
-          } flex flex-col justify-center items-center gap-1 font-medium`}
-        >
-          <MdPerson />
-          {/* Account */}
-        </Link>
-      </div>
-      {/* drawer code for category show  */}
-      <Drawer
-        open={isOpen}
-        onClose={toggleDrawer}
-        direction="left"
-        className="p-4 bg-white"
-      >
-        <p className="text-lg font-semibold">Sidebar Content</p>
-      </Drawer>
-    </div>
-  );
-};
+ 
 const NavbarText = ({ text1, text2 }) => {
   return (
     <div className="flex flex-col text-[#030712] ">

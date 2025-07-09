@@ -6,7 +6,7 @@ function useProductId(id) {
   const [error, setError] = useState(null);
   useEffect(() => {
     if (!id) return;
-    const fetchCategory = async () => {
+    const fetchProductId = async () => {
       setLoading(true);
       try {
         const response = await singleProduct(id);
@@ -18,7 +18,7 @@ function useProductId(id) {
         setLoading(false); 
       }
     };
-    fetchCategory();
+    fetchProductId();
   }, [id]);
 
   return { data, loading, error };
