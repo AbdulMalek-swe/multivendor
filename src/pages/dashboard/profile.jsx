@@ -75,7 +75,7 @@ const MyAccount = () => {
       {loading ? (
         <ManageAccountSkeleton />
       ) : (
-        <div className=" max-w-7xl mx-auto text-black">
+        <div className=" max-w-7xl mx-auto text-[#030712] border-[#E5E7EB]">
           <Drawer
             open={openDrawer}
             onClose={handleOpenDrawer}
@@ -100,7 +100,7 @@ const MyAccount = () => {
           {/* Profile & Address Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {/* Personal Profile */}
-            <div className="bg-white shadow p-5 rounded border">
+            <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium">Personal Profile</h3>
                 {/* <button className="text-blue-600 text-sm">EDIT</button> */}
@@ -113,7 +113,7 @@ const MyAccount = () => {
             </div>
 
             {/* Address Book */}
-            <div className="bg-white shadow p-5 rounded border col-span-1 md:col-span-2">
+            <div className="bg-white shadow p-5 rounded border border-[#E5E7EB] col-span-1 md:col-span-2">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium">Address Book</h3>
                 <button
@@ -161,12 +161,12 @@ const MyAccount = () => {
           </div>
 
           {/* Recent Orders */}
-          <div className="bg-white shadow p-5 rounded border">
+          <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
             <h3 className="text-lg font-medium mb-4">Recent Orders</h3>
             <div className="overflow-auto">
-              <table className="min-w-full text-left text-sm border-t">
+              <table className="min-w-full text-left text-sm border-t border-[#E5E7EB]">
                 <thead>
-                  <tr className="border-b bg-gray-100">
+                  <tr className="border-b border-[#E5E7EB] bg-gray-100">
                     <th className="p-3 font-semibold">Order #</th>
                     <th className="p-3 font-semibold">Placed On</th>
                     <th className="p-3 font-semibold">Items</th>
@@ -176,7 +176,7 @@ const MyAccount = () => {
                 </thead>
                 <tbody>
                   {flatData.map((orderItem) => (
-                    <tr className="border-b hover:bg-gray-50">
+                    <tr className="border-b border-[#E5E7EB] hover:bg-gray-50">
                       <td className="p-3">#{orderItem?.order_id}</td>
                       <td className="p-3">
                         {" "}

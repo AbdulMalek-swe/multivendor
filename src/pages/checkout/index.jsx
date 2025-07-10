@@ -69,7 +69,7 @@ const Checkout = () => {
       {loading ? (
         <CheckoutPageSkeleton />
       ) : (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 text-[#030712] border-[#E5E7EB]">
           {/* Left Content */}
           <div className="md:col-span-2 space-y-6">
             {/* Shipping Information */}
@@ -123,7 +123,7 @@ const Checkout = () => {
               </Drawer>
               {/* shipping information show  */}
               {addressData?.length > 0 ? (
-                <div className="border p-4 rounded text-sm space-y-1 ">
+                <div className="border border-[#E5E7EB] p-4 rounded text-sm space-y-1 ">
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="font-semibold">
@@ -134,7 +134,7 @@ const Checkout = () => {
                       </span>
                     </div>
                     <button
-                      className="border rounded-md px-1 py-0.5 font-normal cursor-pointer  bg-blue-200/50 text-nowrap flex gap-1 flex-nowrap items-center justify-center"
+                      className="border border-[#E5E7EB] rounded-md px-1 py-0.5 font-normal cursor-pointer  bg-blue-200/50 text-nowrap flex gap-1 flex-nowrap items-center justify-center"
                       onClick={handleOpenDrawer}
                     >
                       <FaHome className="text-blue-600" /> address
@@ -150,7 +150,7 @@ const Checkout = () => {
                   </div>
 
                   <button
-                    className="border rounded-md px-1 py-0.5 font-normal cursor-pointer bg-gray-100 text-nowrap flex gap-1 flex-nowrap item-center justify-center"
+                    className="border  border-[#E5E7EB] rounded-md px-1 py-0.5 font-normal cursor-pointer bg-gray-100 text-nowrap flex gap-1 flex-nowrap item-center justify-center"
                     onClick={() => {
                       setOpenType("edit");
                       setOpenDrawer(true);
@@ -185,7 +185,7 @@ const Checkout = () => {
             </div>
             {/* here show product details  */}
             <div>
-              <h1 className="text-black border-b-2 shadow-sm font-semibold px-4 pb-2 text-lg">
+              <h1 className="text-black border-b-2 border-[#E5E7EB] shadow-sm font-semibold px-4 pb-2 text-lg">
                 Order Summary - {orderAttribute?.orderItems} items
               </h1>
               <div className="flex-1 space-y-4 mt-2">
@@ -243,7 +243,7 @@ const Checkout = () => {
           {/* Order Summary */}
           <div className="bg-white p-5 rounded   space-y-4">
             <h2 className="text-lg font-semibold">Order Summary</h2>
-            <div className="border-t pt-4 text-sm space-y-2">
+            <div className="border-t  border-[#E5E7EB] pt-4 text-sm space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal {orderAttribute?.orderItems} items </span>
                 <span className="text-nowrap">
@@ -255,7 +255,7 @@ const Checkout = () => {
                 <span className="text-nowrap">৳ {deliveryAmount()}</span>
               </div>
             </div>
-            <div className="border-t pt-4 text-base font-semibold flex justify-between">
+            <div className="border-t border-[#E5E7EB] pt-4 text-base font-semibold flex justify-between">
               <span>Total</span>
               <span className="text-blue-600 text-nowrap">
                 ৳ {deliveryAmount() + orderAttribute?.subtotal}

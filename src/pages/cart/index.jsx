@@ -7,6 +7,10 @@ import { notifyError } from "@/utils/toast";
 import { useDeleteModal } from "@/context/DeleteModalContext";
 import { handlePurchaseProduct } from "@/utils/productPurchase";
 import PageLayout from "@/components/ui/PageLayout";
+import { FaShoppingCart } from "@/icons";
+import CartSkeleton from "@/components/loader/skeleton/AccountSkeleton/CartSkeleton";
+import Link from "next/link";
+import { ROUTES } from "@/constants/route";
 const Cart = () => {
   const { openModal } = useDeleteModal();
   const router = useRouter();
@@ -20,20 +24,20 @@ const Cart = () => {
   } = useCart();
   // checkout to go next order page
   const handleCheckout = () => {
-    try { 
+    try {
       if (!productItem?.length) {
         return notifyError("No product to order item");
       }
       const result = productItem?.map((item) => {
         return handlePurchaseProduct({
           ...item,
-          thumbnail:item?.product?.thumbnail,
+          thumbnail: item?.product?.thumbnail,
           id: item?.product_id,
           attribute_id: item?.selected_attribute_id,
           color_id: item?.selected_color_id,
           offer_price: item?.price,
         });
-      }); 
+      });
       localStorage.setItem("order_items", JSON.stringify(result));
       router.push("/checkout?bestApplied=true");
     } catch (error) {
@@ -78,33 +82,37 @@ const Cart = () => {
   };
 
   //   if (loading && !productItem?.length) return <CartSkeleton />;
-  if (!productItem?.length)
+  if (!productItem?.length || loading)
     return (
-      <div className="flex flex-col items-center justify-center text-center  ">
-        <Image
-          height={250}
-          width={250}
-          className="mx-auto "
-          src="/empty_cart.png"
-          alt="Logo"
-        />
-        <button
-          className="mt-5 px-6 py-2 bg-primary text-white rounded-lg"
-          onClick={() => (window.location.href = "/products")}
-        >
-          Continue Shopping
-        </button>
-      </div>
+      <>
+        {loading ? (
+          <CartSkeleton />
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center py-4 ">
+            <Image
+              height={250}
+              width={250}
+              className="mx-auto "
+              src="/empty_cart.png"
+              alt="Logo"
+            />
+            <Link
+              className="mt-5 px-6 py-2 bg-primary text-white rounded-lg"
+              href={ROUTES?.PRODUCTS}
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        )}
+      </>
     );
   return (
-    <PageLayout className="  ">
+    <PageLayout >
       {productItem?.length && updateLoading && (
-        <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
-          {/* <Spinner /> */}
-        </div>
+        <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center"></div>
       )}
-      <h2 className="text-2xl font-normal mb-4 flex items-center gap-1 bg-gray-200/50 rounded-md px-2 py-1">
-        {/* <FaShoppingCart /> Cart List */}
+      <h2 className="text-2xl font-normal mb-4 flex items-center gap-1 bg-gray-200/50 rounded-md px-2 py-1 text-[#030712]">
+        <FaShoppingCart /> Cart List
       </h2>
       {/* Select All */}
       <label className="flex items-center gap-2 border rounded px-4 py-3 mb-4">
@@ -116,7 +124,7 @@ const Cart = () => {
         />
 
         <div
-          className={`border border-gray-200 w-5 h-5 p-0.5 flex items-center rounded-sm ${
+          className={`border border-[#E5E7EB] w-5 h-5 p-0.5 flex items-center rounded-sm ${
             selectedProduct?.length === productItem?.length ? "bg-primary" : ""
           }`}
         >
@@ -126,7 +134,7 @@ const Cart = () => {
         </div>
         <span className="text-lg text-black">Select all </span>
       </label>
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 text-[#030712] border-[#E5E7EB]">
         {/* Left Side - Product List */}
         <div className="flex-1 space-y-4">
           {/* Headers - hidden on mobile */}
@@ -141,12 +149,12 @@ const Cart = () => {
           {productItem.map((item, idx) => (
             <div
               key={idx}
-              className="grid grid-cols-1 md:grid-cols-12 items-center border rounded-lg p-4 gap-y-4 md:gap-0"
+              className="grid grid-cols-1 md:grid-cols-12 items-center border border-[#E5E7EB] rounded-lg p-4 gap-y-4 md:gap-0"
             >
               <div className="md:col-span-6 flex items-start gap-4">
                 <div
                   onClick={() => handleAddedProduct(item)}
-                  className={`border border-gray-200 w-5 h-5 p-0.5 flex items-center rounded-sm ${
+                  className={`border border-[#E5E7EB] w-5 h-5 p-0.5 flex items-center rounded-sm ${
                     isChecked(item) ? "bg-primary" : ""
                   }`}
                 >
@@ -192,7 +200,7 @@ const Cart = () => {
 
         {/* Right Side - Order Summary */}
         <div className="w-full lg:w-1/3">
-          <div className="border rounded-lg p-6 bg-white shadow-md">
+          <div className="border  border-[#E5E7EB] rounded-lg p-6 bg-white shadow-md">
             <h3 className="text-lg font-semibold mb-4">Order Summary:</h3>
 
             <div className="flex justify-between text-sm mb-2">
@@ -238,14 +246,14 @@ const CartItem = ({ item, updateItem }) => {
     <div className="md:col-span-2 flex justify-center md:justify-start items-center gap-2">
       <button
         onClick={() => handleQty("dec")}
-        className="border px-2 rounded hover:bg-gray-100"
+        className="border border-[#E5E7EB] px-2 rounded hover:bg-gray-100"
       >
         −
       </button>
       <span className="w-6 text-center">{item?.quantity}</span>
       <button
         onClick={() => handleQty("inc")}
-        className="border px-2 rounded hover:bg-gray-100"
+        className="border  border-[#E5E7EB] px-2 rounded hover:bg-gray-100"
       >
         +
       </button>

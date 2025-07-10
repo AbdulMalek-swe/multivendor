@@ -7,6 +7,7 @@ export {
   FaWhatsapp,
   FaPhoneAlt,
   FaSpinner,
+  FaShoppingCart
 } from "react-icons/fa";
 export {
   MdOutlineDashboard,

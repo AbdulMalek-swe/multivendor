@@ -12,6 +12,9 @@ import { handlePurchaseProduct } from "@/utils/productPurchase";
 import { useCart } from "@/hooks/cart/useCart";
 import { notifyError } from "@/utils/toast";
 import PageLayout from "@/components/ui/PageLayout";
+import { publicRequest } from "@/lib/axios";
+import { responseHandler } from "@/utils/helpers";
+import SingleCart from "@/components/card/SingleCart";
 
 const ProductDetails = () => {
   const { addItem, items } = useCart();
@@ -27,6 +30,7 @@ const ProductDetails = () => {
     color_id: null,
     attribute_id: null,
   });
+  // purchasae product handler 
   const handlePurchase = (vl) => {
     let color_id, attribute_id;
     if (!productItem?.colors?.length) {
@@ -62,6 +66,24 @@ const ProductDetails = () => {
       router?.push(`/checkout?buy_now=${product?.slug}`);
     }
   };
+  // fetch releted product  
+  const [reletedProduct,setReletedProduct] = useState([])
+  useEffect(()=>{
+    const fetchReletedProduct  = async()=>{
+        try {
+          console.log(productItem,"----");
+          const response = await publicRequest.get(`/user/related-products?category_id=${productItem?.product?.category_id}&vendor_id=${productItem?.product?.vendor_id}`)
+          console.log(response);
+          if(responseHandler(response)){
+             setReletedProduct(response?.data?.data)
+          }
+        } catch (error) {
+          
+        }
+    }
+    fetchReletedProduct()
+    },[productItem])
+    console.log(reletedProduct,"----------->>>>>>");
   if (loading) return <SkeletonProductDetails />;
   if (error) return <CustomError />;
   return (
@@ -79,7 +101,7 @@ const ProductDetails = () => {
         />
         ORGANIC
       </div>
-
+      {/* product details call here  */}
       <div className="flex flex-col md:flex-row justify-between md:gap-10">
         <div className="flex justify-center w-full md:w-1/2 aspect-[247/187]">
           <Image
@@ -218,6 +240,24 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      {/* product  description */}
+      <div className="space-y-3 py-5 text-[#030712]">
+        <div className="border-b border-[#E5E7EB]  ">
+          <span className="inline-block border-b-2 border-[#030712] pb-2 leading-7 font-bold">
+            Description
+          </span>
+        </div>
+        <div dangerouslySetInnerHTML={{ __html: product?.description }}></div>
+      </div>
+      {/* realeted product code here  */}
+       <span className="inline-block pb-2 leading-7 font-bold text-lg">
+           Related products
+          </span>
+       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {
+              reletedProduct?.map((product,idx)=><SingleCart product={product}/>)
+            }
+       </div>
     </PageLayout>
   );
 };

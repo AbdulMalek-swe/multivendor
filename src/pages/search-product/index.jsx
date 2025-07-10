@@ -118,6 +118,7 @@ const FilterArea = ({
   checked,
   setChecked,
 }) => {
+
   return (
     <div>
       {loading ? (

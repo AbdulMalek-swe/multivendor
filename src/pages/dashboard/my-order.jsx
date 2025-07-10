@@ -41,19 +41,19 @@ const MyOrder = () => {
       {loading ? (
         <OrderSkeleton />
       ) : (
-        <div className="bg-[#f3f4f6] min-h-screen p-5 rounded-2xl">
-          <div className="border-b border-gray-300 mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+        <div className="bg-[#f3f4f6] min-h-screen p-5 rounded-2xl text-[#030712] border-[#E5E7EB]">
+          <div className="border-b text-[#030712] border-[#E5E7EB] mb-4">
+            <h2 className="text-xl font-semibold   mb-2">
               My Orders
             </h2>
-            <ul className="flex space-x-4 text-sm font-medium text-gray-600">
+            <ul className="flex space-x-4 text-sm font-medium  ">
               {tabs.map((tab) => (
                 <li
                   key={tab}
                   onClick={() => handleTabChange(tab)}
                   className={`pb-2 cursor-pointer ${
                     activeTab === tab
-                      ? "border-b-2 border-blue-500 text-blue-600"
+                      ? "border-b-2   text-[#030712] border-[#E5E7EB]"
                       : "hover:text-blue-600"
                   }`}
                 >
@@ -73,19 +73,19 @@ const MyOrder = () => {
             item?.sub_orders?.map((newItem) =>
               newItem?.items?.map((newOrder, id) => (
                 <div
-                  className="bg-white rounded-md border p-4 shadow-sm mt-2"
+                  className="bg-white rounded-md border border-[#E5E7EB] p-4 shadow-sm mt-2"
                   key={id}
                 >
                   <div className="flex justify-between items-center mb-2">
                     <div className="text-sm font-medium text-gray-800 uppercase">
-                      {newItem?.vendor?.company_name}
+                      {newItem?.vendor?.company_name} 
                     </div>
                     <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-semibold">
                       {item?.order_status}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-start space-x-4 border-t pt-4">
+                  <div className="flex justify-between items-start space-x-4 border-t border-[#E5E7EB] pt-4">
                     <div className="flex gap-1">
                       {" "}
                       <img

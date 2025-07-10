@@ -44,7 +44,7 @@ const CategoryProduct = () => {
     loading: infinityLoading,
     hasMoreData,
   });
-
+  console.log(data);
   return (
     <div className="flex gap-4 md:gap-8 ">
       <div className="w-[259px] shrink-0">
@@ -61,16 +61,20 @@ const CategoryProduct = () => {
               min={0}
               setPrice={setPrice}
             />
-            <ProductCategory
-              category={data?.child_categories}
-              categoryId={categoryId}
-              setCategoryId={setCategoryId}
-            />
-            <ProductBrands
-              brand={data?.brands}
-              brandId={brandId}
-              setBrandId={setBrandId}
-            />
+            {data?.child_categories?.length > 0 && (
+              <ProductCategory
+                category={data?.child_categories}
+                categoryId={categoryId}
+                setCategoryId={setCategoryId}
+              />
+            )}
+            {data?.brands?.length > 0 && (
+              <ProductBrands
+                brand={data?.brands}
+                brandId={brandId}
+                setBrandId={setBrandId}
+              />
+            )}
             <ProductStatus checked={checked} setChecked={setChecked} />
           </div>
         )}

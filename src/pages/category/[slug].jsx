@@ -3,7 +3,11 @@ import PageLayout from "@/components/ui/PageLayout";
 import React from "react";
 
 const CategoryProducts = () => {
-  return <PageLayout><CategoryProduct /></PageLayout>;
+  return (
+    <PageLayout>
+      <CategoryProduct />
+    </PageLayout>
+  );
 };
 
 export default CategoryProducts;
