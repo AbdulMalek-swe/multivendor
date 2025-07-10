@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
     domains: [ 
       "192.168.68.101",
-      "127.0.0.1"
+      "127.0.0.1",
+      "plum-caterpillar-579427.hostingersite.com"
     ],
   },
 };

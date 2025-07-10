@@ -7,6 +7,7 @@ if (process?.env?.NODE_ENV === "development") {
   apiUrl = `${process.env.NEXT_PUBLIC_API_SERVER}api/`;
 } else {
   apiUrl = `${process.env.NEXT_PUBLIC_PRODUCTION_API_SERVER}api/`;
+  console.log(apiUrl,"welcom to producttion api");
 }
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const publicRequest = axios.create({
