@@ -29,7 +29,7 @@ const Category = () => {
         }`}
       >
         <nav className="flex justify-center items-center w-full">
-          <ul className="flex flex-col list-none relative bg-white  max-h-[545px]  border rounded-b-lg border-t-0 w-full  ">
+          <ul className="flex flex-col list-none relative bg-white  max-h-[545px]  border rounded-b-lg border-t-0 border-[#E5E7EB] w-full  ">
             {categoryList.map((menu, index) => {
               const depthLevel = 0;
               return (
