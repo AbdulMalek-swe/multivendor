@@ -2,7 +2,8 @@
 import { getToken } from "@/utils/helpers";
 import axios from "axios";
 
-let   apiUrl = `${process.env.NEXT_PUBLIC_API_SERVER}api/`;
+// let   apiUrl = `${process.env.NEXT_PUBLIC_API_SERVER}api/`;
+let   apiUrl = `https://plum-caterpillar-579427.hostingersite.com/api/`;
  
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const publicRequest = axios.create({
