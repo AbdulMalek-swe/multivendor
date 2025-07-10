@@ -80,30 +80,31 @@ const MenuItems = ({ category, depthLevel }) => {
       {category?.children?.length >= 1 ? (
         <>
           <Link
-           href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
+            href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((prev) => !prev)}
-             aria-label="bajar.net"
+            aria-label="bajar.net"
             className="w-full flex justify-between items-center px-4   cursor-pointer focus:outline-none"
-      
-       >
-            <p className="flex items-center gap-2">
+          >
+            <div className="flex items-center gap-2">
               {category?.category_image ? (
-                <Image
-                  src={`${process?.env.NEXT_PUBLIC_API_SERVER}${category?.category_image}`}
-                  width={1000}
-                  height={1000}
-                  className="w-3 h-3"
-                  alt={category?.category_name}
-                />
+                <div className="aspect-square">
+                  <Image
+                    src={`${process?.env.NEXT_PUBLIC_API_SERVER}${category?.category_image}`}
+                    width={1000}
+                    height={1000}
+                    className="w-3 h-3"
+                    alt="loading..."
+                  />
+                </div>
               ) : (
                 <RxDashboard />
               )}
 
               <span> {category?.category_name}</span>
-            </p>
+            </div>
             <IoIosArrowForward />
           </Link>
           <Dropdown
@@ -115,7 +116,7 @@ const MenuItems = ({ category, depthLevel }) => {
       ) : (
         <Link
           href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
-           aria-label="bajar.net"
+          aria-label="bajar.net"
           className="  w-full flex justify-between items-center px-4  cursor-pointer focus:outline-none "
         >
           <p className="flex items-center gap-2">
@@ -125,7 +126,7 @@ const MenuItems = ({ category, depthLevel }) => {
                 width={1000}
                 height={1000}
                 className="w-3 h-3"
-                alt = {category?.category_name}
+                alt="loading..."
               />
             ) : (
               <RxDashboard />
