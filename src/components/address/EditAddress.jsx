@@ -8,6 +8,7 @@ import { notifySuccess } from "@/utils/toast";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
+import Spinner from "../loader/Spinner";
 const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
   const {
     handleSubmit,
@@ -16,7 +17,7 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
     formState: { errors },
     setValue,
   } = useForm();
-  const { data: singleAddress } = useFetchSingAddressById(addressId); 
+  const { data: singleAddress } = useFetchSingAddressById(addressId);
   const [divisionId, setDivisionId] = useState(null);
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -50,6 +51,7 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
     setSelectedArea(e);
   };
   // submit address form
+  const [btnLoading, setBtnLoading] = useState(false);
   const onSubmit = async (formData) => {
     const payload = {
       ...formData,
@@ -58,19 +60,22 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
       division_id: divisionId || selectedDivision?.value,
       country: "bangladesh",
       _method: "PUT",
-    }; 
+    };
+    setBtnLoading(true);
     try {
       const response = await privateRequest.post(
         `/user/address/${addressId}`,
         payload
       );
       if (responseHandler(response)) {
-        notifySuccess(response?.data?.message)
+        setBtnLoading(false);
+        notifySuccess(response?.data?.message);
         setOpenDrawer(false);
         refetch();
       }
     } catch (error) {
-      networkErrorHandeller(error)
+      networkErrorHandeller(error);
+      setBtnLoading(false);
     }
   };
 
@@ -255,9 +260,10 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200"
+          className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200 h-12 flex justify-center items-center"
+          disabled={btnLoading}
         >
-          Submit
+          {!btnLoading ? "Submit" : <Spinner />}
         </button>
       </form>
     </div>

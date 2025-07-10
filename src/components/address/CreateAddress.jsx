@@ -2,19 +2,19 @@ import useAreaById from "@/hooks/api/address/useArea";
 import useCityById from "@/hooks/api/address/useCity";
 import useDivision from "@/hooks/api/address/useDivision";
 import { privateRequest } from "@/lib/axios";
-import { responseHandler } from "@/utils/helpers";
-import React, { useEffect, useState } from "react";
+import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
+import { notifySuccess } from "@/utils/toast";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
-
-const CreateAddress = ({refetch,setOpenDrawer}) => {
+import Spinner from "../loader/Spinner";
+const CreateAddress = ({ refetch, setOpenDrawer }) => {
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-    
-  } = useForm(); 
+  } = useForm();
   const [divisionId, setDivisionId] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
@@ -42,6 +42,7 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
   const handleAreaSelect = (e) => {
     setSelectedArea(e);
   };
+  const [btnLoading,setBtnLoading] = useState(false);
   const onSubmit = async (formData) => {
     const payload = {
       ...formData,
@@ -50,13 +51,19 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
       division_id: divisionId,
       country: "bangladesh",
     };
+     setBtnLoading(true)
     try {
       const response = await privateRequest.post("/user/address", payload);
       if (responseHandler(response)) {
+        setBtnLoading(false)
         setOpenDrawer(false);
-        refetch()
+        refetch();
+        notifySuccess("address create successfully");
       }
-    } catch (error) {}
+    } catch (error) {
+      networkErrorHandeller(error);
+       setBtnLoading(false)
+    }
   };
   return (
     <div>
@@ -211,11 +218,13 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200"
-        >
-          Submit
+          className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200 h-12 flex justify-center items-center"
+         
+          disabled={btnLoading}
+      >
+        { !btnLoading?  "Submit"  : <Spinner/>}
         </button>
-      </form> 
+      </form>
     </div>
   );
 };

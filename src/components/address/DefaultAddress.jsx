@@ -1,10 +1,10 @@
 import { privateRequest } from "@/lib/axios";
 import { networkErrorHandeller } from "@/utils/helpers";
-import {   notifySuccess } from "@/utils/toast";
+import { notifySuccess } from "@/utils/toast";
 import { useState } from "react";
+import Spinner from "../loader/Spinner";
 
 const DefaultAddress = ({
-  fetchAddress,
   setOpenDrawer,
   setOpenType,
   addressData,
@@ -14,20 +14,25 @@ const DefaultAddress = ({
   const [selectedAddressId, setSelectedAddressId] = useState(
     addressData.find((a) => a.default_address === 1)?.id
   );
+  // default address change area 
+  const [btnLoading,setBtnLoading] = useState(false);
   const handleDefaultAddressChange = async () => {
     if (!selectedAddressId) return Toastify.Error("Please Select address");
+    setBtnLoading(true)
     try {
       const response = await privateRequest.post("user/address/default", {
         address_id: address?.id,
       });
       if (response?.status) {
+        setBtnLoading(false)
         notifySuccess(response?.data?.message);
         refetch();
-        fetchAddress();
+
         setOpenDrawer(false);
       }
     } catch (error) {
       networkErrorHandeller(error);
+      setBtnLoading(false)
     }
   };
   return (
@@ -122,12 +127,13 @@ const DefaultAddress = ({
           className="px-6 py-2 border rounded text-gray-600 border-gray-300 hover:bg-gray-100"
         >
           CANCEL
-        </button> */}
+        </button> */} 
         <button
           onClick={handleDefaultAddressChange}
-          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200 h-12 flex justify-center items-center"
+          disabled={btnLoading}
         >
-          SAVE
+          {!btnLoading ? "SAVE" : <Spinner />}
         </button>
       </div>
     </>
