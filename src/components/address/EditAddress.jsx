@@ -16,8 +16,7 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
     formState: { errors },
     setValue,
   } = useForm();
-  const { data: singleAddress } = useFetchSingAddressById(addressId);
-  console.log(singleAddress);
+  const { data: singleAddress } = useFetchSingAddressById(addressId); 
   const [divisionId, setDivisionId] = useState(null);
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -59,8 +58,7 @@ const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
       division_id: divisionId || selectedDivision?.value,
       country: "bangladesh",
       _method: "PUT",
-    };
-    console.log(payload, "-------");
+    }; 
     try {
       const response = await privateRequest.post(
         `/user/address/${addressId}`,

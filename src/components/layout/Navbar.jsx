@@ -41,7 +41,7 @@ const Navbar = () => {
   }, []);
   if (authLoading) return <NavbarSkeleton />;
   return (
-    <div className="mb-1">
+    <div   >
       {/* navingation header  */}
       <section
         className={` hidden md:block bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden ${
@@ -50,7 +50,7 @@ const Navbar = () => {
             : "opacity-100 translate-y-0 h-8"
         }`}
       >
-        <div className="container mx-auto flex justify-between items-center text-sm font-medium leading-[18px] h-8 ">
+        <div className=" container-custom flex justify-between items-center text-sm font-medium leading-[18px] h-8 ">
           <Link href={ROUTES?.HOME}  aria-label="bajar.net" className="hover:underline">
             Welcome to Baajar!
           </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
             : "relative opacity- -translate-y-0 h-20 scale-[0.98]"
         }`}
       >
-        <div className="container mx-auto  h-full flex items-center justify-between gap-3">
+        <div className=" container-custom h-full flex items-center justify-between gap-3">
           <div className="flex gap-3 items-center flex-shrink-0">
             <img src="/icons/location.svg" alt="loading" />
             <NavbarText text1="Deliver to" text2="all sylhet" />

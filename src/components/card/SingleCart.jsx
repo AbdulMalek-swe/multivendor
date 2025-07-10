@@ -21,20 +21,20 @@ const SingleCart = ({ product }) => {
   return (
     <Link
       href={ROUTES?.PRODUCT_DETAILS(product?.id)}
-      className="rounded-2xl bg-white   relative shadow-xs overflow-hidden"
+      className="rounded-2xl bg-white   relative shadow-xs "
       aria-label="bajar.net"
     >
-      <div className="w-full aspect-auto overflow-hidden">
+      <div className="w-full aspect-[247/187] rounded-t-2xl  overflow-hidden">
         <Image
           src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.thumbnail}`}
           width={1000}
           height={1000}
-          className="overflow-hidden w-full h-[187px] rounded-t-2xl  transition-transform duration-300 ease-in-out hover:scale-110"
+          className="overflow-hidden w-full rounded-t-2xl h-full object-cover  transition-transform duration-300 ease-in-out hover:scale-110"
           alt={product?.product_name}
           priority
         />
       </div>
-      <div className="border border-t-0 rounded-b-2xl md:px-3 px-2 space-y-2 py-2">
+      <div className="shadow-[0_0_2px_0_rgba(0,0,0,0.25)] rounded-b-2xl md:px-3 px-2 space-y-2 py-2">
         <h3
           className="text-[#222222] font-poppins font-semibold text-base leading-5 line-clamp-1"
           title={product?.product_name}
@@ -46,27 +46,26 @@ const SingleCart = ({ product }) => {
           {product?.vendor?.company_name}
         </p>
         <div className="flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12">
-          <h3 className="text-2xl font-poppins font-bold text-primary ">
+          <h3 className="text-2xl font-poppins font-bold text-primary md:text-lg lg:text-2xl ">
             {formatPrice(product?.offer_price)}
           </h3>
-          <span className="line-through font-poppins font-normal text-[#222222] text-base  ">
+          <span className="line-through font-poppins font-normal text-[#222222] text-base truncate md:text-sm lg:text-base ">
             {formatPrice(product?.reguler_price)}
           </span>
         </div>
-        {/* <Button
-          className="!w-full   !h-8 !text-xs !font-poppins !font-light text-nowrap  "
-          onClick={(e) => {
-            if (e && e.stopPropagation) {
-              e.stopPropagation();
-            } else {
-              console.log("Event object missing:", e);
-            }
-            handleAdded(product)
+        <Button
+          className="w-full  !h-8 !text-xs !font-poppins !font-light text-nowrap text-black "
+          bgColor=""
+          color="text-primary"
+          onClick={(e) => { 
+             e.preventDefault(); 
+              e.stopPropagation(); 
+            handleAdded(product);
           }}
         >
           <FiShoppingCart />
           Add To Cart
-        </Button> */}
+        </Button>
         <p className="bg-[#AB1C1C] absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
           {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>

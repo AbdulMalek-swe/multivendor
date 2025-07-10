@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import clsx from "clsx";
+import PageLayout from "@/components/ui/PageLayout";
 
 const faqData = [
   {
@@ -39,7 +40,8 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 font-poppins">
+    <PageLayout>
+      <div className="max-w-4xl mx-auto px-6  font-poppins">
       <h1 className="text-4xl font-bold text-center mb-10 text-primary">
         Frequently Asked Questions
       </h1>
@@ -94,5 +96,6 @@ export default function FAQPage() {
         })}
       </div>
     </div>
+    </PageLayout>
   );
 }

@@ -1,3 +1,4 @@
+import PageLayout from "@/components/ui/PageLayout";
 import { privateRequest } from "@/lib/axios";
 import { responseHandler } from "@/utils/helpers";
 import { useRouter } from "next/router";
@@ -35,8 +36,7 @@ const MyOrder = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await privateRequest.get(`/user/order`);
-        console.log(response, "----------");
+        const response = await privateRequest.get(`/user/order`); 
         if (responseHandler(response)) {
           setOrder(response?.data?.data);
         }
@@ -48,7 +48,7 @@ const MyOrder = () => {
     return {};
   });
   return (
-    <div>
+    <PageLayout>
       <div className="bg-[#f3f4f6] min-h-screen p-6">
         <div className="border-b border-gray-300 mb-4">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
@@ -119,7 +119,7 @@ const MyOrder = () => {
           )
         )}
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

@@ -7,9 +7,9 @@ import "react-modern-drawer/dist/index.css";
 import "react-range-slider-input/dist/style.css";
 export const LayoutPageWrapper = ({ children }) => {
   return (
-    <section>
+    <section  >
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow container-custom">{children}</main>
       <Footer />
     </section>
   );

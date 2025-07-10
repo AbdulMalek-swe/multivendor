@@ -31,8 +31,7 @@ const SignUp = () => {
     
     // signup api integrate here
     try {
-      const response = await signup(data);
-      console.log(response,"------------------->");
+      const response = await signup(data); 
       if (responseHandler(response)) {
         setSuccess({
           loading: false,

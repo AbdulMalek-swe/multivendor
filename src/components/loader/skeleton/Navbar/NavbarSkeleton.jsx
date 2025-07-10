@@ -5,7 +5,7 @@ const NavbarSkeleton = () => {
     <div className="mb-5 animate-pulse">
       {/* Top nav (welcome + track) */}
       <div className="hidden md:block bg-primary w-full h-8">
-        <div className="container mx-auto h-8 flex items-center justify-between px-4">
+        <div className="  h-8 flex items-center justify-between px-4">
           <div className="h-4 w-32 bg-white rounded-md" />
           <div className="h-4 w-40 bg-white rounded-md" />
         </div>
@@ -13,7 +13,7 @@ const NavbarSkeleton = () => {
 
       {/* Main header */}
       <div className="bg-white w-full shadow-md h-20 md:h-16">
-        <div className="container mx-auto h-full flex items-center justify-between gap-3 px-4">
+        <div className="  h-full flex items-center justify-between gap-3 px-4">
           {/* Left: Location icon + text */}
           <div className="flex gap-2 items-center flex-shrink-0">
             <div className="w-6 h-6 bg-gray-200 rounded-full" />

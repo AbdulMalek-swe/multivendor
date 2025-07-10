@@ -6,17 +6,17 @@ import useBanner from "@/hooks/api/banner/useBanner";
 import CustomError from "../error/CustomError";
 import BannerSkeleton from "../loader/skeleton/Home/BannerSkeleton";
 const Banner = () => {
-  const { data: bannerList, loading,error } = useBanner();
+  const { data: bannerList, loading, error } = useBanner();
   const pagination = {
     clickable: true,
     renderBullet: function (index, className) {
       return `<span class="dot ${className}"></span>`;
     },
   };
-  if(error) return <CustomError/>
-  if(loading) return <BannerSkeleton/>
+  if (error) return <CustomError />;
+  if (loading) return <BannerSkeleton />;
   return (
-    <div className="w-full  h-full max-h-[320px] overflow-hidden  ">
+    <div className="w-full h-full overflow-hidden">
       <Swiper
         modules={[Pagination, Autoplay]}
         slidesPerView={1}
@@ -26,11 +26,11 @@ const Banner = () => {
         className="custom-swiper"
       >
         {bannerList.map((banner, idx) => (
-          <SwiperSlide key={idx} className="aspect-auto w-full h-full ">
+          <SwiperSlide key={idx} className="aspect-[1016/316] w-full h-full ">
             <Image
               src={`${process?.env.NEXT_PUBLIC_API_SERVER}${banner?.banner_image}`}
               alt="Loading..."
-              className="w-full object-cover rounded-lg max-h-[320px]"
+              className="w-full object-cover rounded-lg  "
               width={1000}
               height={1000}
               priority

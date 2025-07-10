@@ -32,8 +32,7 @@ const BottomNav = ({ items }) => {
       const idx = bottomNavLink.findIndex((route) => route?.href === pathname);
       setActiveIndex(idx);
     }
-  };
-  console.log(category, "----------->");
+  }; 
   return (
     <div
       className="fixed bottom-0 left-0 w-full h-[70px] bg-white z-50 flex items-center justify-center"

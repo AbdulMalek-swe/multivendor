@@ -30,8 +30,7 @@ const ProductCategory = ({ category = [], categoryId, setCategoryId }) => {
       </div>
     </div>
   );
-};
-
+}; 
 export default ProductCategory;
 const RecursiveCategory = ({ category, categoryId, handleChange }) => {
   const [open, setOpen] = useState(false); 

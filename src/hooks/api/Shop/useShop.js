@@ -6,7 +6,7 @@ function useShop(query = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
-    if (!query?.lat || !query?.lng) return;
+    
     async function fetchShop() {
       setLoading(true);
       setError(null);

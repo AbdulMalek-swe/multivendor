@@ -19,7 +19,7 @@ const useGeolocation = () => {
       },
       (err) => {
         setError("Permission denied or location unavailable");
-        setLatLng({lat:500000,lng:50000})
+        setLatLng({})
       }
     );
   }, []);

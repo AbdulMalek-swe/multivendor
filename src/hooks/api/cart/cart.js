@@ -110,6 +110,7 @@ export default function useCartProvider() {
     try {
       await clearCart();
       dispatch({ type: "CLEAR_CART" });
+      loadCart();
     } catch (err) {
       notifyError("clear successfully");
     }

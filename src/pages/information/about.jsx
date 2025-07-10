@@ -1,8 +1,9 @@
+import PageLayout from "@/components/ui/PageLayout";
 import Image from "next/image";
 import React from "react";
 const About = () => {
   return (
-    <div className="bg-white text-[#111827] font-poppins">
+    <PageLayout><div className="bg-white text-[#111827] font-poppins">
       {/* Hero Section */}
       <section className="relative bg-primary text-white">
         <div className="absolute inset-0 bg-black/40 z-0" />
@@ -116,7 +117,8 @@ const About = () => {
           Become a Seller
         </button>
       </section>
-    </div>
+    </div></PageLayout>
+    
   );
 };
 

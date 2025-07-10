@@ -10,8 +10,7 @@ const protectedRoutes = [
 import { NextResponse } from "next/server";
 export function middleware(request) {
   const token = request.cookies.get("bajar_token");
-  const pathname = request.nextUrl.pathname;
-  console.log(pathname)
+  const pathname = request.nextUrl.pathname; 
   const referer = request.headers.get("referer");
   const isAuthPage = pathname.startsWith("/auth");
   if (token && isAuthPage) {

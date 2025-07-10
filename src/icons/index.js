@@ -23,6 +23,7 @@ export {
   CiFaceSmile,
   CiShop,
   CiLogout,
+  CiFilter,
 } from "react-icons/ci";
 export {
   AiFillEye,
@@ -30,7 +31,7 @@ export {
   AiOutlineShopping,
   AiOutlineHome,
   AiOutlineUser,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 export { IoClose, IoArrowBack } from "react-icons/io5";
 export { LuCar } from "react-icons/lu";

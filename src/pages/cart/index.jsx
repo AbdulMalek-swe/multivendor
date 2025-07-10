@@ -6,6 +6,7 @@ import { useCart } from "@/hooks/cart/useCart";
 import { notifyError } from "@/utils/toast";
 import { useDeleteModal } from "@/context/DeleteModalContext";
 import { handlePurchaseProduct } from "@/utils/productPurchase";
+import PageLayout from "@/components/ui/PageLayout";
 const Cart = () => {
   const { openModal } = useDeleteModal();
   const router = useRouter();
@@ -32,8 +33,7 @@ const Cart = () => {
           color_id: item?.selected_color_id,
           offer_price: item?.price,
         });
-      });
-      console.log(result);
+      }); 
       localStorage.setItem("order_items", JSON.stringify(result));
       router.push("/checkout?bestApplied=true");
     } catch (error) {
@@ -97,7 +97,7 @@ const Cart = () => {
       </div>
     );
   return (
-    <div className="container-custom text-black ">
+    <PageLayout className="  ">
       {productItem?.length && updateLoading && (
         <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
           {/* <Spinner /> */}
@@ -221,7 +221,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

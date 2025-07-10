@@ -9,8 +9,7 @@ function useAreaById(id) {
     const fetchAreaById = async () => {
       setLoading(true);
       try {
-        const response = await fetchArea(id);
-        console.log(response,"--------->area find");
+        const response = await fetchArea(id); 
         if (response?.data?.data?.areas?.length) {
           setData(
             response?.data?.data?.areas?.map((item) => {

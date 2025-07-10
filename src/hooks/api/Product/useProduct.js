@@ -8,8 +8,7 @@ function useProduct(query = {}) {
   const [hasMoreData, setHasMoreData] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!query?.lat || !query?.lng || !query?.page) return; 
+  useEffect(() => { 
     async function fetchProduct() {
       if (query.page === 1) {
         setLoading(true);

@@ -1,6 +1,6 @@
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import RangeSlider from "react-range-slider-input";
-const PriceFilter = ({ min = 0, max = 1000 ,setPrice   }) => {
+const PriceFilter = ({ min = 0, max = 1000 ,setPrice ,price  }) => {
   const [value, setValue] = useState([min, max]); 
   const handleSliderChange = (val) => {
     setValue(val);  
@@ -18,8 +18,13 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice   }) => {
     newVal[index] = numVal;
     setValue(newVal); 
   };
+   useEffect(() => {
+    if (price?.minPrice !== undefined && price?.maxPrice !== undefined) {
+      setValue([price.minPrice, price.maxPrice]);
+    }
+  }, [price]);
   return (
-    <div className="shadow-sm spce-y-6 md:space-y-10 pb-4 px-2 rounded-md  overflow-hidden   w-full">
+    <div className="shadow-sm space-y-6 md:space-y-10 pb-4 px-2 rounded-md  overflow-hidden   w-full">
       <h1 className="font-semibold text-sm text-[#030712]">Price Filter</h1>
       <div className="space-y-5">
         {/* price input field  */}
@@ -64,9 +69,9 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice   }) => {
           />
         </div>
         {/* filter button  */}
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center gap-1">
           <span className="font-normal text-sm text-[#030712]">
-            Price: BDT{value[0]||min} — BDT{value[1]||max}
+            Price: ৳ {value[0]||min} — ৳ {value[1]||max}
           </span>
           <button className="rounded-md font-bold text-sm text-black/90 px-4 py-[9px] bg-[#E5E7EB] " onClick={()=>{setPrice({minPrice:value[0]||min,maxPrice:value[1]||max})}}>
             Filter

@@ -10,7 +10,10 @@ import CreateAddress from "@/components/address/CreateAddress";
 import useAddress from "@/hooks/api/address/useAddress";
 import DefaultAddress from "@/components/address/DefaultAddress";
 import EditAddress from "@/components/address/EditAddress";
+import { useCart } from "@/hooks/cart/useCart";
+import PageLayout from "@/components/ui/PageLayout";
 const Checkout = () => {
+  const {clear:cartClear} = useCart();
   const router = useRouter();
   const [orderItems, setOrderItems] = useState([]);
   const [orderAttribute, setOrderAttribute] = useState({
@@ -21,7 +24,7 @@ const Checkout = () => {
   const defaultAddress = addressData?.find(
     (item) => item?.default_address == 1
   );
-  //   setup for order item in state 
+  //   setup for order item in state
   useEffect(() => {
     const result = JSON?.parse(localStorage?.getItem("order_items"));
     const subtotal = result.reduce((acc, cur) => {
@@ -48,6 +51,7 @@ const Checkout = () => {
       });
       if (responseHandler(response)) {
         notifySuccess(response?.data?.message);
+        cartClear();
         router?.push(`/payment-options/${response?.data?.data?.id}`);
       }
     } catch (error) {}
@@ -60,7 +64,7 @@ const Checkout = () => {
     setOpenDrawer(!openDrawer);
   };
   return (
-    <div className="container-custom mx-auto text-black ">
+    <PageLayout>
       <div className="grid md:grid-cols-3 gap-6">
         {/* Left Content */}
         <div className="md:col-span-2 space-y-6">
@@ -96,7 +100,7 @@ const Checkout = () => {
                 )}
                 {openType === "edit" && (
                   <EditAddress
-                    refetch={()=>{}}
+                    refetch={() => {}}
                     setOpenDrawer={setOpenDrawer}
                     addressId={defaultAddress?.id}
                   />
@@ -259,7 +263,7 @@ const Checkout = () => {
           </button>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

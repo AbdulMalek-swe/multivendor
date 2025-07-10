@@ -11,9 +11,10 @@ import { formatPrice } from "@/utils/formatPrice";
 import { handlePurchaseProduct } from "@/utils/productPurchase";
 import { useCart } from "@/hooks/cart/useCart";
 import { notifyError } from "@/utils/toast";
+import PageLayout from "@/components/ui/PageLayout";
 
 const ProductDetails = () => {
-  const { addItem, items } = useCart(); 
+  const { addItem, items } = useCart();
   const router = useRouter();
   const {
     data: productItem,
@@ -64,7 +65,7 @@ const ProductDetails = () => {
   if (loading) return <SkeletonProductDetails />;
   if (error) return <CustomError />;
   return (
-    <div className="max-w-[1360px] mx-auto">
+    <PageLayout>
       <div className="bg-[#DC2626] text-white text-xs  flex items-center justify-center py-2 px-3 rounded-full w-14 mb-2 text-[10px] font-extrabold">
         {offerPricePercent(product?.reguler_price, product?.offer_price)}%
       </div>
@@ -217,7 +218,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

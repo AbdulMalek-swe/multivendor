@@ -3,7 +3,7 @@ import React from "react";
 const PriceFilterSkeleton = () => {
   return (
     <div>
-      <div className="shadow-sm space-y-6 md:space-y-10 pb-4 px-2 rounded-md mb-32 w-full animate-pulse">
+      <div className="shadow-sm space-y-6 md:space-y-10 pb-4 px-2 rounded-md   w-full animate-pulse">
         {/* Title skeleton */}
         <div className="h-4 w-24 bg-gray-300 rounded"></div>
 

@@ -25,8 +25,7 @@ const CartMenu = ({ cartProduct = [] }) => {
           offer_price: item?.price,
           
         });
-      });
-      console.log(result);
+      }); 
       localStorage.setItem("order_items", JSON.stringify(result));
       router.push("/checkout?bestApplied=true");
     } catch (error) {

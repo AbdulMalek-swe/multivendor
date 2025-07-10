@@ -26,8 +26,7 @@ const VerifyOtp = () => {
       otp: "XXXX",
     },
   });
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (data) => { 
     // setSuccess({
     //   ...success,
     //   loading: true,
