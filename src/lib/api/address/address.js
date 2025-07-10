@@ -12,3 +12,6 @@ export const fetchCity = async(id)=>{
 export const fetchArea = async(id)=>{
     return privateRequest.get(`user/city/${id}`)
 }
+export const singleAddress = async(id)=>{
+    return privateRequest.get(`user/address/${id}`)
+}

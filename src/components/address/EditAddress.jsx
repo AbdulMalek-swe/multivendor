@@ -1,32 +1,40 @@
 import useAreaById from "@/hooks/api/address/useArea";
 import useCityById from "@/hooks/api/address/useCity";
 import useDivision from "@/hooks/api/address/useDivision";
+import useFetchSingAddressById from "@/hooks/api/address/useFetchSingleAddress";
 import { privateRequest } from "@/lib/axios";
-import { responseHandler } from "@/utils/helpers";
+import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
+import { notifySuccess } from "@/utils/toast";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
-
-const CreateAddress = ({refetch,setOpenDrawer}) => {
+const EditAddress = ({ refetch, setOpenDrawer, addressId }) => {
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-    
-  } = useForm(); 
+    setValue,
+  } = useForm();
+  const { data: singleAddress } = useFetchSingAddressById(addressId);
+  console.log(singleAddress);
   const [divisionId, setDivisionId] = useState(null);
+  const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
   const { data, loading, error } = useDivision();
-  const { data: cityData, loading: cityLoading } = useCityById(divisionId);
+  const { data: cityData, loading: cityLoading } = useCityById(
+    selectedDivision?.value
+  );
   const { data: areaData, loading: areaLoading } = useAreaById(
     selectedCity?.city_id
   );
   //   division change state
   const handleMainSelectChange = (e) => {
-    setDivisionId(e?.id);
-    if (e.id !== divisionId) {
+    // setDivisionId(e?.id);
+    setSelectedDivision(e);
+
+    if (e.id !== selectedDivision?.value) {
       setSelectedCity(null);
       setSelectedArea(null);
     }
@@ -42,22 +50,56 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
   const handleAreaSelect = (e) => {
     setSelectedArea(e);
   };
+  // submit address form
   const onSubmit = async (formData) => {
     const payload = {
       ...formData,
       city_id: selectedCity?.value,
       area_id: selectedArea?.value,
-      division_id: divisionId,
+      division_id: divisionId || selectedDivision?.value,
       country: "bangladesh",
+      _method: "PUT",
     };
+    console.log(payload, "-------");
     try {
-      const response = await privateRequest.post("/user/address", payload);
+      const response = await privateRequest.post(
+        `/user/address/${addressId}`,
+        payload
+      );
       if (responseHandler(response)) {
+        notifySuccess(response?.data?.message)
         setOpenDrawer(false);
-        refetch()
+        refetch();
       }
-    } catch (error) {}
+    } catch (error) {
+      networkErrorHandeller(error)
+    }
   };
+
+  // set previous value
+  useEffect(() => {
+    setValue("type", singleAddress?.type);
+    setValue("name", singleAddress?.name);
+    setValue("phone", singleAddress?.phone);
+    setValue("address_line1", singleAddress?.address_line1);
+    setValue("postal_code", singleAddress?.postal_code);
+    setValue("division_id", singleAddress?.singleAddress?.division?.id);
+    setValue("city_id", singleAddress?.city?.id);
+    setValue("area_id", singleAddress?.area?.id);
+    setSelectedDivision({
+      label: singleAddress?.division?.name,
+      value: singleAddress?.division?.id,
+    });
+    setSelectedCity({
+      label: singleAddress?.city?.name,
+      value: singleAddress?.city?.city_id,
+      city_id: singleAddress?.city?.city_id,
+    });
+    setSelectedArea({
+      label: singleAddress?.area?.name,
+      value: singleAddress?.area?.id,
+    });
+  }, [singleAddress]);
   return (
     <div>
       <form
@@ -182,7 +224,11 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
         </div>
         <div className="w-full">
           <label className="block font-medium mb-1 text-sm">Division</label>
-          <Select options={data} onChange={handleMainSelectChange} />
+          <Select
+            options={data}
+            onChange={handleMainSelectChange}
+            value={selectedDivision}
+          />
         </div>
 
         {/* City */}
@@ -215,8 +261,8 @@ const CreateAddress = ({refetch,setOpenDrawer}) => {
         >
           Submit
         </button>
-      </form> 
+      </form>
     </div>
   );
 };
-export default CreateAddress;
+export default EditAddress;

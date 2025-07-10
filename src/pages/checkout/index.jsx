@@ -8,6 +8,8 @@ import { notifySuccess } from "@/utils/toast";
 import Drawer from "react-modern-drawer";
 import CreateAddress from "@/components/address/CreateAddress";
 import useAddress from "@/hooks/api/address/useAddress";
+import DefaultAddress from "@/components/address/DefaultAddress";
+import EditAddress from "@/components/address/EditAddress";
 const Checkout = () => {
   const router = useRouter();
   const [orderItems, setOrderItems] = useState([]);
@@ -15,10 +17,11 @@ const Checkout = () => {
     subtotal: 0,
     orderItems: 0,
   });
-  const {data,loading}= useAddress();
-   const defaultAddress = data?.find(item=>item?.default_address==1)
-  //   setup for order item in state
-  console.log(defaultAddress);
+  const { data: addressData, loading } = useAddress();
+  const defaultAddress = addressData?.find(
+    (item) => item?.default_address == 1
+  );
+  //   setup for order item in state 
   useEffect(() => {
     const result = JSON?.parse(localStorage?.getItem("order_items"));
     const subtotal = result.reduce((acc, cur) => {
@@ -41,7 +44,7 @@ const Checkout = () => {
       const response = await privateRequest.post("/user/order", {
         items: result,
         payment_method: "cod",
-        shipping_address: defaultAddress?.id
+        shipping_address: defaultAddress?.id,
       });
       if (responseHandler(response)) {
         notifySuccess(response?.data?.message);
@@ -88,35 +91,36 @@ const Checkout = () => {
                 {openType === "create" && (
                   <CreateAddress
                     // refetch={fetchAddress}
-                    // setOpenDrawer={setOpenDrawer}
-                  />
-                )}
-                {/* {openType === "edit" && (
-                  <EditAddress
-                    refetch={fetchAddress}
                     setOpenDrawer={setOpenDrawer}
                   />
-                )} */}
+                )}
+                {openType === "edit" && (
+                  <EditAddress
+                    refetch={()=>{}}
+                    setOpenDrawer={setOpenDrawer}
+                    addressId={defaultAddress?.id}
+                  />
+                )}
 
-                {/* {openType === "default" && (
-                  <AddressDefault
-                    fetchAddress={fetchAddress}
+                {openType === "default" && (
+                  <DefaultAddress
+                    fetchAddress={() => {}}
                     setOpenDrawer={setOpenDrawer}
                     setOpenType={setOpenType}
                     addressData={addressData}
-                    refetch={refetch}
+                    refetch={() => {}}
                   />
-                )} */}
+                )}
               </div>
             </Drawer>
             {/* shipping information show  */}
-            {data?.length>0 ? (
+            {addressData?.length > 0 ? (
               <div className="border p-4 rounded text-sm space-y-1 ">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-semibold">{
-                      defaultAddress?.name
-                      }</span>
+                    <span className="font-semibold">
+                      {defaultAddress?.name}
+                    </span>
                     <span className="bg-blue-200/50 rounded-md ml-1 px-1">
                       Default address
                     </span>
@@ -128,24 +132,20 @@ const Checkout = () => {
                     <FaHome className="text-blue-600" /> address
                   </button>
                 </div>
-                <div> 
+                <div>
                   <p>{defaultAddress?.address_line1}</p>
-                  <p>{defaultAddress?.division?.name} - {defaultAddress?.city?.name} - {defaultAddress?.area?.name}</p>
+                  <p>
+                    {defaultAddress?.division?.name} -{" "}
+                    {defaultAddress?.city?.name} - {defaultAddress?.area?.name}
+                  </p>
                 </div>
 
                 <button
                   className="border rounded-md px-1 py-0.5 font-normal cursor-pointer bg-gray-100 text-nowrap flex gap-1 flex-nowrap item-center justify-center"
-                  //   onClick={() => {
-                  //     router.push({
-                  //       pathname: router.pathname,
-                  //       query: {
-                  //         ...router.query,
-                  //         id: address?.address_id,
-                  //       },
-                  //     });
-                  //     setOpenType("edit");
-                  //     setOpenDrawer(true);
-                  //   }}
+                  onClick={() => {
+                    setOpenType("edit");
+                    setOpenDrawer(true);
+                  }}
                 >
                   <CiEdit /> edit address
                 </button>
@@ -205,9 +205,9 @@ const Checkout = () => {
                       {" "}
                       <p
                         className="font-medium line-clamp-2"
-                        title={item?.product_name}
+                        title={item?.product?.product_name}
                       >
-                        {item?.product_name}
+                        {item?.product?.product_name}
                       </p>
                       <span className="font-medium line-clamp-3">
                         {item?.category?.category_name}
