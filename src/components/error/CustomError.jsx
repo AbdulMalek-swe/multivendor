@@ -1,12 +1,13 @@
 import React from "react";
 import { FiAlertTriangle } from "@/icons";
+import PageLayout from "../ui/PageLayout";
 
 const CustomError = ({ message }) => {
   const handleReset = () => {
     window.location.reload();
   };
   return (
-    <div>
+    <PageLayout>
       <div className="min-h-[300px] flex flex-col items-center justify-center p-6 bg-red-50 border border-red-200 rounded-lg shadow-inner animate-fade-in">
         <FiAlertTriangle className="text-red-500 text-5xl mb-4 animate-bounce" />
         <h2 className="text-xl font-semibold text-red-600 mb-2">
@@ -22,7 +23,7 @@ const CustomError = ({ message }) => {
           আবার চেষ্টা করুন
         </button>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
