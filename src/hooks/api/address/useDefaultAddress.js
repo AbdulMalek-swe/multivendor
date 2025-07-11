@@ -11,6 +11,7 @@ function useDefaultAddress() {
     setLoading(true);
     setError(null);
     try {
+      console.log(payload,"payload hahah");
       const response = await postDefaultAddress(payload);
       setData(response)
     } catch (err) {

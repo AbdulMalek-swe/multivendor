@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import useAddress from "@/hooks/api/address/useAddress";
 import Drawer from "react-modern-drawer";
@@ -10,6 +10,8 @@ import { privateRequest } from "@/lib/axios";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import useDefaultAddress from "@/hooks/api/address/useDefaultAddress";
+import AddressSkeleton from "@/components/loader/skeleton/AccountSkeleton/AddressSkeleton";
+import CreateAddress from "@/components/address/CreateAddress";
 const Address = () => {
   const { user } = useAuth();
   const { openModal } = useDeleteModal();
@@ -34,13 +36,27 @@ const Address = () => {
       networkErrorHandeller(error);
     }
   };
-//   change default address 
-  const {handleDefaultAddress,data} = useDefaultAddress();
+  //   change default address
+  const { handleDefaultAddress, data, error } = useDefaultAddress();
+  console.log(data, "----");
+  useEffect(() => {
+    if (!loading && responseHandler(data)) {
+      notifySuccess(data?.data?.message);
+      refetch();
+    }
+    if (error) {
+      notifyError("Default address not set");
+    }
+  }, [data]);
   return (
     <>
       {" "}
-      {loading && false ? (
-        <ManageAccountSkeleton />
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4 mb-10">
+          {Array.from({ length: 9 }).map((_, idx) => (
+            <AddressSkeleton key={idx} />
+          ))}
+        </div>
       ) : (
         <div className="   mx-auto text-[#030712] border-[#E5E7EB]">
           <Drawer
@@ -53,19 +69,34 @@ const Address = () => {
             }}
             className="w-full sm:w-[450px]"
           >
-            {" "}
+            {/* CREATE ADDRESS  */}
+            {openType === "create" && (
+              <CreateAddress refetch={refetch} setOpenDrawer={setOpenDrawer} />
+            )}
+            {/* EDIT ADDRESS  */}
             {openType === "edit" && (
               <EditAddress
-                refetch={() => {}}
+                refetch={refetch}
                 setOpenDrawer={setOpenDrawer}
                 addressId={addressId}
               />
             )}
           </Drawer>
 
-          <h2 className="text-2xl font-semibold mb-6">Address Book</h2>
+          <div className="flex justify-between pb-6">
+            <h1 className="text-2xl font-semibold  ">Address Book</h1>
+           <button
+                    className="text-blue-600 text-sm px-2 py-1 border border-gray-500 rounded-lg"
+                    onClick={() => {
+                      setOpenType("create");
+                      setOpenDrawer(true); 
+                    }}
+                  >
+                    Add New Address
+                  </button>
+          </div>
           {/* Profile & Address Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-4 mb-10">
             {/* Address Book */}
             {addressData?.map((address, idx) => (
               <div
@@ -115,9 +146,12 @@ const Address = () => {
                         🗑 Remove
                       </button>
                       {address?.default_address !== 1 && (
-                        <button className="  text-[#030712] items-center text-nowrap text-sm border px-2 py-1 rounded-md border-[#E5E7EB] hover:bg-green-500/20 w-full" onClick={()=>{
-                            handleDefaulAddress({address_id:address?.id})
-                        }}>
+                        <button
+                          className="  text-[#030712] items-center text-nowrap text-sm border px-2 py-1 rounded-md border-[#E5E7EB] hover:bg-green-500/20 w-full"
+                          onClick={() => {
+                            handleDefaultAddress({ address_id: address?.id });
+                          }}
+                        >
                           {" "}
                           Default{" "}
                         </button>

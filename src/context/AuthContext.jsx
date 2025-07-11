@@ -1,13 +1,14 @@
 // context/AuthContext.js
-import { createContext, useContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { createContext, useContext, useEffect, useState } from "react"; 
 import { getProfile } from "@/lib/api/profile/profile";
 import { getToken, removeToken, setToken } from "@/utils/helpers";
 import { notifyError } from "@/utils/toast";
+import { useRouter } from "next/router";
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     const token = getToken();
     if (!token) {
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     removeToken()
     setUser(null);
+    router?.push("/")
   };
 
   return (
