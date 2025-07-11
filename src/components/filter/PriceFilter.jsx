@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import RangeSlider from "react-range-slider-input";
-const PriceFilter = ({ min = 0, max = 1000 ,setPrice ,price  }) => {
-  const [value, setValue] = useState([min, max]); 
+const PriceFilter = ({ min = 0, max = 1000, setPrice, price }) => {
+  const [value, setValue] = useState([min, max]);
   const handleSliderChange = (val) => {
-    setValue(val);  
+    setValue(val);
   };
 
   // When user types manually in inputs
   const handleInputChange = (index, val) => {
-    let newVal = [...value]; 
+    let newVal = [...value];
     let numVal = Number(val);
-    if (isNaN(numVal)) return;  
+    if (isNaN(numVal)) return;
     if (numVal < min) numVal = min;
-    if (numVal > max) numVal = max;  
+    if (numVal > max) numVal = max;
     if (index === 0 && numVal > newVal[1]) numVal = newVal[1];
-    if (index === 1 && numVal < newVal[0]) numVal = newVal[0]; 
+    if (index === 1 && numVal < newVal[0]) numVal = newVal[0];
     newVal[index] = numVal;
-    setValue(newVal); 
+    setValue(newVal);
   };
-   useEffect(() => {
+  useEffect(() => {
     if (price?.minPrice !== undefined && price?.maxPrice !== undefined) {
       setValue([price.minPrice, price.maxPrice]);
     }
   }, [price]);
+  const handleSliderCommit = (val) => {
+    // API call function
+    console.log(val, "ok this value is nice");
+  };
   return (
     <div className="shadow-sm space-y-6 md:space-y-10 pb-4 px-2 rounded-md  overflow-hidden   w-full">
       <h1 className="font-semibold text-sm text-[#030712]">Price Filter</h1>
@@ -35,7 +39,7 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice ,price  }) => {
             </span>
             <input
               className="rounded-lg border border-[#D1D5DB] py-3 px-2 outline-none text-[#020617] text-sm shadow-sm backdrop-blur-sm w-full"
-              value={value[0]||min}
+              value={value[0] || min}
               min={min}
               max={value[1]}
               onChange={(e) => handleInputChange(0, e.target.value)}
@@ -48,7 +52,7 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice ,price  }) => {
             </span>
             <input
               className="rounded-lg border border-[#D1D5DB] py-3 px-2 outline-none text-[#020617] text-sm shadow-sm backdrop-blur-sm w-full"
-              value={value[1]||max}
+              value={value[1] || max}
               min={value[0]}
               max={max}
               onChange={(e) => handleInputChange(1, e.target.value)}
@@ -61,21 +65,24 @@ const PriceFilter = ({ min = 0, max = 1000 ,setPrice ,price  }) => {
             className="custom-slider"
             id="custom-slider-color"
             min={min}
-            max={max} 
-            value={[value[0]||min, value[1]||max]}
+            max={max}
+            value={[value[0] || min, value[1] || max]}
             pearling
             minDistance={1}
             onInput={handleSliderChange}
+            onThumbDragEnd={(val) => {
+              setPrice({
+                minPrice: value[0] || min,
+                maxPrice: value[1] || max,
+              });
+            }}
           />
         </div>
         {/* filter button  */}
         <div className="flex justify-between items-center gap-1">
           <span className="font-normal text-sm text-[#030712]">
-            Price: ৳ {value[0]||min} — ৳ {value[1]||max}
-          </span>
-          <button className="rounded-md font-bold text-sm text-black/90 px-4 py-[9px] bg-[#E5E7EB] " onClick={()=>{setPrice({minPrice:value[0]||min,maxPrice:value[1]||max})}}>
-            Filter
-          </button>
+            Price: ৳ {value[0] || min} — ৳ {value[1] || max}
+          </span> 
         </div>
       </div>
     </div>

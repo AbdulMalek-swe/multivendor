@@ -1,17 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import PriceFilter from "../filter/PriceFilter";
 import useCategoryId from "@/hooks/api/Category/useSingleCategory";
 import { useRouter } from "next/router";
-import PriceFilterSkeleton from "../loader/skeleton/Porduct/Category/PriceFilterSkeleton";
-import ProductStatus from "../filter/Status";
 import SingleCart from "../card/SingleCart";
-import ProductStatusSkeleton from "../loader/skeleton/Porduct/Category/ProductStatusSkeleton";
-import ProductCategory from "../filter/ProductCategory";
-import ProductBrands from "../filter/ProductBrands";
 import ProductBanner from "../banner/ProductBanner";
 import { useLoadingObserver } from "@/utils/loadingObserver";
 import ProductCardSkeleton from "../loader/skeleton/Porduct/Product/SingleProductSkeleton";
+import { FilterArea } from "../filter/FilterArea";
 
+import Drawer from "react-modern-drawer";
 const CategoryProduct = () => {
   const { query } = useRouter();
   const [price, setPrice] = useState({});
@@ -44,41 +40,52 @@ const CategoryProduct = () => {
     loading: infinityLoading,
     hasMoreData,
   });
-  console.log(data);
+  // drawer logic
+  const [open, setOpen] = useState(false);
+  const handleOpenDrawer = () => {
+    setOpen(!open);
+  };
   return (
     <div className="flex gap-4 md:gap-8 ">
-      <div className="w-[259px] shrink-0">
-        {loading ? (
-          <>
-            <PriceFilterSkeleton />
-            <ProductStatusSkeleton />
-          </>
-        ) : (
-          <div className="space-y-4   ">
-            {" "}
-            <PriceFilter
-              max={Math.round(data?.max_price) || 100}
-              min={0}
-              setPrice={setPrice}
-            />
-            {data?.child_categories?.length > 0 && (
-              <ProductCategory
-                category={data?.child_categories}
-                categoryId={categoryId}
-                setCategoryId={setCategoryId}
-              />
-            )}
-            {data?.brands?.length > 0 && (
-              <ProductBrands
-                brand={data?.brands}
-                brandId={brandId}
-                setBrandId={setBrandId}
-              />
-            )}
-            <ProductStatus checked={checked} setChecked={setChecked} />
-          </div>
-        )}
+      <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">
+        <FilterArea
+          data={data}
+          loading={loading}
+          setPrice={setPrice}
+          price={price}
+          categoryId={categoryId}
+          setCategoryId={setCategoryId}
+          brandId={brandId}
+          setBrandId={setBrandId}
+          checked={checked}
+          setChecked={setChecked}
+        />
       </div>
+      <Drawer
+        open={open}
+        onClose={handleOpenDrawer}
+        direction="left"
+        style={{
+          width: "100%",
+          maxWidth: "280px",
+        }}
+        className="w-full sm:w-[280px]"
+      >
+        <div className="px-4 py-4">
+          <FilterArea
+            data={data}
+            loading={loading}
+            setPrice={setPrice}
+            price={price}
+            categoryId={categoryId}
+            setCategoryId={setCategoryId}
+            brandId={brandId}
+            setBrandId={setBrandId}
+            checked={checked}
+            setChecked={setChecked}
+          />
+        </div>
+      </Drawer>
       <div className="flex-1 space-y-4 md:space-y-5 lg:space-y-6 ">
         {/* banner set for cateogory section  */}
         <ProductBanner

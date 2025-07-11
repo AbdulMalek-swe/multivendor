@@ -66,7 +66,7 @@ const SingleCart = ({ product }) => {
           <FiShoppingCart />
           Add To Cart
         </Button>
-        <p className="bg-[#AB1C1C] absolute top-0 right-0 rounded-tr-2xl w-14 h-12 rounded-bl-xl text-sm flex items-center p-1 font-poppins font-semibold text-wrap text-center leading-4">
+        <p className="bg-[#AB1C1C] absolute top-0 right-0 rounded-tr-2xl w-12 h-10 md:h-12 md:w-14 rounded-bl-xl text-sm flex items-center   font-poppins font-semibold text-wrap text-center leading-3.5 md:leading-4 p-1">
           {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>
       </div>

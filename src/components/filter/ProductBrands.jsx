@@ -4,11 +4,11 @@ import { FaPlus, FaMinus } from "@/icons";
 const ProductBrands = ({ brand = [], brandId, setBrandId }) => {
   const handleChange = (item) => {
     setBrandId((prev) => {
-      if (brandId.includes(item?.brand_id)) {
-        const filter = brandId.filter((items) => items != item?.brand_id);
+      if (brandId.includes(item?.id)) {
+        const filter = brandId.filter((items) => items != item?.id);
         return filter;
       } else {
-        return [...prev, item?.brand_id];
+        return [...prev, item?.id];
       }
     });
   };
@@ -19,13 +19,13 @@ const ProductBrands = ({ brand = [], brandId, setBrandId }) => {
       </h1>
       <div>
         {/* brand render component  */}
-        {brand.map((item, idx) => (
+        {brand.map((brand, idx) => (
           <div className="  space-y-2">
             <div className="flex justify-between items-center space-y-2 md:space-y-3  ">
               <Checkbox
-                checked={brandId?.includes(brand.brand_id)}
+                checked={brandId?.includes(brand.id)}
                 onChange={() => handleChange(brand)}
-                label={brand.brand_name}
+                label={brand?.name}
                 key={idx}
               />
               <span className="text-black text-xs">{"(1)"}</span>

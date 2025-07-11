@@ -179,20 +179,20 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-4   gap-3">
-                {productList?.slice(8)?.map((product, idx) => (
-                  <SingleCart product={product} key={idx} />
-                ))}
-                {/* infinityLoading for open image */}
-              </div>
-              <div ref={loadingRef} className="  mt-4 flex justify-center">
-                {!productLoading && infinityLoading && (
-                  <div className="grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  w-full">
-                    {Array.from({ length: 10 }).map((_, index) => (
+              <div
+                ref={loadingRef}
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+              >
+                {!productLoading && infinityLoading
+                  ? Array.from({ length: 10 }).map((_, index) => (
                       <ProductCardSkeleton key={index} />
-                    ))}
-                  </div>
-                )}
+                    ))
+                  : productList
+                      ?.slice(8)
+                      ?.map((product, idx) => (
+                        <SingleCart product={product} key={idx} />
+                      ))}
+                {/* infinityLoading for open image */}
               </div>
             </div>
           </div>

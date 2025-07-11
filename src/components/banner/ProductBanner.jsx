@@ -7,10 +7,10 @@ const ProductBanner = ({
   img = "",
 }) => {
   return (
-    <div className="flex justify-between gap-4 md:gap-6 lg:gap-8 items-center max-h-72 overflow-hidden">
+    <div className="w-full flex justify-between gap-4 md:gap-6 lg:gap-8 items-center max-h-72 overflow-hidden">
       <div className="w-1/2 space-y-1">
-        <h1 className="font-bold text-[30px] text-[#111827]">{title}</h1>
-        <p className="font-normal text-[13px] text-[#6B7280]">{subTitle}</p>
+        <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-[30px]  text-[#111827]">{title}</h1>
+        <p className="font-normal text-[13px] md:text-sm lg:text-base text-[#6B7280]">{subTitle}</p>
       </div>
       <div className="relative w-1/2 h-[180px] overflow-hidden  ">
         {/* Image */}
