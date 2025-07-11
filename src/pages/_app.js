@@ -19,6 +19,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 export default function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <AuthProvider>
       <DeleteModalProvider>
@@ -35,7 +36,7 @@ export default function App({ Component, pageProps }) {
           </Head>
           <main className={`  ${roboto.variable} ${poppins.variable}  `}>
             <LayoutPageWrapper>
-              <Component {...pageProps} />
+              {getLayout(<Component {...pageProps} />)}
               <Toaster
                 position="top-right"
                 richColors

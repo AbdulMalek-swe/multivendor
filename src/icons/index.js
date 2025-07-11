@@ -1,4 +1,3 @@
-export { FiShoppingCart, FiPhone, FiAlertTriangle } from "react-icons/fi";
 export {
   FaHome,
   FaCheck,
@@ -7,16 +6,27 @@ export {
   FaWhatsapp,
   FaPhoneAlt,
   FaSpinner,
-  FaShoppingCart
+  FaShoppingCart,
+  FaUser,
+  FaBoxOpen,
+  FaSignOutAlt,
 } from "react-icons/fa";
 export {
   MdOutlineDashboard,
   MdPerson,
   MdOutlinePayment,
   MdLocationOff,
+  MdOutlineLocationOn,
+  MdCancel,
 } from "react-icons/md";
-export { RxDashboard } from "react-icons/rx";
-export { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+export {
+  AiFillEye,
+  AiFillEyeInvisible,
+  AiOutlineShopping,
+  AiOutlineHome,
+  AiOutlineUser,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 export {
   CiLock,
   CiSearch,
@@ -26,13 +36,9 @@ export {
   CiLogout,
   CiFilter,
 } from "react-icons/ci";
-export {
-  AiFillEye,
-  AiFillEyeInvisible,
-  AiOutlineShopping,
-  AiOutlineHome,
-  AiOutlineUser,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
+export { FiShoppingCart, FiPhone, FiAlertTriangle } from "react-icons/fi";
+export { IoIosArrowForward, IoIosArrowDown } from "react-icons/io"; 
 export { IoClose, IoArrowBack } from "react-icons/io5";
+export { BiRefresh } from "react-icons/bi";
+export { RxDashboard } from "react-icons/rx";
 export { LuCar } from "react-icons/lu";

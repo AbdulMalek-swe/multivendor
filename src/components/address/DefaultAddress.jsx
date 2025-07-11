@@ -26,8 +26,7 @@ const DefaultAddress = ({
       if (response?.status) {
         setBtnLoading(false)
         notifySuccess(response?.data?.message);
-        refetch();
-
+        refetch(); 
         setOpenDrawer(false);
       }
     } catch (error) {

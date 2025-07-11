@@ -111,8 +111,7 @@ const Checkout = () => {
                   )}
 
                   {openType === "default" && (
-                    <DefaultAddress
-                     
+                    <DefaultAddress 
                       setOpenDrawer={setOpenDrawer}
                       setOpenType={setOpenType}
                       addressData={addressData}
@@ -266,7 +265,7 @@ const Checkout = () => {
               onClick={handleOrder}
               // disabled={btnLoading}
             >
-              {/* {btnLoading ? <Spinner /> : "Place Order"} */} place order
+             place order
             </button>
           </div>
         </div>

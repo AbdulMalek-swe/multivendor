@@ -7,6 +7,8 @@ import EditAddress from "@/components/address/EditAddress";
 import useOrder from "@/hooks/api/order/useOrder";
 import PageLayout from "@/components/ui/PageLayout";
 import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";
+import { flattenOrders } from "@/utils/flattenAddress"; 
+import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 const MyAccount = () => {
   const { user } = useAuth();
   const { data: addressData, loading } = useAddress();
@@ -22,42 +24,6 @@ const MyAccount = () => {
   };
   // order find recently order
   const { data: order, loading: orderLoading } = useOrder();
-  console.log(order, "----------->order complete");
-  function flattenOrders(orderList) {
-    const result = [];
-
-    orderList?.forEach((order) => {
-      const orderStatus = order?.order_status;
-      const orderId = order?.id;
-      const shippingCost = parseFloat(order?.shipping_cost || 0);
-      const create = order?.created_at;
-      order?.sub_orders?.forEach((subOrder) => {
-        const vendor = subOrder?.vendor;
-        const vendorName = vendor?.company_name;
-        const subOrderId = subOrder?.id;
-        subOrder?.items?.forEach((item) => {
-          result.push({
-            order_id: orderId,
-            sub_order_id: subOrderId,
-            order_status: orderStatus,
-            vendor_name: vendorName,
-            product_id: item?.product_id,
-            product_name: item?.product?.product_name,
-            product_description: item?.product?.short_description,
-            quantity: item?.quantity,
-            total: parseFloat(item?.total),
-            price: parseFloat(item?.price),
-            shipping_cost: shippingCost,
-            image: `${process.env.NEXT_PUBLIC_API_SERVER}${item?.product?.thumbnail}`,
-            product_images: item?.product?.product_image,
-            created_at: create,
-          });
-        });
-      });
-    });
-
-    return result;
-  }
   const flatData = flattenOrders(order);
   console.log(flatData, "--=");
   // formate date
@@ -70,12 +36,12 @@ const MyAccount = () => {
   }
 
   return (
-    <PageLayout>
+    <>
       {" "}
       {loading ? (
         <ManageAccountSkeleton />
       ) : (
-        <div className=" max-w-7xl mx-auto text-[#030712] border-[#E5E7EB]">
+        <div className="   mx-auto text-[#030712] border-[#E5E7EB]">
           <Drawer
             open={openDrawer}
             onClose={handleOpenDrawer}
@@ -206,8 +172,11 @@ const MyAccount = () => {
           </div>
         </div>
       )}
-    </PageLayout>
+    </>
   );
+};
+MyAccount.getLayout = function getLayout(page) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default MyAccount;

@@ -1,3 +1,4 @@
+import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import OrderSkeleton from "@/components/loader/skeleton/AccountSkeleton/OrderSkeleton";
 import PageLayout from "@/components/ui/PageLayout";
 import useOrder from "@/hooks/api/order/useOrder"; 
@@ -39,7 +40,11 @@ const MyOrder = () => {
   return (
     <PageLayout>
       {loading ? (
-        <OrderSkeleton />
+        <>
+          {
+            Array.from({length:9}).map((_,idx)=> <OrderSkeleton key={idx} />)
+          }
+        </>
       ) : (
         <div className="bg-[#f3f4f6] min-h-screen p-5 rounded-2xl text-[#030712] border-[#E5E7EB]">
           <div className="border-b text-[#030712] border-[#E5E7EB] mb-4">
@@ -120,5 +125,7 @@ const MyOrder = () => {
     </PageLayout>
   );
 };
-
+MyOrder.getLayout = function getLayout(page) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
 export default MyOrder;

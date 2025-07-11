@@ -15,3 +15,6 @@ export const fetchArea = async(id)=>{
 export const singleAddress = async(id)=>{
     return privateRequest.get(`user/address/${id}`)
 }
+export const postDefaultAddress = async(payload)=>{
+    return privateRequest.get(`user/address/default`,payload)
+}
