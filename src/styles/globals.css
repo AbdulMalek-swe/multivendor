@@ -16,6 +16,7 @@
   --font-poppins: "Poppins", sans-serif;
   --animate-ripple: ripple 0.6s linear;
   --animate-fade-up: fadeup 0.4s ease-out;
+  --animate-marquee:marquee_run 15s linear infinite;
   --breakpoint-xs: 480px;
   @keyframes ripple {
     0% {
@@ -33,6 +34,14 @@
     }
     100% {
       transform: translateY(0);
+    }
+  }
+  @keyframes marquee_run {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
     }
   }
 }
@@ -143,4 +152,14 @@ browser scrollbar custom design code here
   .container-custom {
     width: 1550px;
   }
+}
+
+/* hide scrollbar  */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

@@ -130,7 +130,7 @@ const MyAccount = () => {
           <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
             <h3 className="text-lg font-medium mb-4">Recent Orders</h3>
             <div className="overflow-auto">
-              <table className="min-w-full text-left text-sm border-t border-[#E5E7EB]">
+              <table className="min-w-full text-left text-sm border-t border-[#E5E7EB] overflow-scroll">
                 <thead>
                   <tr className="border-b border-[#E5E7EB] bg-gray-100">
                     <th className="p-3 font-semibold">Order #</th>

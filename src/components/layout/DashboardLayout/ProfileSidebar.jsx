@@ -15,7 +15,7 @@ export default function AccountSidebar() {
   const { pathname } = useRouter();
 
   return (
-    <div className="shrink-0 p-4 border rounded-md shadow-sm bg-white">
+    <div className="shrink-0 p-4 border rounded-md shadow-sm bg-white h-screen md:h-[calc(100vh-142px)]">
       <div className="mb-4">
         <p className="text-gray-600 text-sm">Hello,</p>
         <p className="font-semibold text-gray-800"> {user?.name} </p>
