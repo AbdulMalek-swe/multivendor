@@ -4,8 +4,7 @@ import PageLayout from "@/components/ui/PageLayout";
 import Drawer from "react-modern-drawer";
 import { RxHamburgerMenu } from "@/icons";
 const DashboardLayout = ({ children }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false); 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   return (
     <PageLayout>

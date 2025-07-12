@@ -250,7 +250,7 @@ const ProductDetails = () => {
         <div dangerouslySetInnerHTML={{ __html: product?.description }}></div>
       </div>
       {/* realeted product code here  */}
-       <span className="inline-block pb-2 leading-7 font-bold text-lg">
+       <span className="inline-block pb-2 leading-7 font-bold text-lg text-[#030712]">
            Related products
           </span>
        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
