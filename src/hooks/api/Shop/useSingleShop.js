@@ -29,7 +29,7 @@ function useSingleShopId(id, query = {}) {
           const value = data?.products?.data;
           setData({
             brands: response?.data?.data?.brands,
-            child_categories: response?.data?.data?.child_categories,
+            categories: response?.data?.data?.categories,
             max_price: response?.data?.data?.max_price,
             products: {
               ...data?.products,

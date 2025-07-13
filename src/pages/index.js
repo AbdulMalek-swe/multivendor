@@ -17,12 +17,18 @@ import CustomError from "@/components/error/CustomError";
 import { useLoadingObserver } from "@/utils/loadingObserver";
 import { useRef, useState } from "react";
 import PageLayout from "@/components/ui/PageLayout";
+import Modal from "@/components/ui/modal";
+import NearestShop from "@/components/shop/Nearest-Shop";
 export default function Home() {
   const { latLng } = useGeolocation();
   const [page, setPage] = useState(1);
   const loadingRef = useRef();
   // shop list
-  const { data: shopList, loading: shopLoading, error } = useShop(latLng);
+  const {
+    data: shopList,
+    loading: shopLoading,
+    error,
+  } = useShop({ per_page: 12, isFetch: true });
   // product list
   const {
     data: productList,
@@ -30,7 +36,7 @@ export default function Home() {
     error: productError,
     infinityLoading,
     hasMoreData,
-  } = useProduct({ ...latLng, page, per_page: 10 });
+  } = useProduct({ page, per_page: 10 });
   // loading observer function
   useLoadingObserver({
     setPage,
@@ -38,9 +44,23 @@ export default function Home() {
     loading: infinityLoading,
     hasMoreData,
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => {
+    setIsOpen(false);
+  };
   if (error || productError) return <CustomError />;
   return (
     <PageLayout>
+      {/* nearest shop modal created   */}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        children={
+          <>
+            <NearestShop />
+          </>
+        }
+      />
       <div className="  space-y-2 sm:space-y-4 md:space-y-6 lg:space-y-8  ">
         {/* catgory and banner section  */}
         <section className="flex gap-4">
@@ -50,15 +70,15 @@ export default function Home() {
               src="/homeImage/1.png"
               width={1000}
               height={1000}
-              className="mb-2"
+              className="mb-2 mt-2"
               alt="loading..."
             />
-            <Image
+            {/* <Image
               src="/homeImage/2.png"
               width={1000}
               height={1000}
               alt="loading..."
-            />
+            /> */}
           </div>
           {/* product and banner section  */}
           <div className="w-full md:w-8/12 lg:w-9/12 ">
@@ -74,7 +94,10 @@ export default function Home() {
                       <span className="text-primary   ">Shop Profile</span>
                     </HomePageHeaderText>
                     <div className=" flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
-                      <div className="flex items-center gap-2">
+                      <div
+                        className="flex items-center gap-2 cursor-pointer"
+                        onClick={() => setIsOpen(true)}
+                      >
                         <img
                           src="/icons/homeLocation.svg"
                           alt="location icon"
@@ -116,13 +139,14 @@ export default function Home() {
                   ))}
                 </div>
               ) : (
-                <div className="pt-3 ">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4   gap-3">
-                    {productList?.slice(0, 8)?.map((product, idx) => (
-                      <SingleCart product={product} key={idx} />
-                    ))}
-                  </div>
-                </div>
+                ""
+                // <div className="pt-3 ">
+                //   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4   gap-3">
+                //     {productList?.slice(0, 8)?.map((product, idx) => (
+                //       <SingleCart product={product} key={idx} />
+                //     ))}
+                //   </div>
+                // </div>
               )}
             </div>
           </div>
@@ -187,11 +211,9 @@ export default function Home() {
                   ? Array.from({ length: 10 }).map((_, index) => (
                       <ProductCardSkeleton key={index} />
                     ))
-                  : productList
-                      ?.slice(8)
-                      ?.map((product, idx) => (
-                        <SingleCart product={product} key={idx} />
-                      ))}
+                  : productList?.map((product, idx) => (
+                      <SingleCart product={product} key={idx} />
+                    ))}
                 {/* infinityLoading for open image */}
               </div>
             </div>

@@ -38,10 +38,11 @@ export default function App({ Component, pageProps }) {
             <LayoutPageWrapper>
               {getLayout(<Component {...pageProps} />)}
               <Toaster
-                position="top-right"
+                position="top-left"
                 richColors
                 closeButton
-                visibleToasts={9}
+                visibleToasts={5}
+                duration={900}
                 toastOptions={{
                   style: {
                     borderRadius: "10px",

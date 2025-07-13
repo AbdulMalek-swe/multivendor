@@ -43,7 +43,7 @@ export default function Footer() {
             Most Popular Categories
           </h1>
           <div className="space-y-2 text-sm flex flex-col">
-            {categoryList?.map((category, idx) => (
+            {categoryList?.slice(0,7)?.map((category, idx) => (
               <Link
                 href={ROUTES?.CATEGORY_DETAILS(category?.category_id)}
                 aria-label="bajar.net"

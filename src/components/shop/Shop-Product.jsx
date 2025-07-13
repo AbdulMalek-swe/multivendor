@@ -45,6 +45,7 @@ const ShopProduct = () => {
     loading: infinityLoading,
     hasMoreData,
   });
+  console.log(data,"--------->");
   return (
     <div className="flex gap-2 md:gap-3">
       <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">

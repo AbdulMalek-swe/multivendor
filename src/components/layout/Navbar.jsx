@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextInput } from "../ui/Input";
 import Link from "next/link";
-import { ROUTES } from "@/constants/route"; 
-import { useRouter } from "next/router"; 
+import { ROUTES } from "@/constants/route";
+import { useRouter } from "next/router";
 import CartMenu from "../cart/CartMenu";
 import BottomNav from "./BottomNav";
 import { useCart } from "@/hooks/cart/useCart";
@@ -41,21 +41,22 @@ const Navbar = () => {
   }, []);
   if (authLoading) return <NavbarSkeleton />;
   return (
-    <div   >
+    <div className={`fixed top-0 left-0 w-full z-50 ${isFixed&&'shadow'}`}>
       {/* navingation header  */}
       <section
-        className={` hidden md:block bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden ${
-          isFixed
-            ? "opacity-0 -translate-y-4 h-0"
-            : "opacity-100 translate-y-0 h-8"
-        }`}
+        className={` hidden md:block bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden `}
       >
-        <div className=" container-custom flex justify-between items-center text-sm font-medium leading-[18px] h-8 ">
-          <Link href={ROUTES?.HOME}  aria-label="bajar.net" className="hover:underline">
+        <div className=" container-custom flex justify-between text-white items-center text-sm font-medium leading-[18px] h-8 underline">
+          <Link
+            href={ROUTES?.HOME}
+            aria-label="bajar.net"
+            className="hover:underline"
+          >
             Welcome to Baajar!
           </Link>
           <Link
-            href={ROUTES.TRACK}  aria-label="bajar.net"
+            href={ROUTES.TRACK}
+            aria-label="bajar.net"
             className="flex items-center gap-1 hover:underline"
           >
             <img src="/icons/track_car.svg" alt="loading" />
@@ -65,11 +66,7 @@ const Navbar = () => {
       </section>
       {/* second header  */}
       <section
-        className={`bg-white z-50 w-full transition-all duration-500 ease-in-out transform ${
-          isFixed
-            ? "fixed top-0 left-0  shadow-md translate-y-0 opacity-100 h-16 scale-[1]"
-            : "relative opacity- -translate-y-0 h-20 scale-[0.98]"
-        }`}
+        className={`bg-white z-50 w-full transition-all duration-500 ease-in-out transform py-2 `}
       >
         <div className=" container-custom h-full flex items-center justify-between gap-3">
           <div className="flex gap-3 items-center flex-shrink-0">
@@ -127,20 +124,25 @@ const Navbar = () => {
                     {/* indicator make  */}
 
                     <Link
-                      href={ROUTES?.ACCOUNT} aria-label="bajar.net"
+                      href={ROUTES?.ACCOUNT}
+                      aria-label="bajar.net"
                       className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
                     >
                       <CiFaceSmile className="text-xl" />
                       <span className=""> Manage My Account</span>
                     </Link>
                     <Link
-                      href={ROUTES?.ORDERS} aria-label="bajar.net"
+                      href={ROUTES?.ORDERS}
+                      aria-label="bajar.net"
                       className="px-4 py-2   cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline"
                     >
                       <CiShop className="text-xl" />
                       My Orders
                     </Link>
-                    <div  className="px-4 py-2 cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline  "  onClick={()=>logout()}>
+                    <div
+                      className="px-4 py-2 cursor-pointer flex gap-1 items-center text-[15px] font-normal hover:text-primary/80 hover:underline  "
+                      onClick={() => logout()}
+                    >
                       <CiLogout className="text-xl" />
                       <span>Logout</span>
                     </div>
@@ -150,7 +152,7 @@ const Navbar = () => {
               <NavbarText text1="Deliver to" text2="all sylhet" />
               {/* cart route  */}
               <div className="relative  group py-2 ">
-                <Link className=""  aria-label="bajar.net" href={ROUTES?.CART}>
+                <Link className="" aria-label="bajar.net" href={ROUTES?.CART}>
                   <Image
                     width={25}
                     height={25}
@@ -210,13 +212,13 @@ const Navbar = () => {
         </div>
       </section>
       <div className="md:hidden  ">
-        <BottomNav items={items}/>
-      </div> 
+        <BottomNav items={items} />
+      </div>
     </div>
   );
 };
 export default Navbar;
- 
+
 const NavbarText = ({ text1, text2 }) => {
   return (
     <div className="flex flex-col text-[#030712] ">

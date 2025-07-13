@@ -13,8 +13,8 @@ const SingleCart = ({ product }) => {
   const handleAdded = () => {
     const newProduct = {
       ...product,
-      color_id: product?.colors[0] ?? null,
-      attribute_id: product?.attributes[0] ?? null,
+      color_id: product?.colors[0] ?product?.colors[0]?.id : null,
+      attribute_id: product?.attributes[0] ?product?.attributes[0]?.id : null,
     };
     addItem(handlePurchaseProduct(newProduct));
   };
@@ -66,7 +66,7 @@ const SingleCart = ({ product }) => {
           <FiShoppingCart />
           Add To Cart
         </Button>
-        <p className="bg-[#AB1C1C] absolute top-0 right-0 rounded-tr-2xl w-12 h-10 md:h-12 md:w-14 rounded-bl-xl text-sm flex items-center   font-poppins font-semibold text-wrap text-center leading-3.5 md:leading-4 p-1">
+        <p className="bg-[#AB1C1C]  text-white absolute top-0 right-0 rounded-tr-2xl w-12 h-10 md:h-12 md:w-14 rounded-bl-xl text-sm flex items-center   font-poppins font-semibold text-wrap text-center leading-3.5 md:leading-4 p-1">
           {offerPricePercent(product?.reguler_price, product?.offer_price)}% OFF
         </p>
       </div>
