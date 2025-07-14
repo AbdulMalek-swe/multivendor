@@ -14,42 +14,31 @@ function useSearchProduct(query = {}) {
         setLoading(true);
       } else {
         setInfinityLoading(true);
-      }
-      console.log(query,"----->is back");
+      } 
       try {
         const response = await searchProduct(query);
-       const products = response?.data?.data?.products?.data;
-       
-        if (products.length === 0) {
-          setHasMoreData(false);
-        }
-        if (query?.page === 1) {
-          console.log( response?.data?.data,"weheer not come");
-          setData(response?.data?.data);
-        } else {
-          const value = data?.products?.data;
-          setData({
-           related_brands: response?.data?.data?.related_brands,
-            related_categories: response?.data?.data?.related_categories,
-            max_price: response?.data?.data?.max_price,
-            products: {
-              ...data?.products,
-              data: [...value, ...products],
-            },
-          });
+        const products = response?.data?.data?.products?.data;
+        if (Array.isArray(products)) {
+          if (products.length === 0) {
+            setHasMoreData(false);
+          }
+          setData((prev) =>
+            query?.page === 1 ? products : [...prev, ...products]
+          );
         }
         setLoading(false);
+        setInfinityLoading(false);
       } catch (err) {
         setError(err?.message || "Unknown error");
         setLoading(false);
       } finally {
         setLoading(false);
-         setInfinityLoading(false);
+        setInfinityLoading(false);
       }
     }
     fetchSearchProduct();
   }, [JSON.stringify(query)]);
 
-  return { data, loading, error,infinityLoading,hasMoreData };
+  return { data, loading, error, infinityLoading, hasMoreData };
 }
 export default useSearchProduct;

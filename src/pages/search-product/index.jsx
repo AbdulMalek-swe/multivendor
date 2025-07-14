@@ -36,14 +36,13 @@ const SearchProduct = () => {
     };
   }
   // declare category
-  console.log(price, "-------->");
   const { data, loading, error, infinityLoading, hasMoreData } =
     useSearchProduct(params);
   // filter api call here
   const { data: filterData, loading: filterLoading } = useProductFilterMaterial(
     {
-      route: `user/category-products/${query?.slug}`,
-      isFetch: query?.slug ? false : true,
+      route: `product/search?search=${query?.search}`,
+      isFetch: query?.search ? false : true,
     }
   );
   const [open, setOpen] = useState(false);
@@ -57,18 +56,14 @@ const SearchProduct = () => {
     loading: infinityLoading,
     hasMoreData,
   });
-  const newData = {
-    ...data,
-    brands: data?.related_brands,
-    categories: data?.related_categories,
-  };
+
   return (
     <PageLayout>
       <div className="flex gap-4 md:gap-3 ">
         <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">
           <FilterArea
-            data={newData}
-            loading={loading}
+            data={filterData}
+            loading={!filterData?.max_price || filterLoading}
             setPrice={setPrice}
             price={price}
             categoryId={categoryId}
@@ -91,10 +86,10 @@ const SearchProduct = () => {
           }}
           className="w-full sm:w-[350px]"
         >
-          <div className="px-4 py-4">
+          <div className="px-4 py-4 overflow-y-scroll h-screen">
             <FilterArea
-              data={newData}
-              loading={loading}
+              data={filterData}
+              loading={!filterData?.max_price || filterLoading}
               setPrice={setPrice}
               price={price}
               categoryId={categoryId}
@@ -120,7 +115,7 @@ const SearchProduct = () => {
               ? [...Array(10)].map((_, idx) => (
                   <ProductCardSkeleton key={idx} />
                 ))
-              : data?.products?.data?.map((product, idx) => (
+              : data?.map((product, idx) => (
                   <SingleCart product={product} key={idx} />
                 ))}
           </div>

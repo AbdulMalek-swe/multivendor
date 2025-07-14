@@ -12,8 +12,7 @@ function useProductFilterMaterial({route,isFetch}) {
       setError(null);
       try {
         // call category api 
-        const response = await filterDynamicApi(route);
-        console.log(response,"----------->rules is back");
+        const response = await filterDynamicApi(route); 
         setData(response?.data?.data);
         setLoading(false);
       } catch (err) {

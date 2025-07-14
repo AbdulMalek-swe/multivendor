@@ -81,7 +81,7 @@ const ShopProduct = () => {
         }}
         className="w-full sm:w-[280px]"
       >
-        <div className="px-4 py-4">
+        <div className="px-4 py-4 overflow-y-scroll h-screen">
           <FilterArea
             data={filterData}
             loading={filterLoading || !filterData?.max_price}
