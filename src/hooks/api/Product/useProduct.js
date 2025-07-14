@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 function useProduct(query = {}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [infinityLoading, setInfinityLoading] = useState(false);
+  const [infinityLoading, setInfinityLoading] = useState(true);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => { 
     async function fetchProduct() {
       if (query.page === 1) {
-        setLoading(true);
+        setLoading(true); 
       } else {
         setInfinityLoading(true);
       } 
@@ -25,12 +25,13 @@ function useProduct(query = {}) {
           }
           setData((prev) => (query.page === 1 ? result : [...prev, ...result]));
         }
+        setInfinityLoading(false);
       } catch (err) {
         setError(err?.message || "Unknown error");
-        setHasMoreData(false);
+        setInfinityLoading(false);
       } finally {
         setLoading(false);
-        setInfinityLoading(false);
+        // setInfinityLoading(false);
         // setHasMoreData(false);
       }
     }

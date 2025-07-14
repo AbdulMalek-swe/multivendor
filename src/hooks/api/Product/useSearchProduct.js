@@ -9,7 +9,7 @@ function useSearchProduct(query = {}) {
   useEffect(() => {
     async function fetchSearchProduct() {
       setError(null);
-      // if (!query?.search) return;
+      if (!query?.search) return;
       if (query.page === 1) {
         setLoading(true);
       } else {

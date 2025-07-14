@@ -9,6 +9,8 @@ import PageLayout from "@/components/ui/PageLayout";
 import { FilterArea } from "@/components/filter/FilterArea";
 import { useLoadingObserver } from "@/utils/loadingObserver";
 import Spinner from "@/components/loader/Spinner";
+import InfinityLoadingButton from "@/components/ui/InfinityLoadingButton";
+import useProductFilterMaterial from "@/hooks/api/productFilter/useProductFilter";
 const SearchProduct = () => {
   const { query } = useRouter();
   const [price, setPrice] = useState({});
@@ -37,7 +39,13 @@ const SearchProduct = () => {
   console.log(price, "-------->");
   const { data, loading, error, infinityLoading, hasMoreData } =
     useSearchProduct(params);
-  console.log(data, "------>problem");
+  // filter api call here
+  const { data: filterData, loading: filterLoading } = useProductFilterMaterial(
+    {
+      route: `user/category-products/${query?.slug}`,
+      isFetch: query?.slug ? false : true,
+    }
+  );
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
     setOpen(!open);
@@ -52,7 +60,7 @@ const SearchProduct = () => {
   const newData = {
     ...data,
     brands: data?.related_brands,
-    child_categories: data?.related_categories,
+    categories: data?.related_categories,
   };
   return (
     <PageLayout>
@@ -69,6 +77,7 @@ const SearchProduct = () => {
             setBrandId={setBrandId}
             checked={checked}
             setChecked={setChecked}
+            setPage={setPage}
           />
         </div>
 
@@ -94,6 +103,7 @@ const SearchProduct = () => {
               setBrandId={setBrandId}
               checked={checked}
               setChecked={setChecked}
+              setPage={setPage}
             />
           </div>
         </Drawer>
@@ -114,13 +124,11 @@ const SearchProduct = () => {
                   <SingleCart product={product} key={idx} />
                 ))}
           </div>
-          <div ref={loadingRef} className="flex justify-center">
-            {infinityLoading && (
-              <button className="text-primary border border-primary rounded-full w-96 h-16 font-medium text-lg md:text-xl lg:text-2xl hover:bg-primary/10 flex items-center justify-center gap-1">
-                Load More <Spinner />
-              </button>
-            )}
-          </div>
+          {/* infinity loading  */}
+          {/* <InfinityLoadingButton
+          loadingRef={loadingRef}
+          infinityLoading={infinityLoading}
+        /> */}
         </div>
       </div>
     </PageLayout>

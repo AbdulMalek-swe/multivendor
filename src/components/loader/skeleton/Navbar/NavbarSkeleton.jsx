@@ -2,7 +2,7 @@ import React from "react";
 
 const NavbarSkeleton = () => {
   return (
-    <div className="mb-5 animate-pulse">
+    <div className="mb-5 animate-pulse fixed top-0 left-0 w-full z-50 bg-white">
       {/* Top nav (welcome + track) */}
       <div className="hidden md:block bg-primary w-full h-8">
         <div className="  h-8 flex items-center justify-between px-4">

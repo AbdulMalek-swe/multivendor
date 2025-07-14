@@ -8,6 +8,8 @@ import ProductCardSkeleton from "../loader/skeleton/Porduct/Product/SingleProduc
 import { FilterArea } from "../filter/FilterArea";
 
 import Drawer from "react-modern-drawer";
+import useProductFilterMaterial from "@/hooks/api/productFilter/useProductFilter";
+import InfinityLoadingButton from "../ui/InfinityLoadingButton";
 const CategoryProduct = () => {
   const { query } = useRouter();
   const [price, setPrice] = useState({});
@@ -34,23 +36,33 @@ const CategoryProduct = () => {
     query?.slug,
     queryParams
   );
+  // loading observer api
   useLoadingObserver({
     setPage,
     observerRef: loadingRef,
     loading: infinityLoading,
     hasMoreData,
   });
+  // filter api call here
+  const { data: filterData, loading: filterLoading } = useProductFilterMaterial(
+    {
+      route: `user/category-products/${query?.slug}`,
+      isFetch: query?.slug ? false : true,
+    }
+  );
+  console.log(filterData, "----- category data ");
   // drawer logic
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
     setOpen(!open);
   };
+
   return (
     <div className="flex gap-4 md:gap-8 ">
       <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">
         <FilterArea
-          data={data}
-          loading={loading}
+          data={filterData}
+          loading={!filterData?.max_price || filterLoading}
           setPrice={setPrice}
           price={price}
           categoryId={categoryId}
@@ -59,6 +71,7 @@ const CategoryProduct = () => {
           setBrandId={setBrandId}
           checked={checked}
           setChecked={setChecked}
+          setPage={setPage}
         />
       </div>
       <Drawer
@@ -73,8 +86,8 @@ const CategoryProduct = () => {
       >
         <div className="px-4 py-4">
           <FilterArea
-            data={data}
-            loading={loading}
+            data={filterData}
+            loading={!filterData?.max_price || filterLoading}
             setPrice={setPrice}
             price={price}
             categoryId={categoryId}
@@ -83,27 +96,16 @@ const CategoryProduct = () => {
             setBrandId={setBrandId}
             checked={checked}
             setChecked={setChecked}
+            setPage={setPage}
           />
         </div>
       </Drawer>
       <div className="flex-1 space-y-4 md:space-y-5 lg:space-y-6 ">
         {/* banner set for cateogory section  */}
         <ProductBanner
-          title={
-            <>
-              Nearby Groceries Products
-              <br />
-              Tailored for you
-            </>
-          }
-          subTitle={
-            <>
-              We have prepared special discounts for you on grocery
-              <br />
-              products...
-            </>
-          }
-          img="/shop/1.png"
+          title={<>{filterData?.category?.category_name}</>}
+          subTitle={<>{filterData?.category?.description}</>}
+          img={`${process?.env.NEXT_PUBLIC_API_SERVER}${filterData?.category?.category_image}`}
         />
         {/* show product here
          */}
@@ -116,21 +118,16 @@ const CategoryProduct = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {data?.products?.data?.map((product, idx) => (
+            {data?.map((product, idx) => (
               <SingleCart product={product} key={idx} />
             ))}
           </div>
         )}
-
-        <div ref={loadingRef} className="  mt-4 flex justify-center">
-          {!loading && infinityLoading && (
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <ProductCardSkeleton key={index} />
-              ))}
-            </div>
-          )}
-        </div>
+    {/* infinity loading  */}
+        <InfinityLoadingButton
+          loadingRef={loadingRef}
+          infinityLoading={infinityLoading}
+        />
       </div>
     </div>
   );

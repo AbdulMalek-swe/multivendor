@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Checkbox } from "../ui/Input";
 import { FaPlus, FaMinus } from "@/icons";
-const ProductBrands = ({ brand = [], brandId, setBrandId }) => {
+const ProductBrands = ({ brand = [], brandId, setBrandId,setPage }) => {
   const handleChange = (item) => {
     setBrandId((prev) => {
       if (brandId.includes(item?.id)) {
@@ -11,6 +11,7 @@ const ProductBrands = ({ brand = [], brandId, setBrandId }) => {
         return [...prev, item?.id];
       }
     });
+    setPage(1)
   };
   return (
     <div className="shadow-sm space-y-2 md:space-y-3  pb-4 px-2 rounded-md   overflow-hidden   w-full">

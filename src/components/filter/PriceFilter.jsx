@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import RangeSlider from "react-range-slider-input";
-const PriceFilter = ({ min = 0, max = 1000, setPrice, price }) => {
+const PriceFilter = ({ min = 0, max = 1000, setPrice, price ,setPage}) => {
   const [value, setValue] = useState([min, max]);
   const handleSliderChange = (val) => {
     setValue(val);
@@ -22,11 +22,7 @@ const PriceFilter = ({ min = 0, max = 1000, setPrice, price }) => {
     if (price?.minPrice !== undefined && price?.maxPrice !== undefined) {
       setValue([price.minPrice, price.maxPrice]);
     }
-  }, [price]);
-  const handleSliderCommit = (val) => {
-    // API call function
-    console.log(val, "ok this value is nice");
-  };
+  }, [price]); 
   return (
     <div className="shadow-sm space-y-6 md:space-y-10 pb-4 px-2 rounded-md  overflow-hidden   w-full">
       <h1 className="font-semibold text-sm text-[#030712]">Price Filter</h1>
@@ -75,6 +71,7 @@ const PriceFilter = ({ min = 0, max = 1000, setPrice, price }) => {
                 minPrice: value[0] || min,
                 maxPrice: value[1] || max,
               });
+              setPage(1)
             }}
           />
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Checkbox } from "../ui/Input";
 import { FaPlus, FaMinus } from "@/icons";
-const ProductCategory = ({ category = [], categoryId, setCategoryId }) => {
+const ProductCategory = ({ category = [], categoryId, setCategoryId,setPage }) => {
   const handleChange = (item) => {
     setCategoryId((prev) => {
       if (categoryId.includes(item?.category_id)) {
@@ -10,7 +10,9 @@ const ProductCategory = ({ category = [], categoryId, setCategoryId }) => {
       } else {
         return [...prev, item?.category_id];
       }
+     
     });
+     setPage(1)
   };
   return (
     <div className="shadow-sm space-y-2 md:space-y-3  pb-4 px-2 rounded-md   overflow-hidden   w-full">

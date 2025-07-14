@@ -13,6 +13,7 @@ function useSingleShopId(id, query = {}) {
       setError(null);
       if (query.page === 1) {
         setLoading(true);
+        setHasMoreData(true);
       } else {
         setInfinityLoading(true);
       }
@@ -20,36 +21,29 @@ function useSingleShopId(id, query = {}) {
         const response = await getSingleShopById(id, query);
         // depends on your API structure
         const products = response?.data?.data?.products?.data;
-        if (products.length === 0) {
-          setHasMoreData(false);
-        }
-        if (query?.page === 1) {
-          setData(response?.data?.data);
-        } else {
-          const value = data?.products?.data;
-          setData({
-            brands: response?.data?.data?.brands,
-            categories: response?.data?.data?.categories,
-            max_price: response?.data?.data?.max_price,
-            products: {
-              ...data?.products,
-              data: [...value, ...products],
-            },
-          });
-        }
-        setLoading(false);
-      } catch (err) {
-        setError(err?.message || "Unknown error");
-      } finally {
+        if (Array.isArray(products)) {
+          if (products.length === 0) {
+            setHasMoreData(false);
+          }
+          setData((prev) =>
+            query?.page === 1 ? products : [...prev, ...products]
+          );
+        } 
         setLoading(false);
         setInfinityLoading(false);
+      } catch (err) {
+        setError(err?.message || "Unknown error");
+        setInfinityLoading(false);
+      } finally {
+        setLoading(false);
+        //
       }
     };
 
     fetchSingleShop();
   }, [id, JSON.stringify(query)]);
 
-  return { data, loading, error ,hasMoreData,infinityLoading};
+  return { data, loading, error, hasMoreData, infinityLoading };
 }
 
 export default useSingleShopId;

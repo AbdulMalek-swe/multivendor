@@ -15,7 +15,9 @@ export const FilterArea = ({
   setBrandId,
   checked,
   setChecked,
-}) => {
+  setPage
+}) => { 
+  console.log(loading,"------>>>>");
   return (
     <div>
       {loading ? (
@@ -28,16 +30,18 @@ export const FilterArea = ({
         <div className="space-y-4">
           {" "}
           <PriceFilter
-            max={Math.round(data?.max_price) || 100}
+            max={Math.round(Number(data?.max_price)) }
             min={0}
             setPrice={setPrice}
             price={price}
+            setPage={setPage}
           />
           {data?.categories?.length > 0 && (
             <ProductCategory
               category={data?.categories}
               categoryId={categoryId}
               setCategoryId={setCategoryId}
+              setPage={setPage}
             />
           )}
           {data?.brands?.length > 0 && (
@@ -45,9 +49,10 @@ export const FilterArea = ({
               brand={data?.brands}
               brandId={brandId}
               setBrandId={setBrandId}
+               setPage={setPage}
             />
           )}
-          <ProductStatus checked={checked} setChecked={setChecked} />
+          <ProductStatus checked={checked} setChecked={setChecked} setPage={setPage} />
         </div>
       )}
     </div>

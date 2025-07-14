@@ -19,8 +19,8 @@ import { useRef, useState } from "react";
 import PageLayout from "@/components/ui/PageLayout";
 import Modal from "@/components/ui/modal";
 import NearestShop from "@/components/shop/Nearest-Shop";
-export default function Home() {
-  const { latLng } = useGeolocation();
+import InfinityLoadingButton from "@/components/ui/InfinityLoadingButton";
+export default function Home() { 
   const [page, setPage] = useState(1);
   const loadingRef = useRef();
   // shop list
@@ -203,19 +203,15 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div
-                ref={loadingRef}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
-              >
-                {!productLoading && infinityLoading
-                  ? Array.from({ length: 10 }).map((_, index) => (
-                      <ProductCardSkeleton key={index} />
-                    ))
-                  : productList?.map((product, idx) => (
-                      <SingleCart product={product} key={idx} />
-                    ))}
-                {/* infinityLoading for open image */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {productList?.map((product, idx) => (
+                  <SingleCart product={product} key={idx} />
+                ))}
               </div>
+              <InfinityLoadingButton
+                loadingRef={loadingRef}
+                infinityLoading={infinityLoading}
+              />
             </div>
           </div>
         </section>

@@ -10,6 +10,8 @@ import BannerSkeleton from "../loader/skeleton/Home/BannerSkeleton";
 import { useLoadingObserver } from "@/utils/loadingObserver";
 import Spinner from "../loader/Spinner";
 import { FilterArea } from "../filter/FilterArea";
+import useProductFilterMaterial from "@/hooks/api/productFilter/useProductFilter";
+import InfinityLoadingButton from "../ui/InfinityLoadingButton";
 const ShopProduct = () => {
   const { query } = useRouter();
   const [price, setPrice] = useState({});
@@ -23,7 +25,7 @@ const ShopProduct = () => {
     ...(checked.includes("On Sale") && { on_sale: true }),
     ...(categoryId?.length > 0 && { category_ids: categoryId }),
     page,
-    per_page: 5,
+    per_page: 10,
   };
   if (price?.maxPrice) {
     params = {
@@ -32,9 +34,15 @@ const ShopProduct = () => {
       min_price: price?.minPrice,
     };
   }
-  // declare category
+  // fetch single shop data
   const { data, loading, error, infinityLoading, hasMoreData } =
     useSingleShopId(query?.slug, params);
+  // filter api call here
+  const { data: filterData, loading: filterLoading } = useProductFilterMaterial(
+    { route: `user/vendor/${query?.slug}`, isFetch: query?.slug ? false : true }
+  );
+  console.log(filterData, "-----");
+  // drawer function
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
     setOpen(!open);
@@ -45,13 +53,13 @@ const ShopProduct = () => {
     loading: infinityLoading,
     hasMoreData,
   });
-  console.log(data,"--------->");
+  console.log(filterData?.max_price);
   return (
     <div className="flex gap-2 md:gap-3">
       <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">
         <FilterArea
-          data={data}
-          loading={loading}
+          data={filterData}
+          loading={!filterData?.max_price || filterLoading}
           setPrice={setPrice}
           price={price}
           categoryId={categoryId}
@@ -60,6 +68,7 @@ const ShopProduct = () => {
           setBrandId={setBrandId}
           checked={checked}
           setChecked={setChecked}
+          setPage={setPage}
         />
       </div>
       <Drawer
@@ -74,8 +83,8 @@ const ShopProduct = () => {
       >
         <div className="px-4 py-4">
           <FilterArea
-            data={data}
-            loading={loading}
+            data={filterData}
+            loading={filterLoading || !filterData?.max_price}
             setPrice={setPrice}
             price={price}
             categoryId={categoryId}
@@ -84,6 +93,7 @@ const ShopProduct = () => {
             setBrandId={setBrandId}
             checked={checked}
             setChecked={setChecked}
+            setPage={setPage}
           />
         </div>
       </Drawer>
@@ -97,21 +107,9 @@ const ShopProduct = () => {
         {/* banner set for cateogory section  */}
         {!loading ? (
           <ProductBanner
-            title={
-              <span>
-                Nearby Groceries Products
-                <br />
-                Tailored for you
-              </span>
-            }
-            subTitle={
-              <>
-                We have prepared special discounts for you on grocery
-                <br />
-                products...
-              </>
-            }
-            img="/products/1.png"
+            title={<span>{filterData?.vendor?.company_name}</span>}
+            subTitle={<>{filterData?.vendor?.company_location}</>}
+            img={`${process?.env.NEXT_PUBLIC_API_SERVER}${filterData?.vendor?.logo}`}
           />
         ) : (
           <BannerSkeleton />
@@ -123,17 +121,14 @@ const ShopProduct = () => {
             ? Array.from({ length: 10 }).map((_, index) => (
                 <ProductCardSkeleton key={index} />
               ))
-            : data?.products?.data?.map((product, idx) => (
+            : data?.map((product, idx) => (
                 <SingleCart product={product} key={idx} />
               ))}
         </div>
-        <div ref={loadingRef} className="flex justify-center">
-          {infinityLoading && (
-            <button className="text-primary border border-primary rounded-full w-96 h-16 font-medium text-lg md:text-xl lg:text-2xl hover:bg-primary/10 flex items-center justify-center gap-1">
-              Load More <Spinner />
-            </button>
-          )}
-        </div>
+        <InfinityLoadingButton
+          loadingRef={loadingRef}
+          infinityLoading={infinityLoading}
+        />
       </div>
     </div>
   );

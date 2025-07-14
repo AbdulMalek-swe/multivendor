@@ -15,6 +15,8 @@ import PageLayout from "@/components/ui/PageLayout";
 import { publicRequest } from "@/lib/axios";
 import { responseHandler } from "@/utils/helpers";
 import SingleCart from "@/components/card/SingleCart";
+import Pagination from "@/components/ui/Pagination";
+import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
 
 const ProductDetails = () => {
   const { addItem, items } = useCart();
@@ -30,7 +32,8 @@ const ProductDetails = () => {
     color_id: null,
     attribute_id: null,
   });
-  // purchasae product handler 
+  const [page, setPage] = useState(1);
+  // purchasae product handler
   const handlePurchase = (vl) => {
     let color_id, attribute_id;
     if (!productItem?.colors?.length) {
@@ -66,24 +69,46 @@ const ProductDetails = () => {
       router?.push(`/checkout?buy_now=${product?.slug}`);
     }
   };
-  // fetch releted product  
-  const [reletedProduct,setReletedProduct] = useState([])
-  useEffect(()=>{
-    const fetchReletedProduct  = async()=>{
-        try {
-          console.log(productItem,"----");
-          const response = await publicRequest.get(`/user/related-products?category_id=${productItem?.product?.category_id}&vendor_id=${productItem?.product?.vendor_id}`)
-          console.log(response);
-          if(responseHandler(response)){
-             setReletedProduct(response?.data?.data)
-          }
-        } catch (error) {
-          
+  // fetch releted product
+  const [reletedProduct, setReletedProduct] = useState([]);
+  const [relatedLoading, setRelatedLoading] = useState(true);
+  useEffect(() => {
+    const fetchReletedProduct = async () => {
+      setRelatedLoading(true);
+      try {
+        const response = await publicRequest.get(
+          `/user/related-products?category_id=${productItem?.product?.category_id}&vendor_id=${productItem?.product?.vendor_id}&per_page=10&page=${page}`
+        );
+        if (responseHandler(response)) {
+          setReletedProduct(response?.data?.data);
         }
+        setRelatedLoading(false);
+      } catch (error) {
+        setRelatedLoading(false);
+      }
+    };
+    fetchReletedProduct();
+  }, [productItem, page]);
+  // pagination system more user friendly 
+  useEffect(() => {
+    if (!router?.query?.slug) return;
+    router.push(
+      {
+        pathname: `/product-details/${router?.query?.slug}`,
+        query: { related_page: page },
+      },
+      undefined,
+      {
+        shallow: true,
+        scroll: false,
+      }
+    );
+  }, [page]);
+  useEffect(() => {
+    if (router?.query?.related_page) {
+      setPage(Number(router?.query?.related_page));
     }
-    fetchReletedProduct()
-    },[productItem])
-    console.log(reletedProduct,"----------->>>>>>");
+  }, [router?.query?.related_page]);
   if (loading) return <SkeletonProductDetails />;
   if (error) return <CustomError />;
   return (
@@ -188,41 +213,45 @@ const ProductDetails = () => {
             </Button>
           </div>
           <div className="text-sm text-gray-600 space-y-2 ">
-            <div className="flex gap-1">
-              <strong>Unit:</strong>{" "}
-              <div className="flex">
-                {productItem?.attributes?.map((att, idx) => (
-                  <span
-                    className="w-full border rounded-md px-2 border-[#D1D5DB] cursor-pointer"
-                    key={idx}
-                    onClick={() =>
-                      setVariantId({ ...variantId, attribute_id: att?.id })
-                    }
-                  >
-                    {att?.name}
-                  </span>
-                ))}
+            {productItem?.attributes?.length > 0 && (
+              <div className="flex gap-1">
+                <strong>Unit:</strong>{" "}
+                <div className="flex">
+                  {productItem?.attributes?.map((att, idx) => (
+                    <span
+                      className="w-full border rounded-md px-2 border-[#D1D5DB] cursor-pointer"
+                      key={idx}
+                      onClick={() =>
+                        setVariantId({ ...variantId, attribute_id: att?.id })
+                      }
+                    >
+                      {att?.name}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="flex gap-1">
-              <strong>Color:</strong>{" "}
-              <div className="flex gap-1 ">
-                {productItem?.colors?.map((clr, idx) => (
-                  <span
-                    className="w-full cursor-pointer border rounded-md px-2 border-[#D1D5DB] shrink-0 text-center"
-                    key={idx}
-                    style={{
-                      background: clr?.hex_code ?? clr?.name,
-                    }}
-                    onClick={() =>
-                      setVariantId({ ...variantId, color_id: clr?.id })
-                    }
-                  >
-                    {clr?.name}
-                  </span>
-                ))}
+            )}
+            {productItem?.colors?.length > 0 && (
+              <div className="flex gap-1">
+                <strong>Color:</strong>{" "}
+                <div className="flex gap-1 ">
+                  {productItem?.colors?.map((clr, idx) => (
+                    <span
+                      className="w-full cursor-pointer border rounded-md px-2 border-[#D1D5DB] shrink-0 text-center"
+                      key={idx}
+                      style={{
+                        background: clr?.hex_code ?? clr?.name,
+                      }}
+                      onClick={() =>
+                        setVariantId({ ...variantId, color_id: clr?.id })
+                      }
+                    >
+                      {clr?.name}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             <p>
               <strong>Category:</strong> {product?.category?.category_name}
             </p>
@@ -250,14 +279,22 @@ const ProductDetails = () => {
         <div dangerouslySetInnerHTML={{ __html: product?.description }}></div>
       </div>
       {/* realeted product code here  */}
-       <span className="inline-block pb-2 leading-7 font-bold text-lg text-[#030712]">
-           Related products
-          </span>
-       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {
-              reletedProduct?.map((product,idx)=><SingleCart product={product}/>)
-            }
-       </div>
+      <span className="inline-block pb-2 leading-7 font-bold text-lg text-[#030712]">
+        Related products
+      </span>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        {!relatedLoading &&
+          reletedProduct?.data?.map((product, idx) => (
+            <SingleCart product={product} />
+          ))}
+        {relatedLoading &&
+          [...Array(10)].map((_, idx) => <ProductCardSkeleton key={idx} />)}
+      </div>
+      <Pagination
+        totalPage={reletedProduct?.last_page}
+        page={reletedProduct?.current_page}
+        setPage={setPage}
+      />
     </PageLayout>
   );
 };

@@ -30,7 +30,7 @@ const NearestShop = () => {
         </div>
       )}
       <Pagination
-        page={page}
+        page={information?.data?.data?.current_page}
         setPage={setPage}
         totalPage={information?.data?.data?.last_page}
       />

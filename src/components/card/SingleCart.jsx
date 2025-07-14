@@ -20,7 +20,7 @@ const SingleCart = ({ product }) => {
   };
   return (
     <Link
-      href={ROUTES?.PRODUCT_DETAILS(product?.id)}
+      href={ROUTES?.PRODUCT_DETAILS(product?.slug)}
       className="rounded-2xl bg-white   relative shadow-xs "
       aria-label="bajar.net"
     >

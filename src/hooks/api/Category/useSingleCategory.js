@@ -6,7 +6,7 @@ function useCategoryId(id, query = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [infinityLoading, setInfinityLoading] = useState(false);
-  const [hasMoreData, setHasMoreData] = useState(true); 
+  const [hasMoreData, setHasMoreData] = useState(true);
   useEffect(() => {
     if (!id) return;
     const fetchCategory = async () => {
@@ -18,25 +18,17 @@ function useCategoryId(id, query = {}) {
       }
       try {
         const response = await getCategoryById(id, query);
-        const products = response?.data?.data?.products?.data;
-        if (products.length === 0) {
-          setHasMoreData(false);
-        }
-        if (query?.page === 1) {
-          setData(response?.data?.data);
-        } else {
-          const value = data?.products?.data;
-          setData({
-            brands: response?.data?.data?.brands,
-            categories: response?.data?.data?.categories,
-            max_price: response?.data?.data?.max_price,
-            products: {
-              ...data?.products,
-              data: [...value, ...products],
-            },
-          });
+        const products = response?.data?.data?.data;
+        if (Array.isArray(products)) {
+          if (products.length === 0) {
+            setHasMoreData(false);
+          }
+          setData((prev) =>
+            query?.page === 1 ? products : [...prev, ...products]
+          );
         }
         setLoading(false);
+        setInfinityLoading(false);
       } catch (err) {
         setError(err?.message || "Unknown error");
       } finally {

@@ -5,7 +5,7 @@ export const shop = async(params={})=>{
 }
 // single shop 
 export const getSingleShopById = async(id,query={})=>{
-    return await publicRequest.get(`user/vendor/${id}`,{
+    return await publicRequest.get(`user/vendor-filterd-products/${id}`,{
         params:query
     })
 }
