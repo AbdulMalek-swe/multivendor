@@ -10,8 +10,7 @@ function useDefaultAddress() {
   const handleDefaultAddress = async (payload) => {
     setLoading(true);
     setError(null);
-    try {
-      console.log(payload,"payload hahah");
+    try { 
       const response = await postDefaultAddress(payload);
       setData(response)
     } catch (err) {

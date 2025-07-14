@@ -16,8 +16,7 @@ export const FilterArea = ({
   checked,
   setChecked,
   setPage
-}) => { 
-  console.log(loading,"------>>>>");
+}) => {  
   return (
     <div>
       {loading ? (

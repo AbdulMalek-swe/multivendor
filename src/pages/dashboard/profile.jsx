@@ -5,10 +5,11 @@ import useAddress from "@/hooks/api/address/useAddress";
 import Drawer from "react-modern-drawer";
 import EditAddress from "@/components/address/EditAddress";
 import useOrder from "@/hooks/api/order/useOrder";
-import PageLayout from "@/components/ui/PageLayout";
 import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";
-import { flattenOrders } from "@/utils/flattenAddress"; 
+import { flattenOrders } from "@/utils/flattenAddress";
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
+import Modal from "@/components/ui/modal";
+import Profile from "@/components/auth/Profile";
 const MyAccount = () => {
   const { user } = useAuth();
   const { data: addressData, loading } = useAddress();
@@ -25,7 +26,6 @@ const MyAccount = () => {
   // order find recently order
   const { data: order, loading: orderLoading } = useOrder();
   const flatData = flattenOrders(order);
-  console.log(flatData, "--=");
   // formate date
   function formatDate(isoDate) {
     const date = new Date(isoDate);
@@ -34,10 +34,12 @@ const MyAccount = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
-
+  const [isOpen,setIsOpen] = useState(false)
   return (
     <>
-      {" "}
+      <Modal isOpen={isOpen} onClose={()=>setIsOpen(false)}>
+        <Profile />
+      </Modal>
       {loading ? (
         <ManageAccountSkeleton />
       ) : (
@@ -69,7 +71,7 @@ const MyAccount = () => {
             <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium">Personal Profile</h3>
-                {/* <button className="text-blue-600 text-sm">EDIT</button> */}
+                <button className="text-blue-600 text-sm" onClick={()=>setIsOpen(!isOpen)}>EDIT</button>
               </div>
               <p className="mb-1">{user?.name}</p>
               <p className="mb-3">{maskPhone(user?.phone)}</p>

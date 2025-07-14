@@ -49,8 +49,7 @@ const CategoryProduct = () => {
       route: `user/category-products/${query?.slug}`,
       isFetch: query?.slug ? false : true,
     }
-  );
-  console.log(filterData, "----- category data ");
+  ); 
   // drawer logic
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {

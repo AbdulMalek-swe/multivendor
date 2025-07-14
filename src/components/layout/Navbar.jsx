@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import NavbarSkeleton from "../loader/skeleton/Navbar/NavbarSkeleton";
 const Navbar = () => {
   const { items } = useCart();
-  const { user: userProfile, logout, loading: authLoading } = useAuth();
+  const { user: userProfile, logout, loading: authLoading } = useAuth(); 
   const [isFixed, setIsFixed] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
   }, []);
   if (authLoading) return <NavbarSkeleton />;
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 ${isFixed&&'shadow'}`}>
+    <div className={`fixed top-0 left-0 w-full z-50 ${isFixed && "shadow"}`}>
       {/* navingation header  */}
       <section
         className={` hidden md:block bg-primary w-full z-40 transition-all duration-500 ease-in-out overflow-hidden `}
@@ -101,12 +101,21 @@ const Navbar = () => {
               <div className="relative" ref={menuRef}>
                 <button onClick={() => setProfileMenu(!profileMenu)}>
                   {" "}
-                  <Image
-                    width={25}
-                    height={25}
-                    src="/icons/account.svg"
-                    alt="loading"
-                  />
+                  {userProfile?.image ? (
+                    <Image
+                      width={25}
+                      height={25}
+                      src={`${process?.env.NEXT_PUBLIC_API_SERVER}${userProfile?.image}`}
+                      alt="loading"
+                    />
+                  ) : (
+                    <Image
+                      width={25}
+                      height={25}
+                      src="/icons/account.svg"
+                      alt="loading"
+                    />
+                  )}
                 </button>
                 {/* profile menu show here  */}
                 <div

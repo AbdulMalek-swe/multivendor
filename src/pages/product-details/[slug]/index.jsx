@@ -38,8 +38,7 @@ const ProductDetails = () => {
       color_id: productItem?.colors[0]?.id || null,
       attribute_id: productItem?.attributes[0]?.id || null,
     });
-  }, [productItem]);
-  console.log(variantId, "----------->>variant id");
+  }, [productItem]); 
   const [page, setPage] = useState(1);
   // purchasae product handler
   const handlePurchase = (vl) => {
@@ -76,8 +75,7 @@ const ProductDetails = () => {
       );
       router?.push(`/checkout?buy_now=${product?.slug}`);
     }
-  };
-  console.log(productItem);
+  }; 
   // fetch releted product
   const [reletedProduct, setReletedProduct] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(true);

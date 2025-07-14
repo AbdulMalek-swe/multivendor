@@ -37,8 +37,7 @@ const Address = () => {
     }
   };
   //   change default address
-  const { handleDefaultAddress, data, error } = useDefaultAddress();
-  console.log(data, "----");
+  const { handleDefaultAddress, data, error } = useDefaultAddress(); 
   useEffect(() => {
     if (!loading && responseHandler(data)) {
       notifySuccess(data?.data?.message);

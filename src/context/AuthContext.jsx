@@ -14,8 +14,10 @@ export const AuthProvider = ({ children }) => {
     if (!token) {
       setLoading(false);
       return;
-    } 
-    const fetchProfile = async () => {
+    }  
+    fetchProfile();
+  }, []);
+   const fetchProfile = async () => {
       try {
         const res = await getProfile(); 
         setUser(res.data?.data);
@@ -27,8 +29,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-    fetchProfile();
-  }, []);
 
   const login = async (token) => {
     setToken(token);
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   };
    
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading,fetchProfile }}>
       {children}
     </AuthContext.Provider>
   );

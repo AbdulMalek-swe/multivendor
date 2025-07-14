@@ -40,8 +40,7 @@ const ShopProduct = () => {
   // filter api call here
   const { data: filterData, loading: filterLoading } = useProductFilterMaterial(
     { route: `user/vendor/${query?.slug}`, isFetch: query?.slug ? false : true }
-  );
-  console.log(filterData, "-----");
+  ); 
   // drawer function
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
@@ -52,8 +51,7 @@ const ShopProduct = () => {
     observerRef: loadingRef,
     loading: infinityLoading,
     hasMoreData,
-  });
-  console.log(filterData?.max_price);
+  }); 
   return (
     <div className="flex gap-2 md:gap-3">
       <div className="md:w-[230px] lg:w-[259px] md:block hidden shrink-0">

@@ -27,8 +27,7 @@ const SignUp = () => {
     setSuccess({
       ...success,
       loading: true,
-    });
-    
+    }); 
     // signup api integrate here
     try {
       const response = await signup(data); 
