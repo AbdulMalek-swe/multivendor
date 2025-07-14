@@ -125,13 +125,13 @@ export const Checkbox = ({ checked, onChange,label }) => {
       />
 
       <div
-        className={`w-5 h-5 border-2 flex items-center justify-center rounded-md transition-all duration-200 ${
+        className={`border-[#D1D5DB] w-5 h-5 border-2 flex items-center justify-center rounded-md transition-all duration-200 ${
           checked ? "bg-red-600 border-red-600" : "bg-white border-gray-400"
         }`}
       >
         {checked && <FaCheck className="text-white text-lg" />}
       </div>
-      {label &&<span className="text-sm text-[#030712] font-medium ">{label}</span>}
+      {label &&<span className="text-sm text-[#323232] font-medium ">{label}</span>}
     </label>
   );
 };

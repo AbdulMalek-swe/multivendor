@@ -17,6 +17,7 @@ import { responseHandler } from "@/utils/helpers";
 import SingleCart from "@/components/card/SingleCart";
 import Pagination from "@/components/ui/Pagination";
 import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
+import { Checkbox } from "@/components/ui/Input";
 
 const ProductDetails = () => {
   const { addItem, items } = useCart();
@@ -29,9 +30,16 @@ const ProductDetails = () => {
   const product = productItem?.product;
   const [quantity, setQuantity] = useState(1);
   const [variantId, setVariantId] = useState({
-    color_id: null,
-    attribute_id: null,
+    color_id:  null,
+    attribute_id:   null,
   });
+  useEffect(() => {
+    setVariantId({
+      color_id: productItem?.colors[0]?.id || null,
+      attribute_id: productItem?.attributes[0]?.id || null,
+    });
+  }, [productItem]);
+  console.log(variantId, "----------->>variant id");
   const [page, setPage] = useState(1);
   // purchasae product handler
   const handlePurchase = (vl) => {
@@ -69,6 +77,7 @@ const ProductDetails = () => {
       router?.push(`/checkout?buy_now=${product?.slug}`);
     }
   };
+  console.log(productItem);
   // fetch releted product
   const [reletedProduct, setReletedProduct] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(true);
@@ -89,7 +98,7 @@ const ProductDetails = () => {
     };
     fetchReletedProduct();
   }, [productItem, page]);
-  // pagination system more user friendly 
+  // pagination system more user friendly
   useEffect(() => {
     if (!router?.query?.slug) return;
     router.push(
@@ -113,19 +122,6 @@ const ProductDetails = () => {
   if (error) return <CustomError />;
   return (
     <PageLayout>
-      <div className="bg-[#DC2626] text-white text-xs  flex items-center justify-center py-2 px-3 rounded-full w-14 mb-2 text-[10px] font-extrabold">
-        {offerPricePercent(product?.reguler_price, product?.offer_price)}%
-      </div>
-      <div className=" bg-gradient-to-r from-[#D4FC79] to-[#96E6A1] text-[#166534] text-xs text-[10px] font-extrabold flex py-[5px] px-[6px] rounded-full w-20  gap-1 items-center mb-2">
-        <Image
-          src="/products/1.png"
-          alt="loading"
-          className="w-3.5 h-3.5  "
-          width={14}
-          height={14}
-        />
-        ORGANIC
-      </div>
       {/* product details call here  */}
       <div className="flex flex-col md:flex-row justify-between md:gap-10">
         <div className="flex justify-center w-full md:w-1/2 aspect-[247/187]">
@@ -139,11 +135,25 @@ const ProductDetails = () => {
           />
         </div>
         <div className="space-y-2 md:space-y-3 lg:space-y-5 w-full md:w-1/2">
-          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-[#030712]">
-            Marketside Fresh Organic Bananas, Bunch
-          </h1>
+          <div className="flex items-center gap-2 flex-wrap text-xl md:text-2xl lg:text-4xl font-bold text-[#030712]">
+            <span className="whitespace-normal">
+              Marketside Fresh Organic Bananas, Bunch
+            </span>
+
+            {/* <div className="bg-gradient-to-r from-[#D4FC79] to-[#96E6A1] text-[#166534] text-xs font-extrabold flex items-center py-1 px-2 rounded-full gap-1">
+              <Image
+                src="/products/1.png"
+                alt="organic"
+                className="w-3.5 h-3.5"
+                width={14}
+                height={14}
+              />
+              ORGANIC
+            </div> */}
+          </div>
+
           <p className="text-sm border-b pb-2  flex gap-2 items-center">
-            <span className="font-thin text-[#6B7280]">|</span>
+            {/* <span className="font-thin text-[#6B7280]">|</span> */}
             <strong className="text-[#6B7280] ">Vendor:</strong>
             <span className="text-[13px] font-medium text-[#030712] ">
               {product?.vendor?.company_name}
@@ -165,9 +175,12 @@ const ProductDetails = () => {
             <span className="text-[#111827] line-through text-xl font-medium">
               {formatPrice(product?.offer_price, "BDT")}
             </span>
+            <div className="bg-primary/20 text-black/80 text-xs  flex items-center justify-center py-1 px-3 rounded-full w-14 mb-2 text-[10px] font-extrabold">
+              {offerPricePercent(product?.reguler_price, product?.offer_price)}%
+            </div>
           </div>
           <div className="flex gap-1 sm:gap-2 md:gap-3">
-            <div className="flex items-center justify-between px-5 bg-[#FFFFFF] border border-[#D1D5DB] w-full  rounded-md  text-base sm:text-lg md:text-xl lg:text-2xl  text-[#020617]">
+            <div className="flex items-center justify-between px-5 bg-[#FFFFFF] border border-[#D1D5DB] min-w-[155px] w-full  rounded-md  text-base sm:text-lg md:text-xl lg:text-2xl  text-[#020617]  ">
               <button
                 className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
                 onClick={() =>
@@ -180,7 +193,7 @@ const ProductDetails = () => {
               </button>
               <span className="text-lg font-semibold px-3">{quantity}</span>
               <button
-                className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
+                className="rounded-full shadow-md border border-gray-300 w-8 h-8 flex items-center justify-center text-lg font-semibold text-gray-700 hover:bg-gray-100 transition "
                 onClick={() => {
                   if (product?.stock <= quantity) {
                     return notifyError("Quantity is over the stock");
@@ -192,7 +205,7 @@ const ProductDetails = () => {
               </button>
             </div>
             <Button
-              className="text-white font-semibold px-5 py-2 rounded text-nowrap "
+              className="text-white font-semibold px-5 py-2 rounded text-nowrap  "
               bgColor="bg-[#16A34A]"
               rounded="rounded-md"
               textSize="text-sm"
@@ -202,7 +215,7 @@ const ProductDetails = () => {
               <span> Add to cart</span>
             </Button>
             <Button
-              className="text-white font-semibold px-5 py-2 rounded text-nowrap "
+              className="text-white font-semibold px-5 py-2 rounded text-nowrap  "
               bgColor="bg-[#212529]"
               rounded="rounded-md"
               textSize="text-sm"
@@ -214,50 +227,53 @@ const ProductDetails = () => {
           </div>
           <div className="text-sm text-gray-600 space-y-2 ">
             {productItem?.attributes?.length > 0 && (
-              <div className="flex gap-1">
-                <strong>Unit:</strong>{" "}
-                <div className="flex">
+              <div className="flex">
+                <strong className="w-20 block capitalize ">{productItem?.units[0]?.name} </strong> :
+                <div className="flex gap-1">
                   {productItem?.attributes?.map((att, idx) => (
                     <span
-                      className="w-full border rounded-md px-2 border-[#D1D5DB] cursor-pointer"
+                      className="w-full  rounded-md px-2  cursor-pointer"
                       key={idx}
                       onClick={() =>
                         setVariantId({ ...variantId, attribute_id: att?.id })
                       }
                     >
-                      {att?.name}
+                     <Checkbox
+                        checked={variantId?.attribute_id === att?.id ? true : false}
+                        label={att?.name}
+                      /> 
                     </span>
                   ))}
                 </div>
               </div>
             )}
             {productItem?.colors?.length > 0 && (
-              <div className="flex gap-1">
-                <strong>Color:</strong>{" "}
-                <div className="flex gap-1 ">
+              <div className="flex ">
+                <strong className="w-20 block capitalize">Color</strong>:
+                <div className="flex gap-1">
                   {productItem?.colors?.map((clr, idx) => (
                     <span
-                      className="w-full cursor-pointer border rounded-md px-2 border-[#D1D5DB] shrink-0 text-center"
+                      className="  cursor-pointer  rounded-md px-2  shrink-0 text-center"
                       key={idx}
-                      style={{
-                        background: clr?.hex_code ?? clr?.name,
-                      }}
                       onClick={() =>
                         setVariantId({ ...variantId, color_id: clr?.id })
                       }
                     >
-                      {clr?.name}
+                      <Checkbox
+                        checked={variantId?.color_id === clr?.id ? true : false}
+                        label={clr?.name}
+                      /> 
                     </span>
                   ))}
                 </div>
               </div>
             )}
-            <p>
-              <strong>Category:</strong> {product?.category?.category_name}
+            <p className="flex">
+              <strong className="w-20 block capitalize">Category {" "}</strong> : <span className="px-2">{product?.category?.category_name}</span>
             </p>
           </div>
 
-          <div className="mt-2 px-3 py-2  rounded-md text-sm text-[#6B7280] flex items-center gap-2 md:gap-3 lg:gap-4 border border-[#E5E7EB]">
+          {/* <div className="mt-2 px-3 py-2  rounded-md text-sm text-[#6B7280] flex items-center gap-2 md:gap-3 lg:gap-4 border border-[#E5E7EB]">
             <div>
               <MdOutlinePayment className="text-3xl" />
             </div>
@@ -266,7 +282,7 @@ const ProductDetails = () => {
               Payment by card in the department, Bkash, Online card, -5%
               discount in case of payment
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* product  description */}
@@ -279,7 +295,7 @@ const ProductDetails = () => {
         <div dangerouslySetInnerHTML={{ __html: product?.description }}></div>
       </div>
       {/* realeted product code here  */}
-      <span className="inline-block pb-2 leading-7 font-bold text-lg text-[#030712]">
+      <span className="flex mb-2 pb-2 leading-7 font-bold text-lg text-[#030712] border-b border-[#E5E7EB]  ">
         Related products
       </span>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
