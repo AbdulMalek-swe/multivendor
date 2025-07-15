@@ -13,6 +13,7 @@ export function middleware(request) {
   const pathname = request.nextUrl.pathname; 
   const referer = request.headers.get("referer");
   const isAuthPage = pathname.startsWith("/auth");
+  console.log(pathname.split("/"));
   if (token && isAuthPage) {
     if (referer && !referer.includes("/auth")) {
       return NextResponse.redirect(new URL(referer));

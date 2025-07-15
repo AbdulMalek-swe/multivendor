@@ -1,19 +1,19 @@
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
-import { TextInput } from "@/components/ui/Input";
+import { PasswordInput  } from "@/components/ui/Input";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiPhone } from "@/icons";
-import { validateEmailPhone } from "@/utils/validation";
-import { forgotPassword } from "@/lib/api/auth/auth";
+import { CiLock } from "@/icons";
+import {   validatePassword } from "@/utils/validation";
+import { setupForgotPassword } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
 import { useRouter } from "next/router";
 import { notifySuccess } from "@/utils/toast";
-import Link from "next/link";
-import { ROUTES } from "@/constants/route";
+import { useAuth } from "@/context/AuthContext"; 
 
-const ForgotPassword = () => {
+const SetupForgotPassword = () => {
   const router = useRouter();
+  const { login: userLogin } = useAuth();
   const [success, setSuccess] = useState({
     loading: false,
     success: false,
@@ -31,17 +31,21 @@ const ForgotPassword = () => {
       loading: true,
     });
 
-    // ForgotPassword api integrate here
+    // login api integrate here
     try {
-      const response = await forgotPassword(data);
-      console.log(response);
+      const response = await setupForgotPassword({
+        ...data,
+        phone: router?.query?.number,
+        code:router?.query?.code
+      });
       if (responseHandler(response)) {
         setSuccess({
           loading: false,
           success: true,
         });
         notifySuccess(response?.data?.message);
-        router.push(`/auth/forgot-otp?number=${response?.data?.data?.phone}`);
+        userLogin(response?.data?.data?.token);
+        router?.push("/");
       }
     } catch (error) {
       networkErrorHandeller(error);
@@ -53,39 +57,40 @@ const ForgotPassword = () => {
   };
 
   return (
-    <AuthLayout
-      onsubmit={handleSubmit(onSubmit)}
-      icon
-      link={
-        <div className="flex items-center font-normal text-sm md:text-[15px]">
-          Already have an account ?
-          <Link
-            href={ROUTES?.REGISTER}
-            aria-label="bajar.net"
-            className="hover:underline"
-          >
-            {" "}
-            Sign In Now
-          </Link>
-        </div>
-      }
-      text="Welcome to Baajar. ForgotPassword"
-    >
-      <TextInput
+    <AuthLayout onsubmit={handleSubmit(onSubmit)}>
+      <p className="text-center pb-5 font-normal">
+        Hello, Muhtasim Shakil <br />
+        <span className="font-semibold text-white text-[15px]">
+          Please set a password for your account
+        </span>
+      </p>
+
+      <PasswordInput
         register={register}
-        name="phone"
+        name="password"
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            <FiPhone /> Phone Number or E-mail{" "}
+            <CiLock /> Password{" "}
           </p>
         }
-        rules={validateEmailPhone}
+        rules={validatePassword}
         errors={errors}
         trigger={trigger}
-        placeholder={"enter phone number"}
       />
-
+      <PasswordInput
+        register={register}
+        name="confirm_password"
+        label={
+          <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
+            {" "}
+            <CiLock /> Password{" "}
+          </p>
+        }
+        rules={validatePassword}
+        errors={errors}
+        trigger={trigger}
+      />
       <div className=" flex justify-center">
         <Button
           className="rounded-lg mt-8  font-bold !w-[188px]  !h-[48px]"
@@ -96,11 +101,11 @@ const ForgotPassword = () => {
           isLoading={success?.loading}
           isSuccess={success?.success}
         >
-          Send OTP{" "}
+          Reset Password
         </Button>
       </div>
     </AuthLayout>
   );
 };
 
-export default ForgotPassword;
+export default SetupForgotPassword;

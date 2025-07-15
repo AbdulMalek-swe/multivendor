@@ -96,7 +96,7 @@ const Navbar = () => {
             </span>
           </div>
           {/* cart and profile icon  */}
-          {userProfile ? (
+          {userProfile?.phone||userProfile?.name ? (
             <div className="hidden md:flex  items-center flex-shrink-0 gap-2 ">
               <div className="relative flex items-center" ref={menuRef}>
                 <button onClick={() => setProfileMenu(!profileMenu)}>

@@ -4,7 +4,7 @@ import PageLayout from "@/components/ui/PageLayout";
 import Drawer from "react-modern-drawer";
 import { RxHamburgerMenu } from "@/icons";
 const DashboardLayout = ({ children }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   return (
     <PageLayout>
@@ -24,7 +24,7 @@ const DashboardLayout = ({ children }) => {
             </span>
           </div>
         </div>
-      </div> 
+      </div>
       <Drawer
         open={isDrawerOpen}
         onClose={toggleDrawer}
@@ -33,12 +33,12 @@ const DashboardLayout = ({ children }) => {
       >
         <AccountSidebar />
       </Drawer>
-      <section className="flex gap-2 lg:gap-3">
+      <section className="flex gap-2 lg:gap-3  ">
         {" "}
         <div className="hidden md:block shrink-0 h-full">
           <AccountSidebar />
         </div>
-        <div className="w-full h-[calc(100vh-200px)] md:h-[calc(100vh-142px)] overflow-y-scroll  ">
+        <div className="w-full h-[calc(100vh-200px)] md:h-[calc(100vh-98px)] overflow-y-scroll hide-scrollbar ">
           {children}
         </div>
       </section>

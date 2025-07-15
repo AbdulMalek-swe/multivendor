@@ -19,3 +19,15 @@ export const resendOtp = async(payload)=>{
 export const setupPassword = async(payload)=>{
     return publicRequest.post("auth/set-password",payload)
 }
+// password api call 
+export const forgotPassword = async(payload)=>{
+    return publicRequest.post("auth/forgot/password/sms-send",payload)
+}
+// forgot otp call here
+export const forgot_otp = async(payload)=>{
+    return publicRequest.post("auth/forgot-code-check",payload)
+}
+// forgot otp call here
+export const setupForgotPassword = async(payload)=>{
+    return publicRequest.post("auth/forgot-password-update",payload)
+}

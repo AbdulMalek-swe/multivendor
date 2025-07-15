@@ -10,10 +10,8 @@ import {
   getValidateConfirmPassword,
   validatePassword,
 } from "@/utils/validation";
-import { PasswordInput } from "../ui/Input";
-import { ROUTES } from "@/constants/route";
-import Link from "next/link";
-const ResetPassword = ({ setIsOpen }) => {
+import { PasswordInput } from "../ui/Input"; 
+const ResetPassword = ( ) => {
   const { user, fetchProfile } = useAuth();
   const [success, setSuccess] = useState({
     loading: false,
@@ -53,8 +51,7 @@ const ResetPassword = ({ setIsOpen }) => {
             loading: false,
             success: false,
           });
-        }, 700);
-        setIsOpen(false);
+        }, 700); 
       }
     } catch (error) {
       networkErrorHandeller(error);
@@ -63,11 +60,11 @@ const ResetPassword = ({ setIsOpen }) => {
         success: false,
       });
     }
-  };
+  }; 
   return (
     <form
       onSubmit={handleSubmit(onsubmit)}
-      className="  shadow-md px-5 py-7 border rounded-lg space-y-4"
+      className="  shadow-md px-5 py-7 border rounded-lg space-y-4  "
     >
       <h1 className="text-black opacity-70 text-center py-1 font-bold text-xl">
         Password Reset
@@ -101,19 +98,8 @@ const ResetPassword = ({ setIsOpen }) => {
         errors={errors}
         trigger={trigger}
         errorColor="text-primary"
-        disabled={errors["password"] ? true : false}
-      />
-      <div className="flex items-center justify-center font-normal text-black opacity-70 pt-1 text-sm md:text-[15px]">
-        Have forget password ?{" "}
-        <Link
-          href={ROUTES?.FORGET_PASSWORD}
-          aria-label="bajar.net"
-          className="hover:underline"
-        >
-          {" "}
-          Forgot Password
-        </Link>
-      </div>
+        disabled={errors["password"] || !watch("password") ? true : false}
+      /> 
       <div className=" flex justify-center">
         <Button
           className="rounded-lg mt-1 font-bold !w-[188px]  !h-[48px]"
