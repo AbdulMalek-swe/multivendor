@@ -1,5 +1,5 @@
 export  function flattenOrders(orderList) {
-    const result = []; 
+    const result = [];  
     orderList?.forEach((order) => {
       const orderStatus = order?.order_status;
       const orderId = order?.id;

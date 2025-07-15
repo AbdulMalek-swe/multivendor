@@ -2,7 +2,7 @@
 import { order } from "@/lib/api/order/order";
 import { useState, useEffect } from "react";
 
-function useOrder() {
+function useOrder(query={}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ function useOrder() {
       setError(null);
       try {
         // call category api 
-        const response = await order(); 
+        const response = await order(query); 
         setData(response?.data?.data);
         setLoading(false);
       } catch (err) {
@@ -23,7 +23,7 @@ function useOrder() {
       }
     }
     fetchOrder();
-  }, []);
+  }, [JSON.stringify(query)]);
 
   return { data, loading, error };
 }

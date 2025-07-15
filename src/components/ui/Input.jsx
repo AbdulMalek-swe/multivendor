@@ -63,6 +63,7 @@ export const PasswordInput = ({
   placeholder,
   rules = {},
   trigger,
+  errorColor="text-gray-300",
   ...rest
 }) => {
   const [show, setShow] = useState(false);
@@ -95,10 +96,11 @@ export const PasswordInput = ({
           errors[name] ? "border-gray-500 border" : " "
         }`}
         {...rest}
+       
       />
 
       {errors[name] && (
-        <p className="text-sm text-gray-300  px-2">{errors[name].message}</p>
+        <p className={`text-sm  ${errorColor?errorColor:'text-gray-300'} px-2`}>{errors[name].message}</p>
       )}
       <div
         onClick={() => setShow((prev) => !prev)}

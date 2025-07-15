@@ -29,4 +29,5 @@ export const ROUTES = {
   ACCOUNT: "/dashboard/profile",
   ADDRESS: "/dashboard/address",
   TRACK: "/dashboard/my-order",
+  CHANGE_PASSWORD:"/dashboard/change-password"
 };

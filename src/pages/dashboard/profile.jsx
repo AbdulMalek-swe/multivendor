@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+import { FaUser } from "@/icons";
 import { useAuth } from "@/context/AuthContext";
 import { maskPhone } from "@/utils/utils";
+import { flattenOrders } from "@/utils/flattenOrder";
 import useAddress from "@/hooks/api/address/useAddress";
 import Drawer from "react-modern-drawer";
 import EditAddress from "@/components/address/EditAddress";
 import useOrder from "@/hooks/api/order/useOrder";
 import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";
-import { flattenOrders } from "@/utils/flattenAddress";
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import Modal from "@/components/ui/modal";
 import Profile from "@/components/auth/Profile";
+import Pagination from "@/components/ui/Pagination";
 const MyAccount = () => {
   const { user } = useAuth();
   const { data: addressData, loading } = useAddress();
+  const [page, setPage] = useState(1);
   const defaultAddress = addressData?.find(
     (item) => item?.default_address == 1
   );
@@ -24,8 +27,11 @@ const MyAccount = () => {
     setOpenDrawer(!openDrawer);
   };
   // order find recently order
-  const { data: order, loading: orderLoading } = useOrder();
-  const flatData = flattenOrders(order);
+  const { data: order, loading: orderLoading } = useOrder({
+    per_page: 12,
+    page: page,
+  });
+  const flatData = flattenOrders(order?.data);
   // formate date
   function formatDate(isoDate) {
     const date = new Date(isoDate);
@@ -34,11 +40,20 @@ const MyAccount = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <Modal isOpen={isOpen} onClose={()=>setIsOpen(false)}>
-        <Profile />
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title={
+          <div className="flex items-center gap-2">
+            <FaUser />
+            Profile Update
+          </div>
+        }
+      >
+        <Profile setIsOpen={setIsOpen} />
       </Modal>
       {loading ? (
         <ManageAccountSkeleton />
@@ -71,7 +86,12 @@ const MyAccount = () => {
             <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium">Personal Profile</h3>
-                <button className="text-blue-600 text-sm" onClick={()=>setIsOpen(!isOpen)}>EDIT</button>
+                <button
+                  className="text-blue-600 text-sm"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  EDIT
+                </button>
               </div>
               <p className="mb-1">{user?.name}</p>
               <p className="mb-3">{maskPhone(user?.phone)}</p>
@@ -143,8 +163,11 @@ const MyAccount = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {flatData.map((orderItem) => (
-                    <tr className="border-b border-[#E5E7EB] hover:bg-gray-50">
+                  {flatData.map((orderItem, idx) => (
+                    <tr
+                      className="border-b border-[#E5E7EB] hover:bg-gray-50"
+                      key={idx}
+                    >
                       <td className="p-3">#{orderItem?.order_id}</td>
                       <td className="p-3">
                         {" "}
@@ -170,6 +193,11 @@ const MyAccount = () => {
                   ))}
                 </tbody>
               </table>
+              <Pagination
+                totalPage={order?.last_page}
+                page={page}
+                setPage={setPage}
+              />
             </div>
           </div>
         </div>

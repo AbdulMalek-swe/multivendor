@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import NavbarSkeleton from "../loader/skeleton/Navbar/NavbarSkeleton";
 const Navbar = () => {
   const { items } = useCart();
-  const { user: userProfile, logout, loading: authLoading } = useAuth(); 
+  const { user: userProfile, logout, loading: authLoading } = useAuth();
   const [isFixed, setIsFixed] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [profileMenu, setProfileMenu] = useState(false);
@@ -98,7 +98,7 @@ const Navbar = () => {
           {/* cart and profile icon  */}
           {userProfile ? (
             <div className="hidden md:flex  items-center flex-shrink-0 gap-2 ">
-              <div className="relative" ref={menuRef}>
+              <div className="relative flex items-center" ref={menuRef}>
                 <button onClick={() => setProfileMenu(!profileMenu)}>
                   {" "}
                   {userProfile?.image ? (
@@ -107,6 +107,8 @@ const Navbar = () => {
                       height={25}
                       src={`${process?.env.NEXT_PUBLIC_API_SERVER}${userProfile?.image}`}
                       alt="loading"
+                      priority
+                      className="rounded-full object-cover w-7 h-7"
                     />
                   ) : (
                     <Image
@@ -117,9 +119,19 @@ const Navbar = () => {
                     />
                   )}
                 </button>
+                <div
+                  className={`absolute right-2 top-5 mt-2     rounded-md shadow-lg origin-top-right z-50 overflow-hidden
+        transform transition-all duration-300 ease-out border w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-gray-300/30 
+        ${
+          profileMenu
+            ? "translate-y-0 opacity-100 visible"
+            : "translate-y-5 opacity-0 invisible"
+        }`}
+                ></div>
+
                 {/* profile menu show here  */}
                 <div
-                  className={`absolute -right-20 mt-2 w-60 bg-white rounded-md shadow-lg origin-top-right z-50 overflow-hidden
+                  className={`absolute -right-20 top-7 mt-2 w-60 bg-white rounded-md shadow-lg origin-top-right z-50 overflow-hidden
         transform transition-all duration-300 ease-out border 
         ${
           profileMenu

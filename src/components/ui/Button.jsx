@@ -94,7 +94,7 @@ const Button = ({
       }
     >
       {isLoading ? (
-        <FaSpinner className="animate-spin text-primary text-lg" />
+        <FaSpinner className={`${color?color:'text-primary'} animate-spin  text-lg`} />
       ) : isSuccess && showSuccessText ? (
         <span className="flex items-center gap-1 text-sm animate-fade-up">
           <FaCheck className="text-green-300" /> Success

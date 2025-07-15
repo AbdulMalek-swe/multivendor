@@ -7,8 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 import { spcialOffer } from "@/constants/serviceSpecialOffer";
-import useShop from "@/hooks/api/Shop/useShop";
-import useGeolocation from "@/hooks/Location/useGeoLocation";
+import useShop from "@/hooks/api/Shop/useShop"; 
 import useProduct from "@/hooks/api/Product/useProduct";
 import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
 import HomeFirstSkeletonSection from "@/components/loader/skeleton/Home/HomeFirstSkeletonSection";
@@ -91,7 +90,7 @@ export default function Home() {
                   <div className="flex justify-between pb-6 md:pb-8 ">
                     <HomePageHeaderText>
                       Nearest{" "}
-                      <span className="text-primary   ">Shop Profile</span>
+                      <span className="text-primary">Shop Profile</span>
                     </HomePageHeaderText>
                     <div className=" flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
                       <div

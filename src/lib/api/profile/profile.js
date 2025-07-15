@@ -6,3 +6,6 @@ export const getProfile = async () => {
 export const profileUpdate = async (data) => {
   return privateRequest.post("/user/update-profile",data);
 };
+export const passwordReset = async (data) => {
+  return privateRequest.post("/user/reset-password",data);
+};

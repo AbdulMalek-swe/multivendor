@@ -20,7 +20,7 @@ export default function Modal({ isOpen, onClose, children, title = "" }) {
       >
         {/* Header */}
         <div className="px-6 py-4   flex justify-between items-center text-2xl sm:text-3xl font-bold mb-2 text-center shadow-md  bg-white rounded-md w-full mx-auto">
-          <h2 className="">{title ? title : "🛍️ Nearest Shops"}</h2>
+          <div className="opacity-70">{title ? title : "🛍️ Nearest Shops"}</div>
           <button
             onClick={onClose}
             className="text-[#2b2b2b] hover:text-gray-600 text-xl shadow rounded-full w-7 h-7 flex items-center hover:bg-primary/40 justify-center"
