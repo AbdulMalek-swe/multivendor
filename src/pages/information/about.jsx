@@ -1,6 +1,6 @@
+import React from "react";
 import PageLayout from "@/components/ui/PageLayout";
 import Image from "next/image";
-import React from "react";
 const About = () => {
   return (
     <PageLayout><div className="bg-white text-[#111827] font-poppins">

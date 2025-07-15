@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import useAddress from "@/hooks/api/address/useAddress";
 import Drawer from "react-modern-drawer";
-import EditAddress from "@/components/address/EditAddress";
-import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";
-import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
+import { useAuth } from "@/context/AuthContext";
 import { useDeleteModal } from "@/context/DeleteModalContext";
 import { privateRequest } from "@/lib/axios";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import useAddress from "@/hooks/api/address/useAddress";
+import EditAddress from "@/components/address/EditAddress";
+import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import useDefaultAddress from "@/hooks/api/address/useDefaultAddress";
 import AddressSkeleton from "@/components/loader/skeleton/AccountSkeleton/AddressSkeleton";
 import CreateAddress from "@/components/address/CreateAddress";

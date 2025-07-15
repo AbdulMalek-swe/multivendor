@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FaCheck } from "@/icons";
@@ -9,7 +10,6 @@ import { handlePurchaseProduct } from "@/utils/productPurchase";
 import PageLayout from "@/components/ui/PageLayout";
 import { FaShoppingCart } from "@/icons";
 import CartSkeleton from "@/components/loader/skeleton/AccountSkeleton/CartSkeleton";
-import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 const Cart = () => {
   const { openModal } = useDeleteModal();

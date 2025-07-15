@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import OrderSkeleton from "@/components/loader/skeleton/AccountSkeleton/OrderSkeleton";
 import PageLayout from "@/components/ui/PageLayout";
 import useOrder from "@/hooks/api/order/useOrder"; 
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 
 const MyOrder = () => {
   const tabs = ["All", "To Pay", "To Ship", "To Receive", "To Review"];

@@ -1,15 +1,15 @@
+import React, { useState } from "react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
 import { TextInput } from "@/components/ui/Input";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { FiPhone } from "@/icons";
 import { validateEmailPhone } from "@/utils/validation";
 import { forgotPassword } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
-import { useRouter } from "next/router";
 import { notifySuccess } from "@/utils/toast";
-import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 
 const ForgotPassword = () => {

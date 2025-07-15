@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import Drawer from "react-modern-drawer";
 import { FaUser } from "@/icons";
 import { useAuth } from "@/context/AuthContext";
 import { maskPhone } from "@/utils/utils";
 import { flattenOrders } from "@/utils/flattenOrder";
 import useAddress from "@/hooks/api/address/useAddress";
-import Drawer from "react-modern-drawer";
 import EditAddress from "@/components/address/EditAddress";
 import useOrder from "@/hooks/api/order/useOrder";
 import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";

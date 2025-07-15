@@ -1,24 +1,25 @@
+import { useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ROUTES } from "@/constants/route";
+import { spcialOffer } from "@/constants/serviceSpecialOffer";
+import { useLoadingObserver } from "@/utils/loadingObserver";
 import Banner from "@/components/banner/Banner";
 import Category from "@/components/category/Category";
 import SingleCart from "@/components/card/SingleCart";
 import SingleShopCard from "@/components/card/SingleShopCard";
 import HomePageHeaderText from "@/components/ui/HomePageHeaderText";
-import Image from "next/image";
-import Link from "next/link";
-import { ROUTES } from "@/constants/route";
-import { spcialOffer } from "@/constants/serviceSpecialOffer";
 import useShop from "@/hooks/api/Shop/useShop"; 
 import useProduct from "@/hooks/api/Product/useProduct";
 import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
 import HomeFirstSkeletonSection from "@/components/loader/skeleton/Home/HomeFirstSkeletonSection";
 import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
 import CustomError from "@/components/error/CustomError";
-import { useLoadingObserver } from "@/utils/loadingObserver";
-import { useRef, useState } from "react";
 import PageLayout from "@/components/ui/PageLayout";
 import Modal from "@/components/ui/modal";
 import NearestShop from "@/components/shop/Nearest-Shop";
 import InfinityLoadingButton from "@/components/ui/InfinityLoadingButton";
+
 export default function Home() { 
   const [page, setPage] = useState(1);
   const loadingRef = useRef();
@@ -161,6 +162,7 @@ export default function Home() {
                 height={1000}
                 alt="loading..."
                 className="w-full rounded-md"
+                priority
               />
             </div>
             <div className="w-full aspect-auto">
@@ -170,6 +172,7 @@ export default function Home() {
                 height={1000}
                 alt="loading..."
                 className="w-full rounded-md"
+                priority
               />
             </div>
           </div>
@@ -183,6 +186,7 @@ export default function Home() {
               width={1000}
               height={1000}
               alt="loading..."
+              priority
             />
           </div>
           <div className="w-full md:w-8/12 lg:w-9/12 ">
@@ -222,7 +226,7 @@ export default function Home() {
               key={item?.logo}
               className="flex gap-4 items-center rounded-xl justify-center py-5 shadow-custom"
             >
-              <Image height={40} width={40} src={item?.logo} alt="authentic" />
+              <Image height={40} width={40} src={item?.logo} alt="authentic" priority/>
               <div>
                 <p className="text-base font-bold text-[#030712]">
                   {item?.title}

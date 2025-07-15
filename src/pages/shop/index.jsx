@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import SingleShopCard from "@/components/card/SingleShopCard";
 import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
 import PageLayout from "@/components/ui/PageLayout";
 import Pagination from "@/components/ui/Pagination";
 import useShop from "@/hooks/api/Shop/useShop";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 
 const Shop = () => {
   const router = useRouter();

@@ -1,16 +1,16 @@
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
 import { PasswordInput, TextInput } from "@/components/ui/Input";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { CiLock, FiPhone } from "@/icons";
 import { validateEmailPhone, validatePassword } from "@/utils/validation";
 import { login } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
-import { useRouter } from "next/router";
 import { notifySuccess } from "@/utils/toast";
 import { useAuth } from "@/context/AuthContext";
-import Link from "next/link";
 import { ROUTES } from "@/constants/route";
 
 const Login = () => {

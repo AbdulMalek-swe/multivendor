@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 import useProductId from "@/hooks/api/Product/useSinglePorduct";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { AiOutlineShopping, MdOutlinePayment } from "@/icons";
 import { offerPricePercent } from "@/utils/priceOfferPercent";
 import SkeletonProductDetails from "@/components/loader/skeleton/Porduct/Product/SkeletonProductDetails";

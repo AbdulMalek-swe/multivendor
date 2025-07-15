@@ -1,16 +1,16 @@
-import { privateRequest, publicRequest } from "@/lib/axios";
 import React, { useEffect, useState } from "react";
-import { FaHome, CiEdit, MdLocationOff, IoArrowBack } from "@/icons";
+import Drawer from "react-modern-drawer";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { FaHome, CiEdit, MdLocationOff, IoArrowBack } from "@/icons";
+import { privateRequest } from "@/lib/axios";
 import { responseHandler } from "@/utils/helpers";
 import { notifySuccess } from "@/utils/toast";
-import Drawer from "react-modern-drawer";
+import { useCart } from "@/hooks/cart/useCart";
 import CreateAddress from "@/components/address/CreateAddress";
 import useAddress from "@/hooks/api/address/useAddress";
 import DefaultAddress from "@/components/address/DefaultAddress";
 import EditAddress from "@/components/address/EditAddress";
-import { useCart } from "@/hooks/cart/useCart";
 import PageLayout from "@/components/ui/PageLayout";
 import CheckoutPageSkeleton from "@/components/loader/skeleton/AccountSkeleton/CheckoutSkeleton";
 const Checkout = () => {
@@ -21,7 +21,7 @@ const Checkout = () => {
     subtotal: 0,
     orderItems: 0,
   });
-  const { data: addressData, loading,refetch } = useAddress();
+  const { data: addressData, loading, refetch } = useAddress();
   const defaultAddress = addressData?.find(
     (item) => item?.default_address == 1
   );
@@ -111,11 +111,11 @@ const Checkout = () => {
                   )}
 
                   {openType === "default" && (
-                    <DefaultAddress 
+                    <DefaultAddress
                       setOpenDrawer={setOpenDrawer}
                       setOpenType={setOpenType}
                       addressData={addressData}
-                       refetch={refetch} 
+                      refetch={refetch}
                     />
                   )}
                 </div>
@@ -265,7 +265,7 @@ const Checkout = () => {
               onClick={handleOrder}
               // disabled={btnLoading}
             >
-             place order
+              place order
             </button>
           </div>
         </div>

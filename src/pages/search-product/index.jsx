@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
+import Drawer from "react-modern-drawer";
 import useSearchProduct from "@/hooks/api/Product/useSearchProduct";
 import SingleCart from "@/components/card/SingleCart";
 import ProductCardSkeleton from "@/components/loader/skeleton/Porduct/Product/SingleProductSkeleton";
-import Drawer from "react-modern-drawer";
 import { CiFilter } from "@/icons";
 import PageLayout from "@/components/ui/PageLayout";
 import { FilterArea } from "@/components/filter/FilterArea";

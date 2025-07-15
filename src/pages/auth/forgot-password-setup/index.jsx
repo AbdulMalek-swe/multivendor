@@ -1,13 +1,13 @@
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
 import { PasswordInput  } from "@/components/ui/Input";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { CiLock } from "@/icons";
 import {   validatePassword } from "@/utils/validation";
 import { setupForgotPassword } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
-import { useRouter } from "next/router";
 import { notifySuccess } from "@/utils/toast";
 import { useAuth } from "@/context/AuthContext"; 
 

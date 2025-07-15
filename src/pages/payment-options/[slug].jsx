@@ -1,10 +1,10 @@
-import PageLayout from "@/components/ui/PageLayout";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { paymentOption } from "@/constants/paymentOptions";
 import { privateRequest } from "@/lib/axios";
 import { responseHandler } from "@/utils/helpers";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import PageLayout from "@/components/ui/PageLayout";
 
 const PaymentOption = () => {
   const router = useRouter();

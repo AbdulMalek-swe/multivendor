@@ -1,14 +1,12 @@
+import React, { useState } from "react";
+import OtpInput from "react-otp-input";
+import { useRouter } from "next/router";
+import { Controller, useForm } from "react-hook-form";
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { forgot_otp, forgotPassword, resendOtp } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
-import { useRouter } from "next/router";
-import { notifySuccess } from "@/utils/toast";
-import Link from "next/link";
-import { ROUTES } from "@/constants/route";
-import OtpInput from "react-otp-input";
+import { notifySuccess } from "@/utils/toast"; 
 const VerifyOtp = () => {
   const router = useRouter();
   const [success, setSuccess] = useState({

@@ -12,8 +12,7 @@ export function middleware(request) {
   const token = request.cookies.get("bajar_token");
   const pathname = request.nextUrl.pathname; 
   const referer = request.headers.get("referer");
-  const isAuthPage = pathname.startsWith("/auth");
-  console.log(pathname.split("/"));
+  const isAuthPage = pathname.startsWith("/auth"); 
   if (token && isAuthPage) {
     if (referer && !referer.includes("/auth")) {
       return NextResponse.redirect(new URL(referer));
