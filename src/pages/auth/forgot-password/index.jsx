@@ -60,7 +60,7 @@ const ForgotPassword = () => {
         <div className="flex items-center font-normal text-sm md:text-[15px]">
           Already have an account ?
           <Link
-            href={ROUTES?.REGISTER}
+            href={ROUTES?.LOGIN}
             aria-label="bajar.net"
             className="hover:underline"
           >
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            <FiPhone /> Phone Number or E-mail{" "}
+            <FiPhone /> Phone Number  {" "}
           </p>
         }
         rules={validateEmailPhone}

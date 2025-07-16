@@ -77,6 +77,7 @@ const SignUp = () => {
         errors={errors}
         trigger={trigger}
         required={true}
+        placeholder={"Full Name"}
       />
       <TextInput
         register={register}
@@ -90,6 +91,7 @@ const SignUp = () => {
         rules={validateEmailPhone}
         errors={errors}
         trigger={trigger}
+        placeholder={"Phone"}
       />
       <div className="font-normal text-sm lg:text-[15px] my-8">
         By clicking <span className="font-semibold">"SIGN UP"</span> I agree to <Link  aria-label="bajar.net"  href={ROUTES?.TERMS_CONDITION} className="font-semibold hover:underline cursor-pointer">Terms of Use</Link> and <Link href={ROUTES?.PRIVACY_POLICY}  aria-label="bajar.net" className="font-semibold hover:underline cursor-pointer">Privacy Policy</Link>

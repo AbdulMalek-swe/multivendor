@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Drawer from "react-modern-drawer";
 import { FaUser } from "@/icons";
 import { useAuth } from "@/context/AuthContext";
-import { maskPhone } from "@/utils/utils";
+import { formatDate, maskPhone } from "@/utils/utils";
 import { flattenOrders } from "@/utils/flattenOrder";
 import useAddress from "@/hooks/api/address/useAddress";
 import EditAddress from "@/components/address/EditAddress";
@@ -33,13 +33,7 @@ const MyAccount = () => {
   });
   const flatData = flattenOrders(order?.data);
   // formate date
-  function formatDate(isoDate) {
-    const date = new Date(isoDate);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth is 0-indexed
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
+ 
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>

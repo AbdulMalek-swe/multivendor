@@ -1,29 +1,20 @@
-// import { LayoutPageWrapper } from "@/components/layout";
+import { LayoutPageWrapper } from "@/components/layout";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { DeleteModalProvider } from "@/context/DeleteModalContext";
-import dynamic from "next/dynamic";
 import "@/styles/globals.css";
 import { Poppins, Roboto } from "next/font/google";
 import Head from "next/head";
-const Toaster = dynamic(() => import("sonner").then((mod) => mod.Toaster), {
-  ssr: false,
-});
-const LayoutPageWrapper = dynamic(() =>
-  import("@/components/layout").then((mod) => mod.LayoutPageWrapper)
-);
+import { Toaster } from "sonner"; 
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-roboto",
-  display: "swap",
-});
-
+}); 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
-  display: "swap",
 });
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout ?? ((page) => page);

@@ -80,7 +80,7 @@ const VerifyOtp = () => {
         <p className="text-center pt-8 pb-5 font-normal">
           We have sent an OTP to your phone number <br />
           <span className="font-semibold text-white text-[15px]">
-            +8801811017801
+              {router?.query?.number}
           </span>
         </p>
         <p className="text-center text-white font-semibold text-[15px]">

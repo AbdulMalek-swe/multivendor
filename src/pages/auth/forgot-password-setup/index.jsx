@@ -3,17 +3,16 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/ui/Button";
-import { PasswordInput  } from "@/components/ui/Input";
+import { PasswordInput } from "@/components/ui/Input";
 import { CiLock } from "@/icons";
-import {   validatePassword } from "@/utils/validation";
+import { validatePassword } from "@/utils/validation";
 import { setupForgotPassword } from "@/lib/api/auth/auth";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
-import { notifySuccess } from "@/utils/toast";
-import { useAuth } from "@/context/AuthContext"; 
+import { notifySuccess } from "@/utils/toast"; 
+import { ROUTES } from "@/constants/route";
 
 const SetupForgotPassword = () => {
-  const router = useRouter();
-  const { login: userLogin } = useAuth();
+  const router = useRouter(); 
   const [success, setSuccess] = useState({
     loading: false,
     success: false,
@@ -36,7 +35,7 @@ const SetupForgotPassword = () => {
       const response = await setupForgotPassword({
         ...data,
         phone: router?.query?.number,
-        code:router?.query?.code
+        code: router?.query?.code,
       });
       if (responseHandler(response)) {
         setSuccess({
@@ -44,8 +43,7 @@ const SetupForgotPassword = () => {
           success: true,
         });
         notifySuccess(response?.data?.message);
-        userLogin(response?.data?.data?.token);
-        router?.push("/");
+        router?.push(ROUTES?.LOGIN);
       }
     } catch (error) {
       networkErrorHandeller(error);
@@ -101,7 +99,7 @@ const SetupForgotPassword = () => {
           isLoading={success?.loading}
           isSuccess={success?.success}
         >
-          Reset Password
+          Save Password
         </Button>
       </div>
     </AuthLayout>

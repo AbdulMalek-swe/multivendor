@@ -58,7 +58,7 @@ const SetupPassword = () => {
   return (
     <AuthLayout onsubmit={handleSubmit(onSubmit)}>
       <p className="text-center pb-5 font-normal">
-        Hello, Muhtasim Shakil <br />
+        Hello  <br />
         <span className="font-semibold text-white text-[15px]">
           Please set a password for your account
         </span>
@@ -76,6 +76,7 @@ const SetupPassword = () => {
         rules={validatePassword}
         errors={errors}
         trigger={trigger}
+        placeholder={"Password"}
       />
       <PasswordInput
         register={register}
@@ -83,12 +84,13 @@ const SetupPassword = () => {
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            <CiLock /> Password{" "}
+            <CiLock />Confirm Password{" "}
           </p>
         }
         rules={validatePassword}
         errors={errors}
         trigger={trigger}
+        placeholder={"Confirm Password"}
       />
       <div className=" flex justify-center">
         <Button
@@ -100,7 +102,7 @@ const SetupPassword = () => {
           isLoading={success?.loading}
           isSuccess={success?.success}
         >
-          Reset Password
+         Setup Password
         </Button>
       </div>
     </AuthLayout>

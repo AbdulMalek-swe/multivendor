@@ -1,7 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { ROUTES } from "@/constants/route";
-import LinkButton from "../ui/LinkButton";
 import Button from "../ui/Button";
 import { useRouter } from "next/router";
 import { notifyError } from "@/utils/toast";
@@ -23,9 +21,8 @@ const CartMenu = ({ cartProduct = [] }) => {
           attribute_id: item?.selected_attribute_id,
           color_id: item?.selected_color_id,
           offer_price: item?.price,
-          
         });
-      }); 
+      });
       localStorage.setItem("order_items", JSON.stringify(result));
       router.push("/checkout?bestApplied=true");
     } catch (error) {
@@ -33,8 +30,8 @@ const CartMenu = ({ cartProduct = [] }) => {
     }
   };
   return (
-    <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg">
-      <div className="overflow-y-auto max-h-[300px]">
+    <div className="bg-white fixed top-0 z-[99999999999] right-0.5 p-8 w-[380px] md:w-[425px] rounded-lg shadow">
+      <div className="hover:overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-gray-400 overflow-hidden">
         {cartProduct?.map((product, idx) => (
           <div
             className="flex gap-2 md:gap-4 items-center border-b-2 md:py-3 py-2"
@@ -58,8 +55,12 @@ const CartMenu = ({ cartProduct = [] }) => {
                   {product?.vendor?.company_name}
                 </p>
                 <p className="flex gap-2 font-medium text-xs text-[#AAAAAA]">
-                  <span>Color : {product?.color?.name}</span>
-                  <span>Size : {product?.attribute?.name}</span>
+                  {product?.color?.name && (
+                    <span>Color : {product?.color?.name}</span>
+                  )}
+                  {product?.attribute?.name && (
+                    <span>Size : {product?.attribute?.name}</span>
+                  )}
                 </p>
               </div>
               <span className="text-primary font-bold md:text-base text-sm leading-3.5">

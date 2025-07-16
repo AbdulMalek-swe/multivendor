@@ -75,7 +75,7 @@ const Login = () => {
           </Link>
         </div>
       }
-      footer={<Link href={ROUTES?.FORGET_PASSWORD} aria-label="bajar.net">Fogot Password?</Link>}
+      footer={<Link href={ROUTES?.FORGET_PASSWORD} aria-label="bajar.net" className="hover:underline">Fogot Password?</Link>}
       text="Welcome to Baajar. Login"
     >
       <TextInput
@@ -84,12 +84,13 @@ const Login = () => {
         label={
           <p className="px-3 flex items-center text-white gap-2 font-semibold text-sm ">
             {" "}
-            <FiPhone /> Phone Number or E-mail{" "}
+            <FiPhone /> Phone Number {" "}
           </p>
         }
         rules={validateEmailPhone}
         errors={errors}
         trigger={trigger}
+        placeholder={"Phone Number"}
       />
       <PasswordInput
         register={register}
@@ -103,6 +104,7 @@ const Login = () => {
         rules={validatePassword}
         errors={errors}
         trigger={trigger}
+        placeholder={"Password"}
       />
       <div className=" flex justify-center">
         <Button

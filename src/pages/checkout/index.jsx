@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Drawer from "react-modern-drawer";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FaHome, CiEdit, MdLocationOff, IoArrowBack } from "@/icons";
+import { FaHome, CiEdit, MdLocationOff, IoArrowBack, FaSpinner } from "@/icons";
 import { privateRequest } from "@/lib/axios";
 import { responseHandler } from "@/utils/helpers";
 import { notifySuccess } from "@/utils/toast";
@@ -13,6 +13,7 @@ import DefaultAddress from "@/components/address/DefaultAddress";
 import EditAddress from "@/components/address/EditAddress";
 import PageLayout from "@/components/ui/PageLayout";
 import CheckoutPageSkeleton from "@/components/loader/skeleton/AccountSkeleton/CheckoutSkeleton";
+import Spinner from "@/components/loader/Spinner";
 const Checkout = () => {
   const { clear: cartClear } = useCart();
   const router = useRouter();
@@ -21,6 +22,7 @@ const Checkout = () => {
     subtotal: 0,
     orderItems: 0,
   });
+  const [orderLoadinBtn,setOrderLoadingBtn] = useState(false);
   const { data: addressData, loading, refetch } = useAddress();
   const defaultAddress = addressData?.find(
     (item) => item?.default_address == 1
@@ -43,6 +45,7 @@ const Checkout = () => {
   };
   //   order create successfully
   const handleOrder = async () => {
+    setOrderLoadingBtn(true)
     try {
       const result = JSON?.parse(localStorage?.getItem("order_items"));
       const response = await privateRequest.post("/user/order", {
@@ -54,8 +57,11 @@ const Checkout = () => {
         notifySuccess(response?.data?.message);
         cartClear();
         router?.push(`/payment-options/${response?.data?.data?.id}`);
+        setOrderLoadingBtn(false)
       }
-    } catch (error) {}
+    } catch (error) {
+      setOrderLoadingBtn(false)
+    }
   };
   // drawer code
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -261,11 +267,11 @@ const Checkout = () => {
               </span>
             </div>
             <button
-              className="fixed bottom-0 left-0 md:static w-full bg-gradient-to-r from-primary to-primary/50 text-white font-semibold h-9 rounded hover:opacity-90 transition cursor-pointer "
+              className="  w-full bg-gradient-to-r from-primary to-primary/50 text-white font-semibold h-9 rounded hover:opacity-90 transition cursor-pointer flex justify-center items-center"
               onClick={handleOrder}
-              // disabled={btnLoading}
+              disabled={orderLoadinBtn}
             >
-              place order
+              {orderLoadinBtn?<FaSpinner className="animate-spin " />:"place order "}
             </button>
           </div>
         </div>

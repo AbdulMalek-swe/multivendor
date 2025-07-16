@@ -5,3 +5,10 @@ export const maskPhone = (phone) => {
   const masked = "*".repeat(phone.length - 5);
   return `${first}${masked}${last}`;
 };
+export  function formatDate(isoDate) {
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth is 0-indexed
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
