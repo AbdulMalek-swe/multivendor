@@ -18,6 +18,7 @@ function useOrder(query={}) {
       } catch (err) {
         setError(err.message || "Unknown error");
         setLoading(false);
+        setData([]);
       } finally {
         setLoading(false);
       }

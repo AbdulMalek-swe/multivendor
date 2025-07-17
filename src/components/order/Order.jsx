@@ -16,6 +16,7 @@ const Order = ({ queryParams }) => {
     page: page,
     order_status: queryParams,
   });
+  console.log(order,"---------->",queryParams);
   const [openOrderId, setOpenOrderId] = useState(null);
   if (loading) return <OrderSkeleton />;
 

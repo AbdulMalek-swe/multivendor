@@ -17,7 +17,7 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
     setValue,
     formState: { errors },
   } = useForm();
-  const [divisionId, setDivisionId] = useState(3);
+  const [divisionId, setDivisionId] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
   const { data, loading, error } = useDivision();
@@ -72,6 +72,13 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
     setValue("phone",user?.phone)
     setValue("name",user?.name) 
   },[user])
+  useEffect(()=>{
+    console.log(data);
+   const findsData = data?.find(item => item?.label.toLowerCase() === "sylhet");
+   console.log(findsData);
+setDivisionId(findsData?.id);
+
+  },[data])
   return (
     <div>
       <form
