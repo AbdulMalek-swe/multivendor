@@ -13,8 +13,8 @@ const SingleCart = ({ product }) => {
   const handleAdded = () => {
     const newProduct = {
       ...product,
-      color_id: product?.colors[0] ?product?.colors[0]?.id : null,
-      attribute_id: product?.attributes[0] ?product?.attributes[0]?.id : null,
+      color_id: product?.colors[0] ? product?.colors[0]?.id : null,
+      attribute_id: product?.attributes[0] ? product?.attributes[0]?.id : null,
     };
     addItem(handlePurchaseProduct(newProduct));
   };
@@ -42,7 +42,10 @@ const SingleCart = ({ product }) => {
           {product?.product_name}
         </h3>
         <hr className="border" />
-        <p className="text-[#4D5860] font-poppins font-normal text-xs truncate" title={product?.vendor?.company_name}>
+        <p
+          className="text-[#4D5860] font-poppins font-normal text-xs truncate"
+          title={product?.vendor?.company_name}
+        >
           {product?.vendor?.company_name}
         </p>
         <div className="flex items-center gap-2 md:gap-3 lg:gap-4 xl:gap-7">
@@ -57,9 +60,9 @@ const SingleCart = ({ product }) => {
           className="w-full  !h-8 !text-xs !font-poppins !font-light text-nowrap text-black "
           bgColor=""
           color="text-primary"
-          onClick={(e) => { 
-             e.preventDefault(); 
-              e.stopPropagation(); 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
             handleAdded(product);
           }}
         >

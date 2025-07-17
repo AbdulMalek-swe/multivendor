@@ -193,14 +193,15 @@ export default function Home() {
                 {productList?.map((product, idx) => (
                   <SingleCart product={product} key={idx} />
                 ))}
-                {productLoading && (
+               
+              </div>
+               {productLoading && (
                   <div className="pt-5 grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6  gap-3">
                     {[...Array(10)].map((_, idx) => (
                       <ProductCardSkeleton key={idx} />
                     ))}
                   </div>
                 )}
-              </div>
               <InfinityLoadingButton
                 loadingRef={loadingRef}
                 infinityLoading={infinityLoading}
