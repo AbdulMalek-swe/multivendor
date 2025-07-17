@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import Drawer from "react-modern-drawer";
 import { FaUser } from "@/icons";
 import { useAuth } from "@/context/AuthContext";
-import { formatDate, maskPhone } from "@/utils/utils";
-import { flattenOrders } from "@/utils/flattenOrder";
+import {   maskPhone } from "@/utils/utils"; 
 import useAddress from "@/hooks/api/address/useAddress";
 import EditAddress from "@/components/address/EditAddress";
 import useOrder from "@/hooks/api/order/useOrder";
 import ManageAccountSkeleton from "@/components/loader/skeleton/AccountSkeleton/ManageAccountSkeleton";
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import Modal from "@/components/ui/modal";
-import Profile from "@/components/auth/Profile";
-import Pagination from "@/components/ui/Pagination";
+import Profile from "@/components/auth/Profile"; 
+import Order from "@/components/order/Order";
 const MyAccount = () => {
   const { user } = useAuth();
   const { data: addressData, loading } = useAddress();
@@ -30,10 +29,10 @@ const MyAccount = () => {
   const { data: order, loading: orderLoading } = useOrder({
     per_page: 12,
     page: page,
-  });
-  const flatData = flattenOrders(order?.data);
+  }); 
   // formate date
- 
+  console.log(order?.data);
+
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -140,60 +139,9 @@ const MyAccount = () => {
                 </div>
               </div>
             </div>
-          </div>
-
+          </div> 
           {/* Recent Orders */}
-          <div className="bg-white shadow p-5 rounded border border-[#E5E7EB]">
-            <h3 className="text-lg font-medium mb-4">Recent Orders</h3>
-            <div className="overflow-auto">
-              <table className="min-w-full text-left text-sm border-t border-[#E5E7EB] overflow-scroll">
-                <thead>
-                  <tr className="border-b border-[#E5E7EB] bg-gray-100">
-                    <th className="p-3 font-semibold">Order #</th>
-                    <th className="p-3 font-semibold">Placed On</th>
-                    <th className="p-3 font-semibold">Items</th>
-                    <th className="p-3 font-semibold">Total</th>
-                    {/* <th className="p-3 font-semibold">Action</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {flatData.map((orderItem, idx) => (
-                    <tr
-                      className="border-b border-[#E5E7EB] hover:bg-gray-50"
-                      key={idx}
-                    >
-                      <td className="p-3">#{orderItem?.order_id}</td>
-                      <td className="p-3">
-                        {" "}
-                        {formatDate(orderItem?.created_at)}
-                      </td>
-                      <td className="p-3">
-                        <div className="flex gap-1">
-                          {orderItem?.product_images?.map((itm, idx) => (
-                            <img
-                              key={idx}
-                              src={`${process.env.NEXT_PUBLIC_API_SERVER}${itm}`}
-                              alt="loading"
-                              className="w-8 h-8 object-cover rounded"
-                            />
-                          ))}
-                        </div>
-                      </td>
-                      <td className="p-3">৳ {orderItem?.total}</td>
-                      {/* <td className="p-3 text-blue-600 font-medium cursor-pointer">
-                      MANAGE
-                    </td> */}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <Pagination
-                totalPage={order?.last_page}
-                page={page}
-                setPage={setPage}
-              />
-            </div>
-          </div>
+           <Order queryParams={"shipped"} />
         </div>
       )}
     </>

@@ -26,8 +26,9 @@ export const ROUTES = {
   //   user dashboard route
   DASHBOARD: "/dashboard",
   ORDERS: "/dashboard/my-order",
+  ORDER_DETAILS: (id) => `/dashboard/order-details/${id}`,
   ACCOUNT: "/dashboard/profile",
   ADDRESS: "/dashboard/address",
   TRACK: "/dashboard/my-order",
-  CHANGE_PASSWORD:"/dashboard/change-password"
+  CHANGE_PASSWORD: "/dashboard/change-password",
 };

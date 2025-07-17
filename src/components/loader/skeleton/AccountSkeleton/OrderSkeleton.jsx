@@ -1,6 +1,6 @@
 const  OrderSkeleton=() =>{
   return (
-    <div className="bg-white rounded-md border p-4 shadow-sm mt-2 animate-pulse">
+    <div className="bg-white rounded-md border p-4 shadow-sm mt-2 animate-pulse text-gray-200">
       <div className="flex justify-between items-center mb-2">
         <div className="h-4 w-32 bg-gray-200 rounded"></div>
         <div className="h-6 w-20 bg-blue-100 rounded-full"></div>

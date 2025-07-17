@@ -38,6 +38,7 @@ export {
   CiShop,
   CiLogout,
   CiFilter,
+  CiCircleChevDown
 } from "react-icons/ci";
 export { FiShoppingCart, FiPhone, FiAlertTriangle } from "react-icons/fi";
 export { IoIosArrowForward, IoIosArrowDown } from "react-icons/io"; 
@@ -46,3 +47,5 @@ export { BiRefresh,BiCamera,BiLockAlt } from "react-icons/bi";
 export { RxDashboard ,RxHamburgerMenu} from "react-icons/rx";
 export { LuCar } from "react-icons/lu"; 
 export  { GrFormPrevious } from "react-icons/gr";
+export  { RiEyeLine } from "react-icons/ri";
+export  { TbCurrencyTaka } from "react-icons/tb";

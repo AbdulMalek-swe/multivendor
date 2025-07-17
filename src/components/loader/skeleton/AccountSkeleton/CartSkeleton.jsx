@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CartSkeleton() {
   return (
-    <div className="animate-pulse space-y-6">
+    <div className="animate-pulse space-y-6 text-gray-300">
       {/* Header */}
       <div className="h-8 w-48 bg-gray-200 rounded-md"></div>
 

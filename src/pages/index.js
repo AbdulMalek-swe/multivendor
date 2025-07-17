@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ROUTES } from "@/constants/route";
@@ -9,7 +9,7 @@ import Category from "@/components/category/Category";
 import SingleCart from "@/components/card/SingleCart";
 import SingleShopCard from "@/components/card/SingleShopCard";
 import HomePageHeaderText from "@/components/ui/HomePageHeaderText";
-import useShop from "@/hooks/api/Shop/useShop"; 
+import useShop from "@/hooks/api/Shop/useShop";
 import useProduct from "@/hooks/api/Product/useProduct";
 import SingleShopSkeleton from "@/components/loader/skeleton/Shop/SingleShopSkeleton";
 import HomeFirstSkeletonSection from "@/components/loader/skeleton/Home/HomeFirstSkeletonSection";
@@ -20,7 +20,7 @@ import Modal from "@/components/ui/modal";
 import NearestShop from "@/components/shop/Nearest-Shop";
 import InfinityLoadingButton from "@/components/ui/InfinityLoadingButton";
 
-export default function Home() { 
+export default function Home() {
   const [page, setPage] = useState(1);
   const loadingRef = useRef();
   // shop list
@@ -47,7 +47,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => {
     setIsOpen(false);
-  };
+  }; 
   if (error || productError) return <CustomError />;
   return (
     <PageLayout>
@@ -90,8 +90,7 @@ export default function Home() {
                 ) : (
                   <div className="flex justify-between pb-6 md:pb-8 ">
                     <HomePageHeaderText>
-                      Nearest{" "}
-                      <span className="text-primary">Shop Profile</span>
+                      Nearest <span className="text-primary">Shop Profile</span>
                     </HomePageHeaderText>
                     <div className=" flex items-center gap-2 text-sm md:text-base leading-[18px] text-[#222222]">
                       <div
@@ -132,22 +131,6 @@ export default function Home() {
                   </div>
                 )}
               </div>
-              {productLoading ? (
-                <div className="pt-5 grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6  gap-3">
-                  {[...Array(10)].map((_, idx) => (
-                    <ProductCardSkeleton key={idx} />
-                  ))}
-                </div>
-              ) : (
-                ""
-                // <div className="pt-3 ">
-                //   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4   gap-3">
-                //     {productList?.slice(0, 8)?.map((product, idx) => (
-                //       <SingleCart product={product} key={idx} />
-                //     ))}
-                //   </div>
-                // </div>
-              )}
             </div>
           </div>
         </section>
@@ -210,6 +193,13 @@ export default function Home() {
                 {productList?.map((product, idx) => (
                   <SingleCart product={product} key={idx} />
                 ))}
+                {productLoading && (
+                  <div className="pt-5 grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6  gap-3">
+                    {[...Array(10)].map((_, idx) => (
+                      <ProductCardSkeleton key={idx} />
+                    ))}
+                  </div>
+                )}
               </div>
               <InfinityLoadingButton
                 loadingRef={loadingRef}
@@ -217,8 +207,7 @@ export default function Home() {
               />
             </div>
           </div>
-        </section>
-
+        </section> 
         {/* special service section  */}
         <section className="  gap-4 hidden md:gap-3 lg:gap-5   grid-cols-1 md:grid lg:grid-cols-4  md:grid-cols-2   ">
           {spcialOffer.map((item) => (
@@ -226,7 +215,13 @@ export default function Home() {
               key={item?.logo}
               className="flex gap-4 items-center rounded-xl justify-center py-5 shadow-custom"
             >
-              <Image height={40} width={40} src={item?.logo} alt="authentic" priority/>
+              <Image
+                height={40}
+                width={40}
+                src={item?.logo}
+                alt="authentic"
+                priority
+              />
               <div>
                 <p className="text-base font-bold text-[#030712]">
                   {item?.title}

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ManageAccountSkeleton() {
   return (
-    <div className="max-w-7xl mx-auto text-black animate-pulse">
+    <div className="max-w-7xl mx-auto text-gray-300 animate-pulse">
       {/* Drawer Placeholder (not visible during loading) */}
       {/* Heading */}
       <div className="h-6 w-60 bg-gray-200 rounded mb-6"></div>

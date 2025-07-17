@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CheckoutPageSkeleton() {
   return (
-    <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto animate-pulse text-black">
+    <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto animate-pulse text-gray-300">
       {/* Left Content */}
       <div className="md:col-span-2 space-y-6">
         {/* Shipping Information Skeleton */}
