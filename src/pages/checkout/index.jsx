@@ -13,24 +13,26 @@ import DefaultAddress from "@/components/address/DefaultAddress";
 import EditAddress from "@/components/address/EditAddress";
 import PageLayout from "@/components/ui/PageLayout";
 import CheckoutPageSkeleton from "@/components/loader/skeleton/AccountSkeleton/CheckoutSkeleton";
-import Spinner from "@/components/loader/Spinner";
+
 const Checkout = () => {
-  const { clear: cartClear } = useCart();
+  const { clear: cartClear, items } = useCart();
   const router = useRouter();
+ 
   const [orderItems, setOrderItems] = useState([]);
   const [orderAttribute, setOrderAttribute] = useState({
     subtotal: 0,
     orderItems: 0,
   });
-  const [orderLoadinBtn,setOrderLoadingBtn] = useState(false);
+  const [orderLoadinBtn, setOrderLoadingBtn] = useState(false);
   const { data: addressData, loading, refetch } = useAddress();
   const defaultAddress = addressData?.find(
     (item) => item?.default_address == 1
   );
   //   setup for order item in state
-  useEffect(() => {
-    const result = JSON?.parse(localStorage?.getItem("order_items"));
-    const subtotal = result.reduce((acc, cur) => {
+  useEffect(() => { 
+    const result = JSON?.parse(localStorage?.getItem("order_items"))||[];
+     if(!result?.length) router?.push("/");
+    const subtotal = result?.reduce((acc, cur) => {
       return acc + (cur?.price || 0) * (cur?.quantity || 0);
     }, 0);
     setOrderAttribute({
@@ -45,22 +47,22 @@ const Checkout = () => {
   };
   //   order create successfully
   const handleOrder = async () => {
-    setOrderLoadingBtn(true)
+    setOrderLoadingBtn(true);
     try {
-      const result = JSON?.parse(localStorage?.getItem("order_items"));
       const response = await privateRequest.post("/user/order", {
-        items: result,
+        items: orderItems,
         payment_method: "cod",
         shipping_address: defaultAddress?.id,
       });
       if (responseHandler(response)) {
         notifySuccess(response?.data?.message);
         cartClear();
+        localStorage.removeItem("order_items");
         router?.push(`/payment-options/${response?.data?.data?.id}`);
-        setOrderLoadingBtn(false)
+        setOrderLoadingBtn(false);
       }
     } catch (error) {
-      setOrderLoadingBtn(false)
+      setOrderLoadingBtn(false);
     }
   };
   // drawer code
@@ -271,7 +273,11 @@ const Checkout = () => {
               onClick={handleOrder}
               disabled={orderLoadinBtn}
             >
-              {orderLoadinBtn?<FaSpinner className="animate-spin " />:"place order "}
+              {orderLoadinBtn ? (
+                <FaSpinner className="animate-spin " />
+              ) : (
+                "place order "
+              )}
             </button>
           </div>
         </div>

@@ -90,10 +90,10 @@ const ResetPassword = ( ) => {
         label={
           <p className="px-3 flex items-center text-black/50 gap-2 font-semibold text-sm ">
             {" "}
-            <CiLock /> ReType Password *
+            <CiLock /> New Password *
           </p>
         }
-        placeholder="Enter Retype Password"
+        placeholder="Enter New Password"
         rules={getValidateConfirmPassword(watch)}
         errors={errors}
         trigger={trigger}

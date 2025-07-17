@@ -4,21 +4,24 @@ import useDivision from "@/hooks/api/address/useDivision";
 import { privateRequest } from "@/lib/axios";
 import { networkErrorHandeller, responseHandler } from "@/utils/helpers";
 import { notifySuccess } from "@/utils/toast";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import Spinner from "../loader/Spinner";
+import { useAuth } from "@/context/AuthContext";
 const CreateAddress = ({ refetch, setOpenDrawer }) => {
+  const { user } = useAuth();
   const {
     handleSubmit,
     register,
-    control,
+    setValue,
     formState: { errors },
   } = useForm();
-  const [divisionId, setDivisionId] = useState(null);
+  const [divisionId, setDivisionId] = useState(3);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
   const { data, loading, error } = useDivision();
+ 
   const { data: cityData, loading: cityLoading } = useCityById(divisionId);
   const { data: areaData, loading: areaLoading } = useAreaById(
     selectedCity?.city_id
@@ -42,7 +45,7 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
   const handleAreaSelect = (e) => {
     setSelectedArea(e);
   };
-  const [btnLoading,setBtnLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const onSubmit = async (formData) => {
     const payload = {
       ...formData,
@@ -51,20 +54,24 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
       division_id: divisionId,
       country: "bangladesh",
     };
-     setBtnLoading(true)
+    setBtnLoading(true);
     try {
       const response = await privateRequest.post("/user/address", payload);
       if (responseHandler(response)) {
-        setBtnLoading(false)
+        setBtnLoading(false);
         setOpenDrawer(false);
         refetch();
         notifySuccess("address create successfully");
       }
     } catch (error) {
       networkErrorHandeller(error);
-       setBtnLoading(false)
+      setBtnLoading(false);
     }
-  };
+  }; 
+  useEffect(()=>{
+    setValue("phone",user?.phone)
+    setValue("name",user?.name) 
+  },[user])
   return (
     <div>
       <form
@@ -189,7 +196,7 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
         </div>
         <div className="w-full">
           <label className="block font-medium mb-1 text-sm">Division</label>
-          <Select options={data} onChange={handleMainSelectChange} />
+          <Select options={data} onChange={handleMainSelectChange} defaultValue={{ label:"Sylhet",name:"Sylhet",value:"Sylhet" }} />
         </div>
 
         {/* City */}
@@ -219,10 +226,9 @@ const CreateAddress = ({ refetch, setOpenDrawer }) => {
         <button
           type="submit"
           className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition duration-200 h-12 flex justify-center items-center"
-         
           disabled={btnLoading}
-      >
-        { !btnLoading?  "Submit"  : <Spinner/>}
+        >
+          {!btnLoading ? "Submit" : <Spinner />}
         </button>
       </form>
     </div>

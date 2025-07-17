@@ -57,7 +57,7 @@ const SetupForgotPassword = () => {
   return (
     <AuthLayout onsubmit={handleSubmit(onSubmit)}>
       <p className="text-center pb-5 font-normal">
-        Hello, Muhtasim Shakil <br />
+        Hello  <br />
         <span className="font-semibold text-white text-[15px]">
           Please set a password for your account
         </span>
@@ -75,6 +75,7 @@ const SetupForgotPassword = () => {
         rules={validatePassword}
         errors={errors}
         trigger={trigger}
+        placeholder={"Password"}
       />
       <PasswordInput
         register={register}
@@ -88,6 +89,7 @@ const SetupForgotPassword = () => {
         rules={validatePassword}
         errors={errors}
         trigger={trigger}
+        placeholder={"Re Type password"}
       />
       <div className=" flex justify-center">
         <Button

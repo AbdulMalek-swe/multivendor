@@ -34,8 +34,7 @@ export const getValidateConfirmPassword = (watch) => ({
   required: "Password is required",
   validate: (value) => {
     if (value.length < 6) return "At least 6 characters";
-    if (value.length > 20) return "Max 20 characters";
-    if (watch("password") !== value) return "Password Mismatch";
+    if (value.length > 20) return "Max 20 characters"; 
     return true;
   },
 });
