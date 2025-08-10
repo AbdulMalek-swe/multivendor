@@ -13,6 +13,7 @@ function useOrder(query={}) {
       try {
         // call category api 
         const response = await order(query); 
+        console.log(response,"---------->my response is back");
         setData(response?.data?.data);
         setLoading(false);
       } catch (err) {
