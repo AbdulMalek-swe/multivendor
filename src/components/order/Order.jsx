@@ -15,8 +15,8 @@ const Order = ({ queryParams }) => {
     per_page: 12,
     page: page,
     order_status: queryParams,
-  });
-   console.log(order,"------------>");
+  }); 
+  console.log(order,"-------->my order");
   const [openOrderId, setOpenOrderId] = useState(null);
   if (loading) return <OrderSkeleton />;
   return (
@@ -29,7 +29,7 @@ const Order = ({ queryParams }) => {
           openOrderId={openOrderId}
         />
       ))}
-      {order?.length!==0  && (
+      {order?.data?.length!==0  && (
         <Pagination
           totalPage={order?.last_page}
           page={page}
