@@ -17,7 +17,7 @@ const AuthLayout = ({
       <div className="my-4 md:my-8 flex justify-center ">
         <form
           onSubmit={onsubmit}
-          className="bg-primary space-y-3 py-6 md:py-16 px-14   lg:px-20 rounded-md w-full sm:w-[556px] flex   flex-col relative  "
+          className="bg-primary space-y-3 py-6 md:py-16 px-14  lg:px-20 rounded-md w-full sm:w-[556px] flex   flex-col relative  "
         >
           
           {icon && (
