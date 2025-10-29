@@ -2,9 +2,9 @@ import {
   FaUser,
   FaBoxOpen,
   FaSignOutAlt,
-  MdOutlineLocationOn, 
+  MdOutlineLocationOn,
   CiFaceSmile,
-  BiLockAlt
+  BiLockAlt,
 } from "@/icons";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
@@ -22,7 +22,11 @@ export default function AccountSidebar() {
         <div className="flex justify-center">
           <div className="flex w-25 justify-center aspect-square">
             <Image
-              src={`${process?.env.NEXT_PUBLIC_API_SERVER}${user?.image}`}
+              src={`${
+                !user?.image
+                  ? "/profile.png"
+                  : `${process?.env.NEXT_PUBLIC_API_SERVER}${user?.image}`
+              }`}
               priority
               width={100}
               height={100}
@@ -50,7 +54,7 @@ export default function AccountSidebar() {
                 ROUTES?.ACCOUNT === pathname ? "text-primary" : "text-gray-700"
               } font-medium cursor-pointer hover:underline flex items-center gap-1`}
             >
-              <CiFaceSmile   /> My Profile
+              <CiFaceSmile /> My Profile
             </Link>
             <Link
               href={ROUTES?.ADDRESS}
@@ -64,7 +68,9 @@ export default function AccountSidebar() {
             <Link
               href={ROUTES?.CHANGE_PASSWORD}
               className={` ${
-                ROUTES?.CHANGE_PASSWORD === pathname ? "text-primary" : "text-gray-700"
+                ROUTES?.CHANGE_PASSWORD === pathname
+                  ? "text-primary"
+                  : "text-gray-700"
               } font-medium cursor-pointer flex items-center gap-1 hover:underline`}
             >
               <BiLockAlt />

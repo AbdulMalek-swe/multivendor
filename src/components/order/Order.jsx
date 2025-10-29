@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Pagination from "../ui/Pagination";
-import useOrder from "@/hooks/api/order/useOrder"; 
 import { formatDate } from "@/utils/utils";
-import OrderSkeleton from "../loader/skeleton/AccountSkeleton/OrderSkeleton";
 import { ROUTES } from "@/constants/route";
-import Link from "next/link";
 import { RiEyeLine } from "react-icons/ri";
 import { CiCircleChevDown } from "react-icons/ci";
 import { TbCurrencyTaka } from "react-icons/tb";
+import Pagination from "../ui/Pagination";
+import useOrder from "@/hooks/api/order/useOrder";
+import Link from "next/link";
+import OrderSkeleton from "../loader/skeleton/AccountSkeleton/OrderSkeleton";
 
 const Order = ({ queryParams }) => {
   const [page, setPage] = useState(1);
@@ -15,11 +15,10 @@ const Order = ({ queryParams }) => {
     per_page: 12,
     page: page,
     order_status: queryParams,
-  });
-  console.log(order,"---------->",queryParams);
+  }); 
+  console.log(order,"-------->my order");
   const [openOrderId, setOpenOrderId] = useState(null);
   if (loading) return <OrderSkeleton />;
-
   return (
     <div className="overflow-x-auto">
       {order?.data?.map((orderItem, idx) => (
@@ -30,7 +29,13 @@ const Order = ({ queryParams }) => {
           openOrderId={openOrderId}
         />
       ))}
-     { order?.length!==0&& <Pagination totalPage={order?.last_page} page={page} setPage={setPage} />}
+      {order?.data?.length!==0  && (
+        <Pagination
+          totalPage={order?.last_page}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 };
@@ -38,9 +43,7 @@ const Order = ({ queryParams }) => {
 export default Order;
 
 const OrderRow = ({ order, openOrderId, setOpenOrderId }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [subOrder, setSubOrder] = useState([]);
-
   const handleOrderDetailsShow = (data) => {
     const result = [];
     data?.sub_orders?.forEach((vendor) => {
@@ -60,7 +63,6 @@ const OrderRow = ({ order, openOrderId, setOpenOrderId }) => {
       setOpenOrderId(order.id); // open this and close others
     }
   };
-  console.log(openOrderId);
   return (
     <div
       onClick={() => handleOrderDetailsShow(order)}

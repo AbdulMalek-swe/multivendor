@@ -121,8 +121,8 @@ const ProductDetails = () => {
   return (
     <PageLayout>
       {/* product details call here  */}
-      <div className="flex flex-col md:flex-row justify-between md:gap-10">
-        <div className="flex justify-center w-full md:w-1/2 aspect-[247/187]">
+      <div className="flex flex-col gap-3 sm:gap-5 sm:flex-row justify-between md:gap-10">
+        <div className="flex justify-center w-full  md:w-1/2  aspect-[247/187]">
           <Image
             src={`${process?.env.NEXT_PUBLIC_API_SERVER}${product?.thumbnail}`}
             alt="Organic Banana"
@@ -153,14 +153,14 @@ const ProductDetails = () => {
           <p className="text-sm border-b pb-2  flex gap-2 items-center">
             {/* <span className="font-thin text-[#6B7280]">|</span> */}
             <strong className="text-[#6B7280] ">Vendor:</strong>
-            <span className="text-[13px] font-medium text-[#030712] ">
+            <span className="text-[13px] font-medium text-[#030712] truncate" title={product?.vendor?.company_name}>
               {product?.vendor?.company_name}
             </span>
             <span className="font-thin text-[#6B7280]">|</span>
             <strong className="text-[13px] font-medium text-[#6B7280]">
               SKU:
             </strong>
-            <span className="text-[#030712]">{product?.sku}</span>
+            <span className="text-[#030712] truncate" title={product?.sku}>{product?.sku}</span>
           </p>
           <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-3 font-normal">
             {product?.short_description ||

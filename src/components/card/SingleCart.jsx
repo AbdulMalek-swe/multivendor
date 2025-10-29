@@ -48,11 +48,11 @@ const SingleCart = ({ product }) => {
         >
           {product?.vendor?.company_name}
         </p>
-        <div className="flex items-center gap-2 md:gap-3 lg:gap-4 xl:gap-7">
-          <h1 className="text-2xl font-poppins font-bold text-primary md:text-lg lg:text-2xl ">
+        <div className="flex flex-col sm:flex-row sm:justify-around sm:items-center gap-1 md:gap-1 lg:gap-2 xl:gap-7">
+          <h1 className="text-2xl font-poppins font-bold text-primary  md:text-base lg:text-xl ">
             {formatPrice(product?.offer_price)}
           </h1>
-          <span className="line-through font-poppins font-normal text-[#222222] text-base truncate md:text-sm lg:text-base ">
+          <span className="flex justify-end line-through font-poppins font-normal text-[#222222] text-base truncate md:text-sm lg:text-base ">
             {formatPrice(product?.reguler_price)}
           </span>
         </div>

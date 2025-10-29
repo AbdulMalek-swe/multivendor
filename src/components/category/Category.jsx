@@ -72,7 +72,7 @@ const MenuItems = ({ category, depthLevel }) => {
   };
   return (
     <li
-      className="text-[#030712] bg-white font-medium text-sm leading-5 border-t border-t-[#E5E7EB] py-3"
+      className="text-[#030712] bg-white font-medium text-sm leading-5 border-t border-t-[#E5E7EB] py-3 relative"
       ref={ref}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
